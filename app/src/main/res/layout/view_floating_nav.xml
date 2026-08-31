@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardFloatingNav"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center_horizontal"
+    android:background="@drawable/bg_floating_nav_container"
+    android:orientation="horizontal"
+    android:elevation="6dp"
+    android:padding="4dp">
+
+    <LinearLayout
+        android:id="@+id/tabHome"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_nav_tab_active"
+        android:clickable="true"
+        android:contentDescription="@string/nav_home"
+        android:focusable="true"
+        android:gravity="center"
+        android:minWidth="112dp"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
+
+        <ImageView
+            android:id="@+id/iconHome"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@null"
+            android:src="@drawable/home"
+            android:scaleType="fitCenter"
+            app:tint="?attr/colorOnPrimary" />
+
+        <TextView
+            android:id="@+id/textHome"
+            style="@style/TextAppearance.LinkDeck.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/nav_home"
+            android:textColor="?attr/colorOnPrimary" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tabSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_nav_tab_inactive"
+        android:clickable="true"
+        android:contentDescription="@string/nav_settings"
+        android:focusable="true"
+        android:gravity="center"
+        android:minWidth="112dp"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
+
+        <ImageView
+            android:id="@+id/iconSettings"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@null"
+            android:src="@drawable/settings"
+            android:scaleType="fitCenter"
+            app:tint="?attr/colorOnSurfaceVariant" />
+
+        <TextView
+            android:id="@+id/textSettings"
+            style="@style/TextAppearance.LinkDeck.Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/nav_settings"
+            android:textColor="?attr/colorOnSurfaceVariant" />
+    </LinearLayout>
+</LinearLayout>

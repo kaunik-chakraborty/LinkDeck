@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/settingsRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/android:colorBackground">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/settingsAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="144dp"
+        android:background="?attr/android:colorBackground"
+        app:liftOnScroll="true"
+        app:liftOnScrollTargetViewId="@id/settingsContent">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/settingsCollapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:collapsedTitleGravity="start|center_vertical"
+            app:collapsedTitleTextAppearance="@style/TextAppearance.LinkDeck.CollapsingToolbar.Collapsed"
+            app:contentScrim="?attr/android:colorBackground"
+            app:expandedTitleGravity="bottom|start"
+            app:expandedTitleMarginBottom="20dp"
+            app:expandedTitleMarginEnd="24dp"
+            app:expandedTitleMarginStart="24dp"
+            app:expandedTitleTextAppearance="@style/TextAppearance.LinkDeck.CollapsingToolbar.Expanded"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:maxLines="1"
+            app:statusBarScrim="?attr/android:colorBackground"
+            app:title="@string/settings_title">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/settingsToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_nav_back"
+                app:navigationIconTint="?attr/colorOnSurface"
+                app:layout_collapseMode="pin" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/settingsContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/android:colorBackground"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="104dp">
+            <include layout="@layout/settings_section_appearance" />
+            <include layout="@layout/settings_section_link_handling" />
+            <include layout="@layout/settings_section_diagnostics" />
+            <include layout="@layout/settings_section_data" />
+            <include layout="@layout/settings_section_about" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        layout="@layout/view_floating_nav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/floating_nav_margin_horizontal"
+        android:layout_marginEnd="@dimen/floating_nav_margin_horizontal"
+        android:layout_marginBottom="@dimen/floating_nav_margin_bottom" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

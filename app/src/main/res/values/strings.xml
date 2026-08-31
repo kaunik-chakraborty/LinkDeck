@@ -1,0 +1,212 @@
+<resources>
+    <string name="app_name">LinkDeck</string>
+    <string name="app_tagline">Choose which app opens your links</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Main Screen -->
+    <string name="status_active_title">LinkDeck is your default browser</string>
+    <string name="status_active_desc">Links you tap in other apps will open with LinkDeck.</string>
+    <string name="status_inactive_title">LinkDeck isn\'t your default browser yet</string>
+    <string name="status_inactive_desc">Set LinkDeck as your default browser so it can route links you tap in other apps.</string>
+    <string name="set_default_browser_btn">Set as default browser</string>
+
+    <string name="test_link_title">Test a link</string>
+    <string name="test_link_desc">Paste a link to see which apps can open it.</string>
+    <string name="test_link_hint">https://example.com</string>
+    <string name="test_link_btn">Open link</string>
+
+    <!-- Tracking Protection -->
+    <string name="tracking_protection_title">Tracking protection</string>
+    <string name="tracking_protection_desc">Remove common marketing and tracking parameters from links before opening.</string>
+    <string name="tracking_cleaned_badge">Tracking parameters removed</string>
+
+    <!-- Routing Rules (Phase 4) -->
+    <string name="rules_title">Routing rules</string>
+    <string name="rules_desc">Automatically open specific websites or paths in your preferred app.</string>
+    <string name="rules_empty">No routing rules yet</string>
+    <string name="rules_empty_desc">Create custom rules to route websites or paths like youtube.com/shorts/* to specific apps.</string>
+    <string name="btn_add_rule">Add rule</string>
+    <string name="edit_rule_title">Edit routing rule</string>
+    <string name="add_rule_title">New routing rule</string>
+    <string name="rule_domain_hint">Website (e.g. youtube.com)</string>
+    <string name="rule_path_hint">Path pattern (optional, e.g. /shorts/*)</string>
+    <string name="rule_target_hint">Open with</string>
+    <string name="btn_save_rule">Save rule</string>
+    <string name="rule_saved_toast">Saved rule for %1$s</string>
+    <string name="rule_deleted_toast">Deleted rule for %1$s</string>
+    <string name="rule_limit_reached">Rule limit reached (max 50). Remove an existing rule to add new ones.</string>
+
+    <!-- Saved Preferences (Phase 3) -->
+    <string name="saved_preferences_title">Saved link choices</string>
+    <string name="saved_preferences_desc">Links for these domains automatically open in your preferred app.</string>
+    <string name="saved_preferences_empty">No saved link choices yet</string>
+    <string name="saved_preferences_empty_desc">Select \"Always\" in the chooser to remember your preferred app for specific websites.</string>
+    <string name="action_forget">Forget</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_delete">Delete</string>
+    <string name="preference_removed_toast">Removed preference for %1$s</string>
+
+    <!-- Link Inspector (Phase 5) -->
+    <string name="inspector_title">Link details</string>
+    <string name="inspector_section_original">Original link</string>
+    <string name="inspector_section_redirects">Redirect chain</string>
+    <string name="inspector_section_destination">Final destination</string>
+    <string name="inspector_section_tracking">Tracking protection</string>
+    <string name="inspector_section_routing">Routing decision</string>
+    <string name="inspector_no_redirects">Direct link (no redirects)</string>
+    <string name="inspector_redirect_hop">Hop %1$d: HTTP %2$d</string>
+    <string name="inspector_redirect_blocked">Destination was blocked for your safety</string>
+    <string name="inspector_redirect_loop">Redirect loop detected</string>
+    <string name="inspector_redirect_too_many">Too many redirects</string>
+    <string name="inspector_redirect_timeout">Check timed out</string>
+    <string name="inspector_redirect_unreachable">Destination could not be reached</string>
+    <string name="inspector_tracking_cleaned">Removed %1$d tracking parameter(s)</string>
+    <string name="inspector_tracking_none">No tracking parameters detected</string>
+    <string name="inspector_rule_matched">Matched custom rule for %1$s</string>
+    <string name="inspector_pref_matched">Using saved choice for %1$s</string>
+    <string name="inspector_manual_choice">Manual selection</string>
+    <string name="inspector_btn_inspect">Inspect</string>
+    <string name="btn_done">Done</string>
+
+    <!-- Settings Activity (V1 Expansion) -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_category_appearance">Appearance</string>
+    <string name="settings_category_link_handling">Link handling</string>
+    <string name="setting_auto_routing_title">Automatic routing</string>
+    <string name="setting_auto_routing_desc">Open matching links automatically without showing the chooser.</string>
+    <string name="setting_remember_choices_title">Remember link choices</string>
+    <string name="setting_remember_choices_desc">Allow saving preferred apps per domain (\"Always\" option in chooser).</string>
+    <string name="setting_tracking_title">Tracking protection</string>
+    <string name="setting_tracking_desc">Remove common marketing and tracking parameters from links before opening.</string>
+    <string name="setting_redirect_title">Safe redirect inspection</string>
+    <string name="setting_redirect_desc">Unfurl shortened links on-device before choosing an app.</string>
+
+    <string name="settings_category_data">Data &amp; Privacy</string>
+    <string name="setting_clear_preferences_title">Clear saved link choices</string>
+    <string name="setting_clear_preferences_desc">Remove all remembered domain-to-app choices.</string>
+    <string name="setting_clear_rules_title">Clear routing rules</string>
+    <string name="setting_clear_rules_desc">Remove all custom domain and path routing rules.</string>
+    <string name="setting_reset_settings_title">Reset settings</string>
+    <string name="setting_reset_settings_desc">Restore default application settings.</string>
+    <string name="dialog_clear_preferences_msg">Are you sure you want to remove all saved link choices?</string>
+    <string name="dialog_clear_rules_msg">Are you sure you want to delete all custom routing rules?</string>
+    <string name="dialog_reset_settings_msg">Are you sure you want to reset all LinkDeck settings to default?</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_reset">Reset</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="toast_preferences_cleared">Cleared all saved link choices</string>
+    <string name="toast_rules_cleared">Cleared all routing rules</string>
+    <string name="toast_settings_reset">Reset settings to default</string>
+
+    <string name="settings_category_diagnostics">Diagnostics</string>
+    <string name="setting_test_link_title">Test a link</string>
+    <string name="setting_test_link_desc">Preview redirect resolution, tracking cleaner, and app matching.</string>
+
+    <string name="settings_category_about">About</string>
+    <string name="setting_github_title">GitHub Repository</string>
+    <string name="setting_github_desc">Star the project or view source code on GitHub</string>
+    <string name="github_repo_url">https://github.com/kaunik-chakraborty/LinkDeck</string>
+    <string name="setting_version_title">Version</string>
+    <string name="setting_version_desc">1.0 (Release)</string>
+    <string name="setting_license_title">License</string>
+    <string name="setting_license_desc">Open source (Apache License 2.0)</string>
+    <string name="setting_privacy_title">Privacy &amp; Security</string>
+    <string name="setting_privacy_desc">100% on-device processing, zero telemetry, no cloud backend.</string>
+
+    <!-- Test Link Screen (V1 Expansion) -->
+    <string name="test_link_screen_title">Test link destination</string>
+    <string name="test_link_btn_inspect">Inspect destination</string>
+    <string name="test_link_btn_open">Open in Chooser</string>
+    <string name="test_link_results_title">Resolution breakdown</string>
+    <string name="test_link_empty_prompt">Enter or paste a web link above to test on-device resolution and app matching.</string>
+    <string name="test_link_original">Original link</string>
+    <string name="test_link_redirect_chain">Redirect chain</string>
+    <string name="test_link_cleaned">Cleaned destination</string>
+    <string name="test_link_routing_rule">Routing rule / preference</string>
+    <string name="test_link_target_apps">Available target apps</string>
+
+    <!-- Chooser -->
+    <string name="chooser_title">Open with</string>
+    <string name="checking_destination">Checking link destination…</string>
+    <string name="redirected_from">Redirected from %1$s</string>
+    <string name="blocked_private_network_notice">This link points to a private network address and wasn\'t opened by LinkDeck.</string>
+    <string name="category_recommended">Dedicated apps</string>
+    <string name="category_browsers">Browsers</string>
+    <string name="category_other">Other apps</string>
+    <string name="category_share_with">Share with</string>
+    <string name="action_open_original_link">Open original link</string>
+    <string name="checkbox_open_original_link">Open original link</string>
+    <string name="action_pin_app">Pin to top</string>
+    <string name="action_unpin_app">Unpin</string>
+    <string name="toast_using_original_link">Using original link</string>
+    <string name="toast_using_cleaned_link">Using cleaned destination</string>
+    <string name="action_just_once">Just once</string>
+    <string name="action_open">Open</string>
+    <string name="action_always">Always</string>
+    <string name="action_share">Share</string>
+    <string name="preference_saved_toast">Always opening %1$s with %2$s</string>
+    <string name="preference_limit_reached">Preference limit reached (max 50). Remove an existing preference to add new ones.</string>
+    <string name="empty_targets_title">No apps found</string>
+    <string name="empty_targets_desc">No browsers or compatible apps are available to open this link.</string>
+    <string name="empty_open_targets_banner">Nothing can open this link directly.</string>
+    <string name="empty_all_targets_desc">No apps can open or share this link.</string>
+    <string name="error_invalid_link_title">Invalid link</string>
+    <string name="dismiss_btn">Dismiss</string>
+    <string name="copy_link_btn">Copy</string>
+    <string name="link_copied_toast">Link copied</string>
+    <string name="launch_failed_toast">Couldn\'t open %1$s. Try another app.</string>
+    <string name="share_failed_toast">Couldn\'t share with %1$s. Try another app.</string>
+
+    <!-- Widget Strings -->
+    <string name="widget_multilink_name">LinkDeck Multi-Link &amp; Paste</string>
+    <string name="widget_multilink_desc">Paste and open links instantly, manage quick test links, and access LinkDeck settings from your home screen.</string>
+    <string name="widget_status_name">LinkDeck Status</string>
+    <string name="widget_status_desc">Quick overview of LinkDeck default browser status, protection, and test link launcher.</string>
+    <string name="widget_paste_and_open">Paste &amp; Open Link</string>
+    <string name="widget_quick_links">Quick Links</string>
+    <string name="widget_protection_active">Protection Active</string>
+    <string name="widget_status_active">LinkDeck Active</string>
+    <string name="widget_btn_test_link">Test Link</string>
+    <string name="widget_btn_rules">Rules</string>
+    <string name="widget_btn_settings">Settings</string>
+
+    <!-- Onboarding Walkthrough -->
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_back">Back</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_set_default">Set as Default Browser</string>
+    <string name="onboarding_done">Done</string>
+
+    <string name="onboarding_badge_1">SMART LINK COMPANION</string>
+    <string name="onboarding_title_1">Take Control of Every Link</string>
+    <string name="onboarding_desc_1">LinkDeck intercepts web links from your apps and lets you choose where and how to open them seamlessly.</string>
+    <string name="onboarding_feat_1_1">Open in dedicated native apps or web browsers</string>
+    <string name="onboarding_feat_1_2">Fast 1-tap direct launch with zero friction</string>
+    <string name="onboarding_feat_1_3">Pin favorite share apps directly to the top</string>
+
+    <string name="onboarding_badge_2">PRIVACY &amp; SECURITY</string>
+    <string name="onboarding_title_2">Clean, Private &amp; On-Device</string>
+    <string name="onboarding_desc_2">Strips invasive tracking tags and unfurls shortened links safely on your device before opening.</string>
+    <string name="onboarding_feat_2_1">Auto-removes utm_*, fbclid, and marketing trackers</string>
+    <string name="onboarding_feat_2_2">Safe on-device redirect inspection (bit.ly, t.co)</string>
+    <string name="onboarding_feat_2_3">100% on-device processing with zero telemetry</string>
+
+    <string name="onboarding_badge_3">AUTOMATION &amp; RULES</string>
+    <string name="onboarding_title_3">Automate with Smart Rules</string>
+    <string name="onboarding_desc_3">Create custom domain and path rules or remember \'Always\' choices for automatic instant routing.</string>
+    <string name="onboarding_feat_3_1">Domain rules (e.g. reddit.com → Reddit app)</string>
+    <string name="onboarding_feat_3_2">Path patterns (e.g. youtube.com/shorts/*)</string>
+    <string name="onboarding_feat_3_3">Per-domain \'Always\' choices you can edit anytime</string>
+
+    <string name="onboarding_badge_4">GET STARTED</string>
+    <string name="onboarding_title_4">Make LinkDeck Your Default</string>
+    <string name="onboarding_desc_4">Set LinkDeck as your Android default browser so every link you tap in other apps gets routed and protected.</string>
+    <string name="onboarding_feat_4_1">Intercepts links across all social, chat, and email apps</string>
+    <string name="onboarding_feat_4_2">Inspect destinations with Link Inspector</string>
+    <string name="onboarding_feat_4_3">Home screen widgets for quick paste &amp; routing</string>
+
+    <string name="setting_walkthrough_title">App Walkthrough</string>
+    <string name="setting_walkthrough_desc">Replay the interactive introduction and features guide.</string>
+</resources>

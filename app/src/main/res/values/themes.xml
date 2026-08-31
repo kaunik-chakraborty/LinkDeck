@@ -1,0 +1,267 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.LinkDeck" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorOnSecondary">@color/on_primary</item>
+        <item name="colorSecondaryContainer">@color/primary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_primary_container</item>
+        <item name="android:colorBackground">@color/surface_light</item>
+        <item name="colorSurface">@color/surface_container_light</item>
+        <item name="colorOnSurface">@color/on_surface_light</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_light</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant_light</item>
+        <item name="colorOutline">@color/outline_light</item>
+        <item name="colorOutlineVariant">@color/outline_variant_light</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+        <item name="fontFamily">@font/font_satoshi</item>
+        <item name="android:fontFamily">@font/font_satoshi</item>
+        <item name="bottomSheetDialogTheme">@style/Widget.LinkDeck.BottomSheetDialog</item>
+
+        <!-- Material 3 TypeScale Global Overrides -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.LinkDeck.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.LinkDeck.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.LinkDeck.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.LinkDeck.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.LinkDeck.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.LinkDeck.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.LinkDeck.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.LinkDeck.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.LinkDeck.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.LinkDeck.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.LinkDeck.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.LinkDeck.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.LinkDeck.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.LinkDeck.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.LinkDeck.LabelSmall</item>
+    </style>
+
+    <style name="Theme.LinkDeck" parent="Base.Theme.LinkDeck" />
+
+    <style name="Theme.LinkDeck.Translucent" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="fontFamily">@font/font_satoshi</item>
+        <item name="android:fontFamily">@font/font_satoshi</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/on_primary</item>
+        <item name="colorPrimaryContainer">@color/primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container</item>
+        <item name="colorSecondary">@color/primary</item>
+        <item name="colorOnSecondary">@color/on_primary</item>
+        <item name="colorSecondaryContainer">@color/primary_container</item>
+        <item name="colorOnSecondaryContainer">@color/on_primary_container</item>
+        <item name="colorSurface">@color/surface_container_light</item>
+        <item name="colorOnSurface">@color/on_surface_light</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_light</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant_light</item>
+        <item name="colorOutlineVariant">@color/outline_variant_light</item>
+        <item name="bottomSheetDialogTheme">@style/Widget.LinkDeck.BottomSheetDialog</item>
+
+        <!-- Material 3 TypeScale Global Overrides -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.LinkDeck.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.LinkDeck.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.LinkDeck.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.LinkDeck.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.LinkDeck.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.LinkDeck.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.LinkDeck.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.LinkDeck.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.LinkDeck.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.LinkDeck.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.LinkDeck.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.LinkDeck.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.LinkDeck.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.LinkDeck.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.LinkDeck.LabelSmall</item>
+    </style>
+
+    <!-- Material 3 Bottom Sheet -->
+    <style name="Widget.LinkDeck.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/Widget.LinkDeck.BottomSheet</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="enableEdgeToEdge">true</item>
+    </style>
+
+    <style name="Widget.LinkDeck.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="shapeAppearance">@style/ShapeAppearance.LinkDeck.BottomSheet</item>
+        <item name="backgroundTint">@color/surface_container_light</item>
+    </style>
+
+    <style name="ShapeAppearance.LinkDeck.BottomSheet" parent="ShapeAppearance.Material3.Corner.ExtraLarge">
+        <item name="cornerSizeTopLeft">24dp</item>
+        <item name="cornerSizeTopRight">24dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+
+    <!-- Material 3 Typography TypeScale Definitions -->
+    <style name="TextAppearance.LinkDeck.DisplayLarge" parent="TextAppearance.Material3.DisplayLarge" />
+    <style name="TextAppearance.LinkDeck.DisplayMedium" parent="TextAppearance.Material3.DisplayMedium" />
+    <style name="TextAppearance.LinkDeck.DisplaySmall" parent="TextAppearance.Material3.DisplaySmall" />
+    <style name="TextAppearance.LinkDeck.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge" />
+    <style name="TextAppearance.LinkDeck.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium" />
+    <style name="TextAppearance.LinkDeck.HeadlineSmall" parent="TextAppearance.Material3.HeadlineSmall" />
+    <style name="TextAppearance.LinkDeck.TitleLarge" parent="TextAppearance.Material3.TitleLarge" />
+    <style name="TextAppearance.LinkDeck.TitleMedium" parent="TextAppearance.Material3.TitleMedium" />
+    <style name="TextAppearance.LinkDeck.TitleSmall" parent="TextAppearance.Material3.TitleSmall" />
+    <style name="TextAppearance.LinkDeck.BodyLarge" parent="TextAppearance.Material3.BodyLarge" />
+    <style name="TextAppearance.LinkDeck.BodyMedium" parent="TextAppearance.Material3.BodyMedium" />
+    <style name="TextAppearance.LinkDeck.BodySmall" parent="TextAppearance.Material3.BodySmall" />
+    <style name="TextAppearance.LinkDeck.LabelLarge" parent="TextAppearance.Material3.LabelLarge" />
+    <style name="TextAppearance.LinkDeck.LabelMedium" parent="TextAppearance.Material3.LabelMedium" />
+    <style name="TextAppearance.LinkDeck.LabelSmall" parent="TextAppearance.Material3.LabelSmall" />
+
+    <!-- Custom Typography Presets -->
+    <style name="TextAppearance.LinkDeck.Display" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:letterSpacing">-0.015</item>
+    </style>
+
+    <style name="TextAppearance.LinkDeck.ScreenTitle" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.LinkDeck.Section" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="TextAppearance.LinkDeck.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:lineSpacingMultiplier">1.12</item>
+    </style>
+
+    <style name="TextAppearance.LinkDeck.Supporting" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnSurfaceVariant</item>
+        <item name="android:lineSpacingMultiplier">1.12</item>
+    </style>
+
+    <style name="TextAppearance.LinkDeck.Label" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.LinkDeck.PrimaryButton" parent="Widget.Material3.Button">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Widget.LinkDeck.SecondaryButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnSecondaryContainer</item>
+        <item name="backgroundTint">?attr/colorSecondaryContainer</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Widget.LinkDeck.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:minHeight">44dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Widget.LinkDeck.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxStrokeWidthFocused">2dp</item>
+    </style>
+
+    <!-- Material 3 Collapsing Toolbar Title Styles -->
+    <style name="TextAppearance.LinkDeck.CollapsingToolbar.Expanded" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:letterSpacing">-0.015</item>
+    </style>
+
+    <style name="TextAppearance.LinkDeck.CollapsingToolbar.Collapsed" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- iOS / M3 Floating Bottom Navigation Style -->
+    <style name="Widget.LinkDeck.FloatingBottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/Widget.LinkDeck.BottomNav.ActiveIndicator</item>
+        <item name="itemTextColor">?attr/colorOnSurface</item>
+        <item name="itemIconTint">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Widget.LinkDeck.BottomNav.ActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/colorPrimaryContainer</item>
+    </style>
+
+    <!-- ================================================================= -->
+    <!-- Dynamic Font Theme Overlays                                       -->
+    <!-- ================================================================= -->
+    <style name="ThemeOverlay.LinkDeck.Font.System" parent="">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.Satoshi" parent="">
+        <item name="fontFamily">@font/font_satoshi</item>
+        <item name="android:fontFamily">@font/font_satoshi</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.Outfit" parent="">
+        <item name="fontFamily">@font/font_outfit</item>
+        <item name="android:fontFamily">@font/font_outfit</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.GeneralSans" parent="">
+        <item name="fontFamily">@font/font_general_sans</item>
+        <item name="android:fontFamily">@font/font_general_sans</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.CabinetGrotesk" parent="">
+        <item name="fontFamily">@font/font_cabinet_grotesk</item>
+        <item name="android:fontFamily">@font/font_cabinet_grotesk</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.SpaceGrotesk" parent="">
+        <item name="fontFamily">@font/font_space_grotesk</item>
+        <item name="android:fontFamily">@font/font_space_grotesk</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.PlusJakartaSans" parent="">
+        <item name="fontFamily">@font/font_plus_jakarta_sans</item>
+        <item name="android:fontFamily">@font/font_plus_jakarta_sans</item>
+    </style>
+</resources>

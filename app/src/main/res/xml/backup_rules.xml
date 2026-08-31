@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- Exclude local routing preferences and rules from legacy auto backup for user privacy -->
+    <exclude domain="sharedpref" path="linkdeck_routing_preferences.xml" />
+    <exclude domain="sharedpref" path="linkdeck_routing_rules.xml" />
+    <exclude domain="sharedpref" path="linkdeck_settings.xml" />
+</full-backup-content>

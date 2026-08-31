@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Monochrome actions keep navigation and focus unmistakably clear. -->
+    <color name="primary">#000000</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#E7E6E2</color>
+    <color name="on_primary_container">#1F2427</color>
+
+    <color name="primary_dark">#FFFFFF</color>
+    <color name="on_primary_dark">#111416</color>
+    <color name="primary_container_dark">#333638</color>
+    <color name="on_primary_container_dark">#F4F2EE</color>
+
+    <!-- Layered neutrals create depth through surface contrast rather than shadow. -->
+    <color name="surface_light">#F4F3F0</color>
+    <color name="on_surface_light">#1F2427</color>
+    <color name="surface_variant_light">#E9E8E3</color>
+    <color name="on_surface_variant_light">#60666A</color>
+    <color name="surface_container_light">#FCFBF8</color>
+    <color name="outline_light">#DCDDD9</color>
+    <color name="outline_variant_light">#E7E6E1</color>
+
+    <!-- Dark surfaces retain separation without collapsing into pure black. -->
+    <color name="surface_dark">#111416</color>
+    <color name="on_surface_dark">#F4F2EE</color>
+    <color name="surface_variant_dark">#1B2022</color>
+    <color name="on_surface_variant_dark">#ABB2B0</color>
+    <color name="surface_container_dark">#202628</color>
+    <color name="outline_dark">#343B3D</color>
+    <color name="outline_variant_dark">#2A3032</color>
+
+    <!-- Semantic States -->
+    <color name="status_active">#2F8F71</color>
+    <color name="status_active_container">#D8EEE5</color>
+    <color name="on_status_active_container">#1F604D</color>
+
+    <color name="status_active_dark">#65C19E</color>
+    <color name="status_active_container_dark">#173B31</color>
+    <color name="on_status_active_container_dark">#B9E8D3</color>
+
+    <color name="status_inactive">#A34F36</color>
+    <color name="status_inactive_container">#F3DED5</color>
+    <color name="on_status_inactive_container">#6B3324</color>
+
+    <color name="status_inactive_dark">#E58A6B</color>
+    <color name="status_inactive_container_dark">#4A241B</color>
+    <color name="on_status_inactive_dark">#F8C7B5</color>
+
+    <color name="error">#BA4B45</color>
+    <color name="error_container">#F5DFDC</color>
+    <color name="on_error_container">#752F2C</color>
+
+    <!-- Liquid Frosted Glass Nav Colors -->
+    <color name="glass_nav_bg">#E6FCFBF8</color>
+    <color name="glass_nav_stroke">#99FFFFFF</color>
+
+    <!-- Utilities -->
+    <color name="transparent">#00000000</color>
+
+    <!-- Widget Colors (Light Mode) -->
+    <color name="widget_bg">#FCFBF8</color>
+    <color name="widget_surface_card">#F4F3F0</color>
+    <color name="widget_text_primary">#1F2427</color>
+    <color name="widget_text_secondary">#60666A</color>
+    <color name="widget_accent">#000000</color>
+    <color name="widget_on_accent">#FFFFFF</color>
+    <color name="widget_outline">#DCDDD9</color>
+    <color name="widget_icon_tint">#1F2427</color>
+</resources>

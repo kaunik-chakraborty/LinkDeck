@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14dp"
+    android:background="@drawable/bg_widget_container">
+
+    <!-- Header: Title & Settings -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/link"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:tint="@color/widget_accent"
+            android:layout_marginEnd="6dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_primary" />
+
+        <ImageView
+            android:id="@+id/widgetBtnSettings"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/settings"
+            android:contentDescription="@string/nav_settings"
+            android:scaleType="fitCenter"
+            android:tint="@color/widget_text_secondary"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+    <!-- Action Buttons Row: Paste & Open + Save Clipboard -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:id="@+id/widgetBtnPasteOpen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/bg_widget_card"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginEnd="4dp">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/paste"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:tint="@color/widget_text_primary"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paste &amp; Open"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/widget_text_primary" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/widgetBtnPasteSave"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="@drawable/bg_widget_card"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="4dp">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/link"
+                android:contentDescription="@null"
+                android:scaleType="fitCenter"
+                android:tint="@color/widget_accent"
+                android:layout_marginEnd="6dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save Link"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/widget_accent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Quick Links Section Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/widget_quick_links"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_secondary" />
+
+        <TextView
+            android:id="@+id/widgetBtnManage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manage"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_accent"
+            android:padding="2dp" />
+
+    </LinearLayout>
+
+    <!-- Empty State (Shown when no links added) -->
+    <LinearLayout
+        android:id="@+id/widgetEmptyLinksLayout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/bg_widget_card"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Quick Links — Tap to configure"
+            android:textSize="12sp"
+            android:textColor="@color/widget_text_secondary" />
+
+    </LinearLayout>
+
+    <!-- Link Slot 1 -->
+    <LinearLayout
+        android:id="@+id/widgetSlot1"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="8dp"
+        android:background="@drawable/bg_widget_card"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/widgetTextLink1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_primary"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/widgetBtnOpen1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_open"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_accent"
+            android:padding="4dp" />
+
+    </LinearLayout>
+
+    <!-- Link Slot 2 -->
+    <LinearLayout
+        android:id="@+id/widgetSlot2"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="8dp"
+        android:background="@drawable/bg_widget_card"
+        android:layout_marginBottom="4dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/widgetTextLink2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_primary"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/widgetBtnOpen2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_open"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_accent"
+            android:padding="4dp" />
+
+    </LinearLayout>
+
+    <!-- Link Slot 3 -->
+    <LinearLayout
+        android:id="@+id/widgetSlot3"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="8dp"
+        android:background="@drawable/bg_widget_card"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/widgetTextLink3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_primary"
+            android:ellipsize="end"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/widgetBtnOpen3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_open"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_accent"
+            android:padding="4dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

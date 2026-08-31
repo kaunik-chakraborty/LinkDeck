@@ -1,0 +1,25 @@
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Keystore & Signing
+*.jks
+*.keystore
+*.p12
+*.pepk
+
+# Build artifacts & Binaries
+*.apk
+*.aab
+/app/release/
+
+# OS & Temp
+Thumbs.db
+*.log

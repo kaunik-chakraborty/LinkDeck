@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widgetStatusContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="14dp"
+    android:background="@drawable/bg_widget_container">
+
+    <!-- Header: Status indicator -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="6dp">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/shieldcheck"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:tint="@color/widget_accent"
+            android:layout_marginEnd="6dp" />
+
+        <TextView
+            android:id="@+id/widgetStatusTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/widget_status_active"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_primary" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/widgetStatusSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/widget_protection_active"
+        android:textSize="12sp"
+        android:textColor="@color/widget_text_secondary"
+        android:layout_marginBottom="10dp" />
+
+    <!-- Action Buttons Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/widgetBtnQuickTest"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:text="@string/widget_btn_test_link"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_text_primary"
+            android:gravity="center"
+            android:background="@drawable/bg_widget_card"
+            android:layout_marginEnd="6dp" />
+
+        <TextView
+            android:id="@+id/widgetBtnOpenApp"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:text="@string/app_name"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/widget_accent"
+            android:gravity="center"
+            android:background="@drawable/bg_widget_card" />
+
+    </LinearLayout>
+
+</LinearLayout>

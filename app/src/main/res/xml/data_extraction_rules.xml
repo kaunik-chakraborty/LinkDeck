@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules>
+    <cloud-backup>
+        <!-- Exclude local routing preferences and rules from cloud backups for user privacy -->
+        <exclude domain="sharedpref" path="linkdeck_routing_preferences.xml" />
+        <exclude domain="sharedpref" path="linkdeck_routing_rules.xml" />
+        <exclude domain="sharedpref" path="linkdeck_settings.xml" />
+    </cloud-backup>
+    <device-transfer>
+        <include domain="sharedpref" path="linkdeck_routing_preferences.xml" />
+        <include domain="sharedpref" path="linkdeck_routing_rules.xml" />
+        <include domain="sharedpref" path="linkdeck_settings.xml" />
+    </device-transfer>
+</data-extraction-rules>

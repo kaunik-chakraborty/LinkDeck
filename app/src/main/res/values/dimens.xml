@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_1">4dp</dimen>
+    <dimen name="space_2">8dp</dimen>
+    <dimen name="space_3">12dp</dimen>
+    <dimen name="space_4">16dp</dimen>
+    <dimen name="space_5">20dp</dimen>
+    <dimen name="space_6">24dp</dimen>
+    <dimen name="space_7">32dp</dimen>
+    <dimen name="space_8">40dp</dimen>
+    <dimen name="radius_compact">10dp</dimen>
+    <dimen name="radius_card">18dp</dimen>
+    <dimen name="radius_sheet">24dp</dimen>
+    <dimen name="touch_target">48dp</dimen>
+    <dimen name="floating_nav_margin_bottom">16dp</dimen>
+    <dimen name="floating_nav_margin_horizontal">20dp</dimen>
+    <dimen name="content_bottom_padding">104dp</dimen>
+</resources>

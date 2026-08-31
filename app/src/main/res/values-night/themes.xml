@@ -1,0 +1,131 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Base.Theme.LinkDeck" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/on_primary_dark</item>
+        <item name="colorPrimaryContainer">@color/primary_container_dark</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container_dark</item>
+        <item name="colorSecondary">@color/primary_dark</item>
+        <item name="colorOnSecondary">@color/on_primary_dark</item>
+        <item name="colorSecondaryContainer">@color/primary_container_dark</item>
+        <item name="colorOnSecondaryContainer">@color/on_primary_container_dark</item>
+        <item name="android:colorBackground">@color/surface_dark</item>
+        <item name="colorSurface">@color/surface_container_dark</item>
+        <item name="colorOnSurface">@color/on_surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_dark</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant_dark</item>
+        <item name="colorOutline">@color/outline_dark</item>
+        <item name="colorOutlineVariant">@color/outline_variant_dark</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="fontFamily">@font/font_satoshi</item>
+        <item name="android:fontFamily">@font/font_satoshi</item>
+        <item name="bottomSheetDialogTheme">@style/Widget.LinkDeck.BottomSheetDialog</item>
+
+        <!-- Material 3 TypeScale Global Overrides -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.LinkDeck.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.LinkDeck.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.LinkDeck.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.LinkDeck.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.LinkDeck.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.LinkDeck.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.LinkDeck.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.LinkDeck.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.LinkDeck.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.LinkDeck.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.LinkDeck.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.LinkDeck.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.LinkDeck.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.LinkDeck.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.LinkDeck.LabelSmall</item>
+    </style>
+
+    <style name="Theme.LinkDeck.Translucent" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+        <item name="android:statusBarColor">@color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
+        <item name="fontFamily">@font/font_satoshi</item>
+        <item name="android:fontFamily">@font/font_satoshi</item>
+        <item name="colorPrimary">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/on_primary_dark</item>
+        <item name="colorPrimaryContainer">@color/primary_container_dark</item>
+        <item name="colorOnPrimaryContainer">@color/on_primary_container_dark</item>
+        <item name="colorSecondary">@color/primary_dark</item>
+        <item name="colorOnSecondary">@color/on_primary_dark</item>
+        <item name="colorSecondaryContainer">@color/primary_container_dark</item>
+        <item name="colorOnSecondaryContainer">@color/on_primary_container_dark</item>
+        <item name="colorSurface">@color/surface_container_dark</item>
+        <item name="colorOnSurface">@color/on_surface_dark</item>
+        <item name="colorSurfaceVariant">@color/surface_variant_dark</item>
+        <item name="colorOnSurfaceVariant">@color/on_surface_variant_dark</item>
+        <item name="colorOutlineVariant">@color/outline_variant_dark</item>
+        <item name="bottomSheetDialogTheme">@style/Widget.LinkDeck.BottomSheetDialog</item>
+
+        <!-- Material 3 TypeScale Global Overrides -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.LinkDeck.DisplayLarge</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.LinkDeck.DisplayMedium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.LinkDeck.DisplaySmall</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.LinkDeck.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.LinkDeck.HeadlineMedium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.LinkDeck.HeadlineSmall</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.LinkDeck.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.LinkDeck.TitleMedium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.LinkDeck.TitleSmall</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.LinkDeck.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.LinkDeck.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.LinkDeck.BodySmall</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.LinkDeck.LabelLarge</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.LinkDeck.LabelMedium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.LinkDeck.LabelSmall</item>
+    </style>
+
+    <style name="Widget.LinkDeck.BottomSheet" parent="Widget.Material3.BottomSheet">
+        <item name="shapeAppearance">@style/ShapeAppearance.LinkDeck.BottomSheet</item>
+        <item name="backgroundTint">@color/surface_container_dark</item>
+    </style>
+
+    <!-- ================================================================= -->
+    <!-- Dynamic Font Theme Overlays (Dark Mode)                           -->
+    <!-- ================================================================= -->
+    <style name="ThemeOverlay.LinkDeck.Font.System" parent="">
+        <item name="fontFamily">sans-serif</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.Satoshi" parent="">
+        <item name="fontFamily">@font/font_satoshi</item>
+        <item name="android:fontFamily">@font/font_satoshi</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.Outfit" parent="">
+        <item name="fontFamily">@font/font_outfit</item>
+        <item name="android:fontFamily">@font/font_outfit</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.GeneralSans" parent="">
+        <item name="fontFamily">@font/font_general_sans</item>
+        <item name="android:fontFamily">@font/font_general_sans</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.CabinetGrotesk" parent="">
+        <item name="fontFamily">@font/font_cabinet_grotesk</item>
+        <item name="android:fontFamily">@font/font_cabinet_grotesk</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.SpaceGrotesk" parent="">
+        <item name="fontFamily">@font/font_space_grotesk</item>
+        <item name="android:fontFamily">@font/font_space_grotesk</item>
+    </style>
+
+    <style name="ThemeOverlay.LinkDeck.Font.PlusJakartaSans" parent="">
+        <item name="fontFamily">@font/font_plus_jakarta_sans</item>
+        <item name="android:fontFamily">@font/font_plus_jakarta_sans</item>
+    </style>
+</resources>
