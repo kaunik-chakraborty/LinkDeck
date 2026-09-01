@@ -50,6 +50,7 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
     private var selectedOpenTarget: AppTarget? = null
     private var targetAdapter: TargetAdapter? = null
     private var isUsingOriginal: Boolean = false
+    private val settingsStore by lazy { com.linkdeck.android.core.settings.AppSettingsStore(requireContext()) }
 
     var onTargetLaunchRequested: ((AppTarget, SanitizedLink, Boolean) -> Unit)? = null
     var onShareRequested: ((ShareTarget, SanitizedLink) -> Unit)? = null
@@ -157,6 +158,7 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
         val textPath: TextView = root.findViewById(R.id.textPath)
         val textRedirectSource: TextView = root.findViewById(R.id.textRedirectSource)
         val textCleanedBadge: TextView = root.findViewById(R.id.textCleanedBadge)
+        val textSecurityBadge: TextView = root.findViewById(R.id.textSecurityBadge)
         val cbOpenOriginalLink: MaterialCheckBox = root.findViewById(R.id.cbOpenOriginalLink)
         val btnInspect: View = root.findViewById(R.id.btnInspectLink)
         val btnCopy: View = root.findViewById(R.id.btnCopyLink)
@@ -208,6 +210,26 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
             }
 
             textCleanedBadge.visibility = if (wasCleaned && !isUsingOriginal) View.VISIBLE else View.GONE
+
+            val threats = if (settingsStore.isThreatWarningsEnabled) {
+                com.linkdeck.android.core.security.LinkThreatAnalyzer.analyze(displayLink)
+            } else emptyList()
+
+            val criticalThreat = threats.firstOrNull { it.severity == com.linkdeck.android.core.security.LinkThreatWarning.Severity.CRITICAL }
+                ?: threats.firstOrNull { it.severity == com.linkdeck.android.core.security.LinkThreatWarning.Severity.HIGH }
+                ?: threats.firstOrNull { it is com.linkdeck.android.core.security.LinkThreatWarning.CleartextHttp }
+
+            if (criticalThreat != null) {
+                textSecurityBadge.visibility = View.VISIBLE
+                textSecurityBadge.text = when (criticalThreat) {
+                    is com.linkdeck.android.core.security.LinkThreatWarning.PunycodePhishing -> "Punycode Phishing"
+                    is com.linkdeck.android.core.security.LinkThreatWarning.UserInfoDeception -> "Deceptive Link"
+                    is com.linkdeck.android.core.security.LinkThreatWarning.CleartextHttp -> "HTTP Insecure"
+                    else -> "Security Alert"
+                }
+            } else {
+                textSecurityBadge.visibility = View.GONE
+            }
 
             if (isTransformed) {
                 cbOpenOriginalLink.visibility = View.VISIBLE

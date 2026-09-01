@@ -107,6 +107,22 @@
             android:layout_marginStart="28dp">
 
             <TextView
+                android:id="@+id/textSecurityBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="@color/error"
+                android:background="@drawable/bg_badge_chip"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_marginEnd="6dp"
+                android:visibility="gone"
+                tools:text="Phishing Risk" />
+
+            <TextView
                 android:id="@+id/textCleanedBadge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

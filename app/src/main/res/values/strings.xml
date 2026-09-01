@@ -81,6 +81,41 @@
     <string name="setting_tracking_desc">Remove common marketing and tracking parameters from links before opening.</string>
     <string name="setting_redirect_title">Safe redirect inspection</string>
     <string name="setting_redirect_desc">Unfurl shortened links on-device before choosing an app.</string>
+    <string name="setting_threat_warnings_title">Security &amp; phishing warnings</string>
+    <string name="setting_threat_warnings_desc">Analyze links on-device for Unicode homoglyphs, deceptive credentials, and cleartext HTTP.</string>
+    <string name="setting_tls_inspection_title">SSL / TLS certificate inspector</string>
+    <string name="setting_tls_inspection_desc">Enable on-demand verification of server certificates, cipher suites, and validity in Link Inspector.</string>
+
+    <!-- Connection Security & Certificate (Inspector) -->
+    <string name="inspector_section_security">Connection security &amp; certificate</string>
+    <string name="inspector_threats_title">Security alert</string>
+    <string name="inspector_btn_inspect_tls">Inspect Certificate</string>
+    <string name="inspector_tls_inspecting">Connecting &amp; verifying TLS handshake…</string>
+    <string name="inspector_tls_secure">HTTPS Encrypted Connection</string>
+    <string name="inspector_tls_secure_desc">Connection is encrypted with an authenticated server certificate.</string>
+    <string name="inspector_tls_insecure">HTTP Unencrypted Connection</string>
+    <string name="inspector_tls_insecure_desc">Connection uses plain unencrypted HTTP. Transport data can be monitored or modified.</string>
+    <string name="inspector_tls_handshake_failed">TLS Verification Issue</string>
+    <string name="inspector_tls_protocol">Protocol &amp; Cipher</string>
+    <string name="inspector_tls_issuer">Certificate Authority (Issuer)</string>
+    <string name="inspector_tls_subject">Issued To (Subject)</string>
+    <string name="inspector_tls_validity">Validity Period</string>
+    <string name="inspector_tls_valid_until">Valid until %1$s</string>
+    <string name="inspector_tls_days_left">%1$d days remaining</string>
+    <string name="inspector_tls_expired">Certificate Expired</string>
+    <string name="inspector_tls_keys">Public Key &amp; Signature</string>
+    <string name="inspector_tls_fingerprint">SHA-256 Fingerprint</string>
+    <string name="inspector_toast_fingerprint_copied">Certificate fingerprint copied to clipboard</string>
+    <string name="threat_punycode_title">Potential Phishing / Homoglyph Spoofing</string>
+    <string name="threat_punycode_desc">Domain uses Punycode (%1$s → %2$s) which may spoof a legitimate website.</string>
+    <string name="threat_userinfo_title">Deceptive Credential Warning</string>
+    <string name="threat_userinfo_desc">URL embeds deceptive credentials (%1$s) preceding the actual host (%2$s).</string>
+    <string name="threat_raw_ip_title">Raw IP Host Destination</string>
+    <string name="threat_raw_ip_desc">Destination points directly to an IP address (%1$s) rather than a registered domain.</string>
+    <string name="threat_http_title">Unencrypted Connection</string>
+    <string name="threat_http_desc">Link uses plain HTTP without transport encryption.</string>
+    <string name="threat_redirects_title">Excessive Redirect Hops</string>
+    <string name="threat_redirects_desc">Link passed through %1$d intermediate hops.</string>
 
     <string name="settings_category_data">Data &amp; Privacy</string>
     <string name="setting_clear_preferences_title">Clear saved link choices</string>
@@ -108,7 +143,7 @@
     <string name="setting_github_desc">Star the project or view source code on GitHub</string>
     <string name="github_repo_url">https://github.com/kaunik-chakraborty/LinkDeck</string>
     <string name="setting_version_title">Version</string>
-    <string name="setting_version_desc">1.0 (Release)</string>
+    <string name="setting_version_desc">1.1 (Release)</string>
     <string name="setting_license_title">License</string>
     <string name="setting_license_desc">Open source (Apache License 2.0)</string>
     <string name="setting_privacy_title">Privacy &amp; Security</string>

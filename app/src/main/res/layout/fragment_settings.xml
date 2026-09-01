@@ -14,7 +14,7 @@
         android:paddingStart="20dp"
         android:paddingTop="4dp"
         android:paddingEnd="20dp"
-        android:paddingBottom="104dp">
+        android:paddingBottom="@dimen/content_bottom_padding">
 
         <include layout="@layout/settings_section_appearance" />
         <include layout="@layout/settings_section_link_handling" />

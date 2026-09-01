@@ -72,30 +72,50 @@ class MainActivity : BaseActivity() {
         textHome = findViewById(R.id.textHome)
         textSettings = findViewById(R.id.textSettings)
 
+        val initialPage = savedInstanceState?.getInt(KEY_ACTIVE_PAGE, 0) ?: 0
+
         setupWindowInsets()
-        setupViewPager()
+        setupViewPager(initialPage)
         setupNavigation()
         setupPredictiveBack()
-        updateNavigationState(0)
+        updateNavigationState(initialPage)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt(KEY_ACTIVE_PAGE, viewPager.currentItem)
     }
 
     private fun setupWindowInsets() {
-        val initialBottomMargin = resources.getDimensionPixelSize(R.dimen.floating_nav_margin_bottom)
         val nav = findViewById<View>(R.id.cardFloatingNav)
+        val isLandscape = resources.configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+        val initialBottomMargin = resources.getDimensionPixelSize(R.dimen.floating_nav_margin_bottom)
+        val initialStartMargin = resources.getDimensionPixelSize(R.dimen.floating_nav_margin_horizontal)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainCoordinator)) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(bars.left, bars.top, bars.right, 0)
             (nav.layoutParams as? CoordinatorLayout.LayoutParams)?.let { params ->
-                params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
-                params.bottomMargin = initialBottomMargin + bars.bottom
+                if (isLandscape) {
+                    params.gravity = Gravity.START or Gravity.CENTER_VERTICAL
+                    params.marginStart = initialStartMargin + bars.left
+                    params.bottomMargin = 0
+                    params.marginEnd = 0
+                    params.topMargin = 0
+                } else {
+                    params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                    params.bottomMargin = initialBottomMargin + bars.bottom
+                    params.marginStart = 0
+                    params.marginEnd = 0
+                    params.topMargin = 0
+                }
                 nav.layoutParams = params
             }
             insets
         }
     }
 
-    private fun setupViewPager() {
+    private fun setupViewPager(initialPage: Int) {
         val adapter = MainPagerAdapter(this)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 1
@@ -133,6 +153,12 @@ class MainActivity : BaseActivity() {
                 }
             }
         })
+
+        if (initialPage != 0) {
+            viewPager.setCurrentItem(initialPage, false)
+            mainCollapsingToolbar.title = getString(R.string.settings_title)
+            backPressedCallback.isEnabled = true
+        }
     }
 
     private fun setupNavigation() {
@@ -201,5 +227,9 @@ class MainActivity : BaseActivity() {
         override fun createFragment(position: Int): Fragment {
             return if (position == 0) HomeFragment.newInstance() else SettingsFragment.newInstance()
         }
+    }
+
+    companion object {
+        private const val KEY_ACTIVE_PAGE = "key_active_page"
     }
 }

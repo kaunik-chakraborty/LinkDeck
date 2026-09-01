@@ -35,6 +35,8 @@ class SettingsFragment : Fragment() {
     private lateinit var switchRememberChoices: MaterialSwitch
     private lateinit var switchTrackingCleaner: MaterialSwitch
     private lateinit var switchRedirectChecking: MaterialSwitch
+    private lateinit var switchThreatWarnings: MaterialSwitch
+    private lateinit var switchTlsInspection: MaterialSwitch
     private lateinit var switchDynamicColor: MaterialSwitch
 
     override fun onCreateView(
@@ -155,6 +157,8 @@ class SettingsFragment : Fragment() {
         switchRememberChoices = root.findViewById(R.id.switchRememberChoices)
         switchTrackingCleaner = root.findViewById(R.id.switchTrackingCleaner)
         switchRedirectChecking = root.findViewById(R.id.switchRedirectChecking)
+        switchThreatWarnings = root.findViewById(R.id.switchThreatWarnings)
+        switchTlsInspection = root.findViewById(R.id.switchTlsInspection)
 
         refreshSwitchStates()
 
@@ -175,6 +179,14 @@ class SettingsFragment : Fragment() {
             settingsStore.isRedirectCheckingEnabled = isChecked
             com.linkdeck.android.widget.WidgetUpdateHelper.updateAllWidgets(requireContext())
         }
+
+        switchThreatWarnings.setOnCheckedChangeListener { _, isChecked ->
+            settingsStore.isThreatWarningsEnabled = isChecked
+        }
+
+        switchTlsInspection.setOnCheckedChangeListener { _, isChecked ->
+            settingsStore.isTlsInspectionEnabled = isChecked
+        }
     }
 
     fun refreshSwitchStates() {
@@ -183,6 +195,8 @@ class SettingsFragment : Fragment() {
         switchRememberChoices.isChecked = settingsStore.isRememberChoicesEnabled
         switchTrackingCleaner.isChecked = settingsStore.isTrackingCleanerEnabled
         switchRedirectChecking.isChecked = settingsStore.isRedirectCheckingEnabled
+        switchThreatWarnings.isChecked = settingsStore.isThreatWarningsEnabled
+        switchTlsInspection.isChecked = settingsStore.isTlsInspectionEnabled
         if (::switchDynamicColor.isInitialized && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             switchDynamicColor.isChecked = settingsStore.isDynamicColorEnabled
         }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- In landscape, floating nav moves from bottom to left vertical side -->
+    <dimen name="floating_nav_margin_bottom">0dp</dimen>
+    <dimen name="floating_nav_margin_horizontal">16dp</dimen>
+    <!-- Content bottom padding is reduced since floating nav is no longer at bottom -->
+    <dimen name="content_bottom_padding">24dp</dimen>
+    <!-- Offsets content to the right of the vertical floating nav (124dp nav + 24dp spacing) -->
+    <dimen name="landscape_content_start_margin">148dp</dimen>
+</resources>

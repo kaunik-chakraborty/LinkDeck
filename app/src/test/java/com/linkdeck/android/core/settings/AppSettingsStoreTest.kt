@@ -72,6 +72,8 @@ class AppSettingsStoreTest {
         assertTrue(store.isRememberChoicesEnabled)
         assertTrue(store.isTrackingCleanerEnabled)
         assertTrue(store.isRedirectCheckingEnabled)
+        assertTrue(store.isThreatWarningsEnabled)
+        assertTrue(store.isTlsInspectionEnabled)
         assertFalse(store.isOnboardingCompleted)
     }
 
@@ -84,12 +86,16 @@ class AppSettingsStoreTest {
         store.isRememberChoicesEnabled = false
         store.isTrackingCleanerEnabled = false
         store.isRedirectCheckingEnabled = false
+        store.isThreatWarningsEnabled = false
+        store.isTlsInspectionEnabled = false
         store.isOnboardingCompleted = true
 
         assertFalse(store.isAutomaticRoutingEnabled)
         assertFalse(store.isRememberChoicesEnabled)
         assertFalse(store.isTrackingCleanerEnabled)
         assertFalse(store.isRedirectCheckingEnabled)
+        assertFalse(store.isThreatWarningsEnabled)
+        assertFalse(store.isTlsInspectionEnabled)
         assertTrue(store.isOnboardingCompleted)
     }
 
@@ -102,6 +108,8 @@ class AppSettingsStoreTest {
         store.isRememberChoicesEnabled = false
         store.isTrackingCleanerEnabled = false
         store.isRedirectCheckingEnabled = false
+        store.isThreatWarningsEnabled = false
+        store.isTlsInspectionEnabled = false
         store.isOnboardingCompleted = true
 
         assertTrue(store.resetSettings())
@@ -110,6 +118,8 @@ class AppSettingsStoreTest {
         assertTrue(store.isRememberChoicesEnabled)
         assertTrue(store.isTrackingCleanerEnabled)
         assertTrue(store.isRedirectCheckingEnabled)
+        assertTrue(store.isThreatWarningsEnabled)
+        assertTrue(store.isTlsInspectionEnabled)
         assertFalse(store.isOnboardingCompleted)
     }
 }

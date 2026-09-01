@@ -15,4 +15,5 @@
     <dimen name="floating_nav_margin_bottom">16dp</dimen>
     <dimen name="floating_nav_margin_horizontal">20dp</dimen>
     <dimen name="content_bottom_padding">104dp</dimen>
+    <dimen name="landscape_content_start_margin">0dp</dimen>
 </resources>

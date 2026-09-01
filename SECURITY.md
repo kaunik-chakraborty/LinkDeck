@@ -4,6 +4,7 @@
 
 | Version | Supported |
 | ------- | --------- |
+| 1.1.x   | Yes       |
 | 1.0.x   | Yes       |
 
 ---
@@ -29,6 +30,9 @@ LinkDeck operates as a local-first link proxy on Android. Its security design en
 5. **Package Visibility & Isolation**:
    - LinkDeck queries only standard web-handling packages via `<queries>` declarations in `AndroidManifest.xml`. It does NOT request `QUERY_ALL_PACKAGES`.
    - Runtime validation checks target package enablement, visibility, and intent-handling capability before launching. LinkDeck excludes itself from candidate lists to prevent recursive intent loops.
+6. **On-Demand TLS Inspection & On-Device Threat Detection**:
+   - `LinkThreatAnalyzer` evaluates link syntax locally for IDN Punycode homoglyph spoofing (`xn--...`), deceptive userinfo credentials, raw IP destinations, and cleartext HTTP without transmitting browsing data to third-party reputation APIs.
+   - `TlsCertificateInspector` executes on-demand via direct cryptographic socket handshakes without sending HTTP request payloads, parsing X.509 chains, cipher suites, validity windows, and SHA-256 fingerprints.
 
 ---
 

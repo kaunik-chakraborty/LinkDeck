@@ -48,6 +48,8 @@
 | **Smart Tracking Cleaner** | Strips tracking tags while preserving functional application parameters, percent-encoding, parameter order, and URL fragments. |
 | **Deterministic Routing Rules** | Create custom domain and wildcard path rules (`youtube.com/shorts/*`) to automatically route links to preferred apps. |
 | **Per-Domain Saved Preferences** | Choose "Always" or "Just once" per domain with runtime package validation and one-tap "Forget" management. |
+| **On-Demand TLS Certificate Inspector** | Probes X.509 certificates, TLS protocols (`TLSv1.3`), cipher suites, issuer CA, subject SANs, validity window, and 1-tap copyable SHA-256 fingerprint on-demand. |
+| **On-Device Threat & Phishing Heuristics** | Detects Punycode / IDN homoglyph spoofing (`xn--...`), deceptive userinfo credentials, raw IP hosts, and cleartext HTTP with zero cloud calls. |
 | **Link Inspector & Redaction** | Inspect redirect hops, HTTP status codes, and routing explanations with sensitive parameter redaction (`token=[redacted]`, `code=[redacted]`). |
 | **Material You & Typography** | Full Material Design 3 Monet dynamic wallpaper tinting and 6 curated modern typefaces (Satoshi, Outfit, General Sans, Cabinet Grotesk, Space Grotesk, Plus Jakarta Sans). |
 | **Interactive Walkthrough** | Built-in 4-slide onboarding guide for new users, replayable anytime from Settings. |

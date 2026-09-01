@@ -84,6 +84,24 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         }
 
     /**
+     * When true, links are analyzed on-device for phishing, homoglyphs, deceptive userinfo, and HTTP cleartext.
+     */
+    var isThreatWarningsEnabled: Boolean
+        get() = prefs.getBoolean(KEY_THREAT_WARNINGS, DEFAULT_THREAT_WARNINGS)
+        set(value) {
+            prefs.edit().putBoolean(KEY_THREAT_WARNINGS, value).apply()
+        }
+
+    /**
+     * When true, on-demand cryptographic inspection of server TLS certificates is available in the Link Inspector.
+     */
+    var isTlsInspectionEnabled: Boolean
+        get() = prefs.getBoolean(KEY_TLS_INSPECTION, DEFAULT_TLS_INSPECTION)
+        set(value) {
+            prefs.edit().putBoolean(KEY_TLS_INSPECTION, value).apply()
+        }
+
+    /**
      * When true, the first-time user onboarding walkthrough has been viewed or completed.
      */
     var isOnboardingCompleted: Boolean
@@ -113,11 +131,15 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         private const val KEY_REMEMBER_CHOICES = "remember_choices_enabled"
         private const val KEY_TRACKING_CLEANER = "tracking_cleaner_enabled"
         private const val KEY_REDIRECT_CHECKING = "redirect_checking_enabled"
+        private const val KEY_THREAT_WARNINGS = "threat_warnings_enabled"
+        private const val KEY_TLS_INSPECTION = "tls_inspection_enabled"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
 
         const val DEFAULT_AUTOMATIC_ROUTING = true
         const val DEFAULT_REMEMBER_CHOICES = true
         const val DEFAULT_TRACKING_CLEANER = true
         const val DEFAULT_REDIRECT_CHECKING = true
+        const val DEFAULT_THREAT_WARNINGS = true
+        const val DEFAULT_TLS_INSPECTION = true
     }
 }

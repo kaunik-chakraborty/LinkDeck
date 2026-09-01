@@ -61,6 +61,52 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Threat Warnings Card (Only visible when threats detected) -->
+            <LinearLayout
+                android:id="@+id/layoutThreatContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_surface_card"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/shieldcheck"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        app:tint="@color/error"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/textThreatCardTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/inspector_threats_title"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/error" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutThreatItems"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+
             <!-- Hero Destination Card -->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,6 +151,259 @@
                     android:layout_marginTop="8dp"
                     android:lineSpacingMultiplier="1.15"
                     tools:text="https://youtube.com/watch?v=123" />
+
+            </LinearLayout>
+
+            <!-- Connection Security & Certificate Card -->
+            <LinearLayout
+                android:id="@+id/cardConnectionSecurity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/bg_surface_card"
+                android:layout_marginBottom="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:id="@+id/iconSecurityStatus"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@drawable/shieldcheck"
+                        android:contentDescription="@null"
+                        android:scaleType="fitCenter"
+                        app:tint="?attr/colorPrimary"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/inspector_section_security"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textSecurityTransportStatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnSurface"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/inspector_tls_secure" />
+
+                <TextView
+                    android:id="@+id/textSecurityTransportDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="?attr/colorOnSurfaceVariant"
+                    android:layout_marginTop="3dp"
+                    android:lineSpacingMultiplier="1.15"
+                    android:text="@string/inspector_tls_secure_desc" />
+
+                <!-- Action Button to Trigger On-Demand Certificate Inspection -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnInspectCertificate"
+                    style="@style/Widget.LinkDeck.SecondaryButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/inspector_btn_inspect_tls"
+                    app:icon="@drawable/shieldcheck"
+                    app:iconSize="16dp" />
+
+                <!-- TLS Handshake Progress -->
+                <LinearLayout
+                    android:id="@+id/layoutTlsProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                    <ProgressBar
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:indeterminate="true" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurfaceVariant"
+                        android:text="@string/inspector_tls_inspecting" />
+                </LinearLayout>
+
+                <!-- TLS Verification Error View -->
+                <TextView
+                    android:id="@+id/textTlsError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/error"
+                    android:visibility="gone" />
+
+                <!-- Expanded Certificate Details Container -->
+                <LinearLayout
+                    android:id="@+id/layoutCertificateDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="?attr/colorOutlineVariant" />
+
+                    <!-- Protocol & Cipher Suite -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/inspector_tls_protocol"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/textTlsProtocolCipher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginTop="2dp"
+                        tools:text="TLSv1.3 • TLS_AES_256_GCM_SHA384" />
+
+                    <!-- Issuer -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/inspector_tls_issuer"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/textTlsIssuer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginTop="2dp"
+                        tools:text="DigiCert Global Root G2" />
+
+                    <!-- Subject & SANs -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/inspector_tls_subject"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/textTlsSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginTop="2dp"
+                        tools:text="github.com" />
+
+                    <!-- Validity & Days Remaining -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/inspector_tls_validity"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/textTlsValidity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginTop="2dp"
+                        tools:text="Valid until Mar 15, 2027 (184 days remaining)" />
+
+                    <!-- Public Key Specs -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/inspector_tls_keys"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/textTlsPublicKey"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:layout_marginTop="2dp"
+                        tools:text="RSA (2048 bits) • SHA256withRSA" />
+
+                    <!-- SHA-256 Fingerprint with Copy Button -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/inspector_tls_fingerprint"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="2dp">
+
+                        <TextView
+                            android:id="@+id/textTlsFingerprint"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="monospace"
+                            android:textSize="11sp"
+                            android:textColor="?attr/colorOnSurfaceVariant"
+                            tools:text="8A:6B:C3:4D:99:..." />
+
+                        <ImageButton
+                            android:id="@+id/btnCopyFingerprint"
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:padding="6dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/copy"
+                            android:background="@drawable/bg_icon_button"
+                            android:contentDescription="@string/inspector_tls_fingerprint"
+                            app:tint="?attr/colorOnSurface" />
+                    </LinearLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 
