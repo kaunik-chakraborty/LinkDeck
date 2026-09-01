@@ -81,6 +81,37 @@ class MainActivity : BaseActivity() {
         updateNavigationState(initialPage)
     }
 
+    private val defaultBrowserLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+    ) {
+        // Returned from system default browser selector
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkDefaultBrowserPrompt()
+    }
+
+    private fun checkDefaultBrowserPrompt() {
+        if (!com.linkdeck.android.core.intent.DefaultBrowserHelper.isDefaultBrowser(this)) {
+            val existing = supportFragmentManager.findFragmentByTag(com.linkdeck.android.ui.common.DefaultBrowserBottomSheet.TAG)
+            if (existing == null) {
+                val dialog = com.linkdeck.android.ui.common.DefaultBrowserBottomSheet.newInstance()
+                dialog.onSetDefaultClicked = {
+                    val intent = com.linkdeck.android.core.intent.DefaultBrowserHelper.createDefaultBrowserIntent(this)
+                    try {
+                        defaultBrowserLauncher.launch(intent)
+                    } catch (_: Exception) {
+                        try {
+                            startActivity(Intent(android.provider.Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                        } catch (_: Exception) {}
+                    }
+                }
+                dialog.show(supportFragmentManager, com.linkdeck.android.ui.common.DefaultBrowserBottomSheet.TAG)
+            }
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(KEY_ACTIVE_PAGE, viewPager.currentItem)
@@ -94,20 +125,20 @@ class MainActivity : BaseActivity() {
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainCoordinator)) { view, insets ->
             val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(bars.left, bars.top, bars.right, 0)
+            val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
+            val imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+
+            view.setPadding(bars.left, bars.top, bars.right, if (imeVisible) ime.bottom else 0)
+            nav.visibility = if (imeVisible) View.GONE else View.VISIBLE
+
             (nav.layoutParams as? CoordinatorLayout.LayoutParams)?.let { params ->
                 if (isLandscape) {
                     params.gravity = Gravity.START or Gravity.CENTER_VERTICAL
                     params.marginStart = initialStartMargin + bars.left
                     params.bottomMargin = 0
-                    params.marginEnd = 0
-                    params.topMargin = 0
                 } else {
                     params.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
                     params.bottomMargin = initialBottomMargin + bars.bottom
-                    params.marginStart = 0
-                    params.marginEnd = 0
-                    params.topMargin = 0
                 }
                 nav.layoutParams = params
             }

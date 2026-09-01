@@ -37,6 +37,8 @@ class SettingsFragment : Fragment() {
     private lateinit var switchRedirectChecking: MaterialSwitch
     private lateinit var switchThreatWarnings: MaterialSwitch
     private lateinit var switchTlsInspection: MaterialSwitch
+    private lateinit var switchShareCleaning: MaterialSwitch
+    private lateinit var switchCnameDetection: MaterialSwitch
     private lateinit var switchDynamicColor: MaterialSwitch
 
     override fun onCreateView(
@@ -159,6 +161,8 @@ class SettingsFragment : Fragment() {
         switchRedirectChecking = root.findViewById(R.id.switchRedirectChecking)
         switchThreatWarnings = root.findViewById(R.id.switchThreatWarnings)
         switchTlsInspection = root.findViewById(R.id.switchTlsInspection)
+        switchShareCleaning = root.findViewById(R.id.switchShareCleaning)
+        switchCnameDetection = root.findViewById(R.id.switchCnameDetection)
 
         refreshSwitchStates()
 
@@ -187,6 +191,14 @@ class SettingsFragment : Fragment() {
         switchTlsInspection.setOnCheckedChangeListener { _, isChecked ->
             settingsStore.isTlsInspectionEnabled = isChecked
         }
+
+        switchShareCleaning.setOnCheckedChangeListener { _, isChecked ->
+            settingsStore.isShareCleaningEnabled = isChecked
+        }
+
+        switchCnameDetection.setOnCheckedChangeListener { _, isChecked ->
+            settingsStore.isCnameDetectionEnabled = isChecked
+        }
     }
 
     fun refreshSwitchStates() {
@@ -197,6 +209,8 @@ class SettingsFragment : Fragment() {
         switchRedirectChecking.isChecked = settingsStore.isRedirectCheckingEnabled
         switchThreatWarnings.isChecked = settingsStore.isThreatWarningsEnabled
         switchTlsInspection.isChecked = settingsStore.isTlsInspectionEnabled
+        switchShareCleaning.isChecked = settingsStore.isShareCleaningEnabled
+        switchCnameDetection.isChecked = settingsStore.isCnameDetectionEnabled
         if (::switchDynamicColor.isInitialized && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             switchDynamicColor.isChecked = settingsStore.isDynamicColorEnabled
         }
@@ -223,6 +237,10 @@ class SettingsFragment : Fragment() {
     }
 
     private fun bindAboutActions(root: View) {
+        root.findViewById<View>(R.id.btnRowFeaturesGuide)?.setOnClickListener {
+            startActivity(Intent(requireContext(), com.linkdeck.android.ui.guide.FeaturesGuideActivity::class.java))
+        }
+
         root.findViewById<View>(R.id.btnRowWalkthrough)?.setOnClickListener {
             val intent = com.linkdeck.android.ui.onboarding.OnboardingActivity.createIntent(requireContext(), isReplay = true)
             startActivity(intent)
@@ -247,8 +265,7 @@ class SettingsFragment : Fragment() {
             .setPositiveButton(R.string.btn_clear) { _, _ ->
                 preferenceStore.clearAll()
                 Toast.makeText(requireContext(), R.string.toast_preferences_cleared, Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     private fun showClearRulesDialog() {
@@ -259,8 +276,7 @@ class SettingsFragment : Fragment() {
             .setPositiveButton(R.string.btn_clear) { _, _ ->
                 ruleStore.clearAll()
                 Toast.makeText(requireContext(), R.string.toast_rules_cleared, Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     private fun showResetSettingsDialog() {
@@ -272,8 +288,7 @@ class SettingsFragment : Fragment() {
                 settingsStore.resetSettings()
                 refreshSwitchStates()
                 Toast.makeText(requireContext(), R.string.toast_settings_reset, Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     companion object {

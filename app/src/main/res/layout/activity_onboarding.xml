@@ -105,13 +105,24 @@
             style="@style/Widget.LinkDeck.SecondaryButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/onboarding_set_default"
             android:visibility="gone"
             app:icon="@drawable/redirect"
             app:iconGravity="textStart"
             app:iconPadding="8dp"
             app:iconSize="18dp" />
+
+        <!-- View Full Features Guide Button (Visible on final slide) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOnboardingViewGuide"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="@string/onboarding_btn_view_guide"
+            android:textColor="?attr/colorPrimary"
+            android:visibility="gone" />
 
         <!-- Primary Action Navigation (Next / Back / Get Started) -->
         <LinearLayout

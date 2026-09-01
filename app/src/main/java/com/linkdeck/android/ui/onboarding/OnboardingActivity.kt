@@ -34,6 +34,7 @@ class OnboardingActivity : BaseActivity() {
     private lateinit var btnNext: MaterialButton
     private lateinit var btnBack: MaterialButton
     private lateinit var btnSetDefault: MaterialButton
+    private lateinit var btnViewGuide: MaterialButton
     private lateinit var indicators: List<View>
 
     private var isReplay: Boolean = false
@@ -72,6 +73,7 @@ class OnboardingActivity : BaseActivity() {
         btnNext = findViewById(R.id.btnOnboardingNext)
         btnBack = findViewById(R.id.btnOnboardingBack)
         btnSetDefault = findViewById(R.id.btnOnboardingSetDefault)
+        btnViewGuide = findViewById(R.id.btnOnboardingViewGuide)
 
         indicators = listOf(
             findViewById(R.id.indicator0),
@@ -102,6 +104,10 @@ class OnboardingActivity : BaseActivity() {
 
         btnSetDefault.setOnClickListener {
             requestDefaultBrowserRole()
+        }
+
+        btnViewGuide.setOnClickListener {
+            startActivity(Intent(this, com.linkdeck.android.ui.guide.FeaturesGuideActivity::class.java))
         }
     }
 
@@ -147,10 +153,12 @@ class OnboardingActivity : BaseActivity() {
         if (isFinal) {
             btnNext.setText(if (isReplay) R.string.onboarding_done else R.string.onboarding_get_started)
             btnSetDefault.visibility = View.VISIBLE
+            btnViewGuide.visibility = View.VISIBLE
             btnSkip.visibility = View.INVISIBLE
         } else {
             btnNext.setText(R.string.onboarding_next)
             btnSetDefault.visibility = View.GONE
+            btnViewGuide.visibility = View.GONE
             btnSkip.visibility = View.VISIBLE
         }
 

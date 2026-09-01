@@ -48,7 +48,8 @@
         <!-- Main Dashboard Activity -->
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -65,15 +66,22 @@
             android:name=".ui.settings.SettingsActivity"
             android:exported="false" />
 
+        <!-- Comprehensive Features & Architecture Guide Activity -->
+        <activity
+            android:name=".ui.guide.FeaturesGuideActivity"
+            android:exported="false" />
+
         <!-- Widget Quick Links Configuration Activity -->
         <activity
             android:name=".widget.WidgetSettingsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Diagnostic Test Link Activity -->
         <activity
             android:name=".ui.testlink.TestLinkActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- Translucent Link Interception & Chooser Activity -->
         <activity
@@ -92,11 +100,18 @@
                 <data android:scheme="https" />
             </intent-filter>
 
-            <!-- Share Sheet Target (text/plain) -->
+        </activity>
+
+        <!-- Share Clean Link Interception Activity -->
+        <activity
+            android:name=".ui.share.ShareCleanActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.LinkDeck.Translucent">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
+                <data android:mimeType="text/*" />
             </intent-filter>
         </activity>
 

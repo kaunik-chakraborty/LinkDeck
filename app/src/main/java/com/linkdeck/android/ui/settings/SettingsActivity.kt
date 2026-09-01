@@ -264,8 +264,7 @@ class SettingsActivity : BaseActivity() {
             .setPositiveButton(R.string.btn_clear) { _, _ ->
                 preferenceStore.clearAll()
                 Toast.makeText(this, R.string.toast_preferences_cleared, Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     private fun showClearRulesDialog() {
@@ -276,8 +275,7 @@ class SettingsActivity : BaseActivity() {
             .setPositiveButton(R.string.btn_clear) { _, _ ->
                 ruleStore.clearAll()
                 Toast.makeText(this, R.string.toast_rules_cleared, Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     private fun showResetSettingsDialog() {
@@ -289,8 +287,7 @@ class SettingsActivity : BaseActivity() {
                 appSettingsStore.resetSettings()
                 refreshSwitchStates()
                 Toast.makeText(this, R.string.toast_settings_reset, Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     private fun themeColor(@AttrRes attr: Int): Int {

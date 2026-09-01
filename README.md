@@ -50,8 +50,11 @@
 | **Per-Domain Saved Preferences** | Choose "Always" or "Just once" per domain with runtime package validation and one-tap "Forget" management. |
 | **On-Demand TLS Certificate Inspector** | Probes X.509 certificates, TLS protocols (`TLSv1.3`), cipher suites, issuer CA, subject SANs, validity window, and 1-tap copyable SHA-256 fingerprint on-demand. |
 | **On-Device Threat & Phishing Heuristics** | Detects Punycode / IDN homoglyph spoofing (`xn--...`), deceptive userinfo credentials, raw IP hosts, and cleartext HTTP with zero cloud calls. |
+| **DNS CNAME Cloaking Detector** | Inspects DNS CNAME chains in Link Inspector to uncover third-party tracking networks disguised as first-party subdomains. |
+| **Share Sheet Link Cleaner** | Share links directly to LinkDeck from any app (YouTube, Instagram, X) to strip tracking tokens and forward clean links in 1 tap, with an optional toggle to keep original link. |
 | **Link Inspector & Redaction** | Inspect redirect hops, HTTP status codes, and routing explanations with sensitive parameter redaction (`token=[redacted]`, `code=[redacted]`). |
 | **Material You & Typography** | Full Material Design 3 Monet dynamic wallpaper tinting and 6 curated modern typefaces (Satoshi, Outfit, General Sans, Cabinet Grotesk, Space Grotesk, Plus Jakarta Sans). |
+| **Dedicated 2-Tab Features Guide** | Built-in complete guide covering everyday user privacy walkthroughs and in-depth technical security architecture. |
 | **Interactive Walkthrough** | Built-in 4-slide onboarding guide for new users, replayable anytime from Settings. |
 | **Home Screen Widgets** | Multi-link quick paste widget and status widget for 1-tap clipboard routing from your home screen. |
 

@@ -153,4 +153,39 @@ class TrackingParameterCleanerTest {
         assertTrue(result.hasRemovedParams)
         assertEquals("https://example.com/search?q=a%20b&filter=%2F", result.cleanedLink.rawUrl)
     }
+
+    @Test
+    fun clean_complexEcommercePpcUrl_completelyStripped() {
+        val raw = "https://store.example.com/c/nutrition/best-sellers/?affil=sampleppc&kwds=123456&thg_ppc_campaign=11111111111&adtype=&product_id=&cq_src=google_ads&cq_cmp=11111111111&cq_con=222222222222&cq_term=sample%20coupon%20code&cq_med=&cq_plac=&cq_net=g&cq_plt=gp&gclsrc=aw.ds&gad_source=1&gad_campaignid=11111111111&gbraid=OAAAAADsamplemocktoken"
+        val link = SanitizedLink(
+            rawUrl = raw,
+            scheme = "https",
+            host = "store.example.com",
+            path = "/c/nutrition/best-sellers/"
+        )
+        val result = TrackingParameterCleaner.clean(link)
+
+        assertTrue(result.hasRemovedParams)
+        assertEquals("https://store.example.com/c/nutrition/best-sellers/", result.cleanedLink.rawUrl)
+        assertTrue(result.removedParams.contains("gbraid"))
+        assertTrue(result.removedParams.contains("gad_source"))
+        assertTrue(result.removedParams.contains("thg_ppc_campaign"))
+        assertTrue(result.removedParams.contains("cq_src"))
+    }
+
+    @Test
+    fun clean_instagramReelWithIgsi_completelyStripped() {
+        val raw = "https://www.instagram.com/reel/C0000000000/?igsi=mock_share_token_12345"
+        val link = SanitizedLink(
+            rawUrl = raw,
+            scheme = "https",
+            host = "www.instagram.com",
+            path = "/reel/C0000000000/"
+        )
+        val result = TrackingParameterCleaner.clean(link)
+
+        assertTrue(result.hasRemovedParams)
+        assertEquals("https://www.instagram.com/reel/C0000000000/", result.cleanedLink.rawUrl)
+        assertTrue(result.removedParams.contains("igsi"))
+    }
 }

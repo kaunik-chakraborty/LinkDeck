@@ -11,6 +11,23 @@
     <string name="status_inactive_desc">Set LinkDeck as your default browser so it can route links you tap in other apps.</string>
     <string name="set_default_browser_btn">Set as default browser</string>
 
+    <!-- Default Browser Enforcer Prompt -->
+    <string name="prompt_default_browser_title">Set LinkDeck as Default Browser</string>
+    <string name="prompt_default_browser_desc">LinkDeck acts as a local privacy companion. To intercept tapped links, strip tracking tokens, and route websites to native apps, LinkDeck must be your default browser.</string>
+    <string name="prompt_default_browser_feature_1">Unfurls shortened links &amp; blocks phishing</string>
+    <string name="prompt_default_browser_feature_2">Strips tracking tokens (utm, si, fbclid) on-device</string>
+    <string name="prompt_default_browser_feature_3">100% on-device privacy with zero telemetry</string>
+    <string name="prompt_default_browser_btn_set">Set as Default Browser</string>
+    <string name="prompt_default_browser_btn_dismiss">Maybe Later</string>
+
+    <!-- Features & Architecture Guide -->
+    <string name="guide_title">App Features &amp; Guide</string>
+    <string name="guide_tab_simple">Everyday Privacy Guide</string>
+    <string name="guide_tab_technical">Technical &amp; Security Specs</string>
+    <string name="setting_features_guide_title">App Features &amp; Guide</string>
+    <string name="setting_features_guide_desc">Everyday privacy walkthrough and deep technical security architecture.</string>
+    <string name="onboarding_btn_view_guide">Explore Complete Features Guide</string>
+
     <string name="test_link_title">Test a link</string>
     <string name="test_link_desc">Paste a link to see which apps can open it.</string>
     <string name="test_link_hint">https://example.com</string>
@@ -20,6 +37,7 @@
     <string name="tracking_protection_title">Tracking protection</string>
     <string name="tracking_protection_desc">Remove common marketing and tracking parameters from links before opening.</string>
     <string name="tracking_cleaned_badge">Tracking parameters removed</string>
+    <string name="btn_close">Close</string>
 
     <!-- Routing Rules (Phase 4) -->
     <string name="rules_title">Routing rules</string>
@@ -85,6 +103,38 @@
     <string name="setting_threat_warnings_desc">Analyze links on-device for Unicode homoglyphs, deceptive credentials, and cleartext HTTP.</string>
     <string name="setting_tls_inspection_title">SSL / TLS certificate inspector</string>
     <string name="setting_tls_inspection_desc">Enable on-demand verification of server certificates, cipher suites, and validity in Link Inspector.</string>
+    <string name="setting_share_cleaning_title">Share sheet link cleaner</string>
+    <string name="setting_share_cleaning_desc">Strip tracking parameters when sharing links to LinkDeck from other apps.</string>
+    <string name="setting_cname_detection_title">CNAME cloaking detection</string>
+    <string name="setting_cname_detection_desc">Inspect DNS CNAME chains to detect third-party trackers disguised as first-party subdomains.</string>
+
+    <!-- Share Clean Activity Strings -->
+    <string name="share_clean_title">Clean &amp; Share Link</string>
+    <string name="share_clean_url_label">Cleaned destination</string>
+    <string name="share_clean_btn_share">Share Clean Link</string>
+    <string name="share_clean_btn_copy">Copy to Clipboard</string>
+    <string name="share_clean_btn_open">Open via LinkDeck</string>
+    <string name="share_clean_params_removed">Removed %1$d tracking parameter: %2$s</string>
+    <string name="share_clean_no_params">Clean link (no tracking detected)</string>
+    <string name="share_clean_toast_copied">Clean link copied to clipboard</string>
+    <string name="share_clean_no_link_found">No web link found in shared text</string>
+    <string name="share_clean_invalid_link">Invalid or unsupported web link</string>
+    <string name="share_clean_check_original">Share original link (keep tracking)</string>
+    <string name="share_original_btn_share">Share Original Link</string>
+    <string name="share_original_btn_copy">Copy Original Link</string>
+    <string name="share_original_active_warning">Original link selected with all tracking parameters</string>
+    <string name="share_original_toast_copied">Original link copied to clipboard</string>
+
+    <!-- CNAME Cloaking Strings (Inspector) -->
+    <string name="inspector_section_cname">DNS CNAME Cloaking</string>
+    <string name="inspector_cname_inspecting">Checking DNS CNAME records…</string>
+    <string name="inspector_cname_detected">CNAME Cloaking Tracker Detected</string>
+    <string name="inspector_cname_detected_desc">Subdomain points via CNAME to %1$s (%2$s).</string>
+    <string name="inspector_cname_clean">Direct DNS Resolution</string>
+    <string name="inspector_cname_clean_desc">No third-party tracker cloaking detected.</string>
+    <string name="inspector_cname_canonical_clean">Canonical CNAME: %1$s (Direct first-party)</string>
+    <string name="inspector_cname_unavailable">DNS CNAME lookup unavailable (%1$s)</string>
+    <string name="inspector_btn_retry_tls">Retry Certificate Inspection</string>
 
     <!-- Connection Security & Certificate (Inspector) -->
     <string name="inspector_section_security">Connection security &amp; certificate</string>
@@ -143,7 +193,7 @@
     <string name="setting_github_desc">Star the project or view source code on GitHub</string>
     <string name="github_repo_url">https://github.com/kaunik-chakraborty/LinkDeck</string>
     <string name="setting_version_title">Version</string>
-    <string name="setting_version_desc">1.1 (Release)</string>
+    <string name="setting_version_desc">1.2 (Release)</string>
     <string name="setting_license_title">License</string>
     <string name="setting_license_desc">Open source (Apache License 2.0)</string>
     <string name="setting_privacy_title">Privacy &amp; Security</string>

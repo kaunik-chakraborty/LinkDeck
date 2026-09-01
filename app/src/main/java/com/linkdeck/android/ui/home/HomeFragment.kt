@@ -190,6 +190,15 @@ class HomeFragment : Fragment() {
             requestDefaultBrowserRole()
         }
 
+        val homeScroll: androidx.core.widget.NestedScrollView? = root.findViewById(R.id.homeScroll)
+        editUrl.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                editUrl.postDelayed({
+                    homeScroll?.fullScroll(View.FOCUS_DOWN)
+                }, 250)
+            }
+        }
+
         btnTestLink.setOnClickListener {
             val inputUrl = editUrl.text?.toString()?.trim()
             val sanitizationResult = IntentSanitizer.sanitizeUrl(inputUrl)

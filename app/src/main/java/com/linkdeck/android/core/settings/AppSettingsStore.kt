@@ -102,6 +102,24 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         }
 
     /**
+     * When true, sharing links to LinkDeck via the Android Share sheet cleans tracking tokens before forwarding.
+     */
+    var isShareCleaningEnabled: Boolean
+        get() = prefs.getBoolean(KEY_SHARE_CLEANING, DEFAULT_SHARE_CLEANING)
+        set(value) {
+            prefs.edit().putBoolean(KEY_SHARE_CLEANING, value).apply()
+        }
+
+    /**
+     * When true, Link Inspector analyzes DNS CNAME chains to detect third-party tracker cloaking.
+     */
+    var isCnameDetectionEnabled: Boolean
+        get() = prefs.getBoolean(KEY_CNAME_DETECTION, DEFAULT_CNAME_DETECTION)
+        set(value) {
+            prefs.edit().putBoolean(KEY_CNAME_DETECTION, value).apply()
+        }
+
+    /**
      * When true, the first-time user onboarding walkthrough has been viewed or completed.
      */
     var isOnboardingCompleted: Boolean
@@ -133,6 +151,8 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         private const val KEY_REDIRECT_CHECKING = "redirect_checking_enabled"
         private const val KEY_THREAT_WARNINGS = "threat_warnings_enabled"
         private const val KEY_TLS_INSPECTION = "tls_inspection_enabled"
+        private const val KEY_SHARE_CLEANING = "share_cleaning_enabled"
+        private const val KEY_CNAME_DETECTION = "cname_detection_enabled"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
 
         const val DEFAULT_AUTOMATIC_ROUTING = true
@@ -141,5 +161,7 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         const val DEFAULT_REDIRECT_CHECKING = true
         const val DEFAULT_THREAT_WARNINGS = true
         const val DEFAULT_TLS_INSPECTION = true
+        const val DEFAULT_SHARE_CLEANING = true
+        const val DEFAULT_CNAME_DETECTION = true
     }
 }

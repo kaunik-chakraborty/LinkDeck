@@ -38,31 +38,30 @@ class AppResolver(
         // 1. Query handlers for the specific target URI (discovers dedicated/native app links)
         val specificResolves = queryIntentActivitiesCompat(pm, targetIntent)
 
-        // 2. Query handlers for generic web URLs across multiple web formats to discover all installed browsers
-        val genericBrowserIntents = listOf(
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com")).apply { addCategory(Intent.CATEGORY_BROWSABLE) },
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://example.com")).apply { addCategory(Intent.CATEGORY_BROWSABLE) },
-            Intent(Intent.ACTION_VIEW, Uri.parse("http://www.google.com")).apply { addCategory(Intent.CATEGORY_BROWSABLE) },
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://")),
-            Intent(Intent.ACTION_VIEW, Uri.parse("http://"))
-        )
-
-        val genericResolves = mutableListOf<ResolveInfo>()
-        for (browserIntent in genericBrowserIntents) {
-            genericResolves.addAll(queryIntentActivitiesCompat(pm, browserIntent))
-        }
-
-        val genericBrowserPackages = genericResolves.mapNotNull {
-            it.activityInfo?.packageName
-        }.toSet()
-
-        // 3. Identify user's current default browser if resolvable
-        val defaultBrowserPackage = try {
-            val defaultResolve = pm.resolveActivity(genericBrowserIntents.first(), PackageManager.MATCH_DEFAULT_ONLY)
-            val pkg = defaultResolve?.activityInfo?.packageName
-            if (pkg != null && pkg != selfPackageName) pkg else null
-        } catch (e: Exception) {
-            null
+        // 2. Discover installed browsers (cached in-memory to prevent redundant Binder IPC calls)
+        val now = System.currentTimeMillis()
+        val (genericBrowserPackages, defaultBrowserPackage, genericResolves) = synchronized(browserCacheLock) {
+            val cached = cachedBrowserInfo
+            if (cached != null && (now - lastBrowserCacheTime) < BROWSER_CACHE_TTL_MS) {
+                cached
+            } else {
+                val genericIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://example.com")).apply {
+                    addCategory(Intent.CATEGORY_BROWSABLE)
+                }
+                val resolves = queryIntentActivitiesCompat(pm, genericIntent)
+                val packages = resolves.mapNotNull { it.activityInfo?.packageName }.toSet()
+                val defaultPkg = try {
+                    val defaultResolve = pm.resolveActivity(genericIntent, PackageManager.MATCH_DEFAULT_ONLY)
+                    val pkg = defaultResolve?.activityInfo?.packageName
+                    if (pkg != null && pkg != selfPackageName) pkg else null
+                } catch (_: Exception) {
+                    null
+                }
+                val info = Triple(packages, defaultPkg, resolves)
+                cachedBrowserInfo = info
+                lastBrowserCacheTime = now
+                info
+            }
         }
 
         // Merge specific and generic candidates to ensure browsers are never omitted
@@ -204,6 +203,25 @@ class AppResolver(
             }
         } catch (e: Exception) {
             emptyList()
+        }
+    }
+
+    companion object {
+        private val browserCacheLock = Any()
+        @Volatile
+        private var cachedBrowserInfo: Triple<Set<String>, String?, List<ResolveInfo>>? = null
+        @Volatile
+        private var lastBrowserCacheTime: Long = 0L
+        private const val BROWSER_CACHE_TTL_MS = 60_000L
+
+        /**
+         * Clears cached browser resolutions (useful during testing or when package changes occur).
+         */
+        fun clearCache() {
+            synchronized(browserCacheLock) {
+                cachedBrowserInfo = null
+                lastBrowserCacheTime = 0L
+            }
         }
     }
 }

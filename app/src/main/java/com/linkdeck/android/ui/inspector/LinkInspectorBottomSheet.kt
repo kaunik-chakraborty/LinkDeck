@@ -233,11 +233,44 @@ class LinkInspectorBottomSheet : BottomSheetDialogFragment() {
 
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 val result = TlsCertificateInspector.inspect(data.effectiveDestination)
+                val appContext = requireContext().applicationContext
+                val cnameResult = if (settingsStore.isCnameDetectionEnabled) {
+                    com.linkdeck.android.core.security.CnameCloakingDetector.checkCname(data.effectiveDestination.host, appContext)
+                } else null
+
                 cachedTlsResult = result
                 withContext(Dispatchers.Main) {
                     progress.visibility = View.GONE
                     renderTlsResult(root, result)
+                    cnameResult?.let { renderCnameResult(root, it) }
                 }
+            }
+        }
+    }
+
+    private fun renderCnameResult(root: View, result: com.linkdeck.android.core.security.CnameCloakingDetector.CnameResult) {
+        val textStatus = root.findViewById<TextView>(R.id.textCnameStatus) ?: return
+        val textDesc = root.findViewById<TextView>(R.id.textCnameDesc) ?: return
+
+        when (result) {
+            is com.linkdeck.android.core.security.CnameCloakingDetector.CnameResult.CloakingDetected -> {
+                textStatus.text = getString(R.string.inspector_cname_detected)
+                textStatus.setTextColor(requireContext().getColor(R.color.error))
+                textDesc.text = getString(R.string.inspector_cname_detected_desc, result.cnameHost, result.trackerName)
+            }
+            is com.linkdeck.android.core.security.CnameCloakingDetector.CnameResult.Clean -> {
+                textStatus.text = getString(R.string.inspector_cname_clean)
+                textStatus.setTextColor(requireContext().getColor(R.color.on_surface_light))
+                textDesc.text = getString(R.string.inspector_cname_canonical_clean, result.cnameHost)
+            }
+            is com.linkdeck.android.core.security.CnameCloakingDetector.CnameResult.DirectResolution -> {
+                textStatus.text = getString(R.string.inspector_cname_clean)
+                textStatus.setTextColor(requireContext().getColor(R.color.on_surface_light))
+                textDesc.text = getString(R.string.inspector_cname_clean_desc)
+            }
+            is com.linkdeck.android.core.security.CnameCloakingDetector.CnameResult.Error -> {
+                textStatus.text = getString(R.string.inspector_cname_clean)
+                textDesc.text = getString(R.string.inspector_cname_unavailable, result.message)
             }
         }
     }
@@ -266,7 +299,7 @@ class LinkInspectorBottomSheet : BottomSheetDialogFragment() {
                 textError.visibility = View.VISIBLE
                 textError.text = result.message
                 btnInspect.visibility = View.VISIBLE
-                btnInspect.text = "Retry Certificate Inspection"
+                btnInspect.setText(R.string.inspector_btn_retry_tls)
             }
             else -> {}
         }

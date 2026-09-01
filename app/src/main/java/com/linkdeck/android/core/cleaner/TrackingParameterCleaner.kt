@@ -28,23 +28,123 @@ object TrackingParameterCleaner {
      * Evaluated case-insensitively. Functional parameters like 'id', 'v', 'q', 'ref', 'page', 'token'
      * are strictly excluded from this set to avoid breaking application routing or site features.
      */
-    val KNOWN_TRACKING_KEYS = setOf(
-        "utm_source",
-        "utm_medium",
-        "utm_campaign",
-        "utm_term",
-        "utm_content",
-        "utm_id",
-        "fbclid",
-        "gclid",
-        "dclid",
-        "msclkid",
-        "twclid",
-        "mc_eid",
-        "igshid",
-        "_hsenc",
-        "_hsmi"
+    val KNOWN_TRACKING_PREFIXES = listOf(
+        "utm_",
+        "cq_",
+        "gad_",
+        "thg_",
+        "sc_",
+        "mat_",
+        "ad_",
+        "camp_",
+        "pk_",
+        "piwik_",
+        "mtm_",
+        "itm_",
+        "trk_",
+        "tracking_",
+        "ig_",
+        "fb_",
+        "tw_",
+        "ga_",
+        "mc_"
     )
+
+    val KNOWN_TRACKING_KEYS = setOf(
+        // Google / DoubleClick / YouTube
+        "gclid",
+        "gclsrc",
+        "dclid",
+        "gbraid",
+        "wbraid",
+        "si",
+        "feature",
+
+        // Meta / Facebook / Instagram
+        "fbclid",
+        "igsi",
+        "igsh",
+        "igshid",
+        "mibextid",
+        "fb_action_ids",
+        "fb_action_types",
+        "fb_source",
+        "fb_ref",
+
+        // Microsoft / Bing
+        "msclkid",
+
+        // Twitter / X
+        "twclid",
+        "ref_src",
+        "ref_url",
+
+        // TikTok & LinkedIn
+        "ttclid",
+        "li_fat_id",
+
+        // Pinterest & Yandex
+        "epik",
+        "yclid",
+        "ysclid",
+
+        // MailChimp, HubSpot, Email Marketing
+        "mc_cid",
+        "mc_eid",
+        "_hsenc",
+        "_hsmi",
+        "vero_id",
+        "vero_conv",
+        "ml_subscriber",
+        "ml_subscriber_hash",
+        "wickedid",
+        "klaviyo_id",
+        "_kx",
+
+        // Affiliate, E-commerce & Ad Networks
+        "affil",
+        "affiliate",
+        "affiliate_id",
+        "aff_id",
+        "kwds",
+        "adtype",
+        "click_id",
+        "clickid",
+        "sub_id",
+        "subid",
+        "sub_id1",
+        "sub_id2",
+        "irgwc",
+        "zanpid",
+        "s_kwcid",
+        "spm",
+        "scm",
+        "pvid",
+        "wt_mc",
+        "wt_zmc",
+        "ndclid",
+        "tag",
+        "ascsubtag",
+        "linkcode",
+        "creative",
+        "creativeasin"
+    )
+
+    /**
+     * Evaluates whether a query parameter key represents an adtech, marketing, or tracking token.
+     */
+    fun isTrackingKey(rawKey: String, rawValue: String?): Boolean {
+        val key = rawKey.trim().lowercase(Locale.ROOT)
+        if (KNOWN_TRACKING_KEYS.contains(key)) return true
+        for (prefix in KNOWN_TRACKING_PREFIXES) {
+            if (key.startsWith(prefix)) return true
+        }
+        // Prune empty tracking artifacts
+        if (rawValue.isNullOrBlank() && (key == "product_id" || key == "item_id" || key == "campaign")) {
+            return true
+        }
+        return false
+    }
 
     /**
      * Inspects and cleans known tracking parameters from [link].
@@ -68,9 +168,9 @@ object TrackingParameterCleaner {
                 if (pair.isEmpty()) continue
                 val eqIdx = pair.indexOf('=')
                 val key = if (eqIdx != -1) pair.substring(0, eqIdx) else pair
-                val normalizedKey = key.trim().lowercase(Locale.ROOT)
+                val value = if (eqIdx != -1) pair.substring(eqIdx + 1) else null
 
-                if (KNOWN_TRACKING_KEYS.contains(normalizedKey)) {
+                if (isTrackingKey(key, value)) {
                     removedParamNames.add(key)
                 } else {
                     preservedPairs.add(pair)

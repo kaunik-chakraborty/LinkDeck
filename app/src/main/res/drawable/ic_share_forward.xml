@@ -1,0 +1,26 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Clean Share Tray (Open Box) -->
+    <path
+        android:strokeColor="?attr/colorOnPrimary"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M4,12v7c0,1.1 0.9,2 2,2h12c1.1,0 2,-0.9 2,-2v-7" />
+    <!-- Upward Pointing Forward Arrow Stem -->
+    <path
+        android:strokeColor="?attr/colorOnPrimary"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M12,15V3" />
+    <!-- Upward Pointing Forward Arrow Head -->
+    <path
+        android:strokeColor="?attr/colorOnPrimary"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M7.5,7.5L12,3l4.5,4.5" />
+</vector>

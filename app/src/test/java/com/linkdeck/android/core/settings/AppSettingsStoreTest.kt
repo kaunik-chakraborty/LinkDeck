@@ -74,6 +74,8 @@ class AppSettingsStoreTest {
         assertTrue(store.isRedirectCheckingEnabled)
         assertTrue(store.isThreatWarningsEnabled)
         assertTrue(store.isTlsInspectionEnabled)
+        assertTrue(store.isShareCleaningEnabled)
+        assertTrue(store.isCnameDetectionEnabled)
         assertFalse(store.isOnboardingCompleted)
     }
 
@@ -88,6 +90,8 @@ class AppSettingsStoreTest {
         store.isRedirectCheckingEnabled = false
         store.isThreatWarningsEnabled = false
         store.isTlsInspectionEnabled = false
+        store.isShareCleaningEnabled = false
+        store.isCnameDetectionEnabled = false
         store.isOnboardingCompleted = true
 
         assertFalse(store.isAutomaticRoutingEnabled)
@@ -96,6 +100,8 @@ class AppSettingsStoreTest {
         assertFalse(store.isRedirectCheckingEnabled)
         assertFalse(store.isThreatWarningsEnabled)
         assertFalse(store.isTlsInspectionEnabled)
+        assertFalse(store.isShareCleaningEnabled)
+        assertFalse(store.isCnameDetectionEnabled)
         assertTrue(store.isOnboardingCompleted)
     }
 
@@ -110,6 +116,8 @@ class AppSettingsStoreTest {
         store.isRedirectCheckingEnabled = false
         store.isThreatWarningsEnabled = false
         store.isTlsInspectionEnabled = false
+        store.isShareCleaningEnabled = false
+        store.isCnameDetectionEnabled = false
         store.isOnboardingCompleted = true
 
         assertTrue(store.resetSettings())
@@ -120,6 +128,8 @@ class AppSettingsStoreTest {
         assertTrue(store.isRedirectCheckingEnabled)
         assertTrue(store.isThreatWarningsEnabled)
         assertTrue(store.isTlsInspectionEnabled)
+        assertTrue(store.isShareCleaningEnabled)
+        assertTrue(store.isCnameDetectionEnabled)
         assertFalse(store.isOnboardingCompleted)
     }
 }
