@@ -49,7 +49,7 @@ class ShareCleanActivity : AppCompatActivity() {
             return
         }
 
-        // Sanitize and clean link tracking tokens
+        // Sanitize, De-AMP, and clean link tracking tokens
         val sanitization = IntentSanitizer.sanitizeUrl(extractedUrl)
         if (sanitization !is SanitizationResult.Success) {
             Toast.makeText(this, R.string.share_clean_invalid_link, Toast.LENGTH_SHORT).show()
@@ -57,7 +57,15 @@ class ShareCleanActivity : AppCompatActivity() {
             return
         }
 
-        val cleanResult = TrackingParameterCleaner.clean(sanitization.link)
+        val settingsStore = com.linkdeck.android.core.settings.AppSettingsStore(this)
+        val linkToClean = if (settingsStore.isDeAmpingEnabled) {
+            val deAmped = com.linkdeck.android.core.deamp.DeAmpEngine.deAmp(sanitization.link)
+            if (deAmped.wasDeAmped) deAmped.deAmpedLink else sanitization.link
+        } else {
+            sanitization.link
+        }
+
+        val cleanResult = TrackingParameterCleaner.clean(linkToClean)
         val finalUrl = cleanResult.cleanedLink.rawUrl
         val removedParams = cleanResult.removedParams
 

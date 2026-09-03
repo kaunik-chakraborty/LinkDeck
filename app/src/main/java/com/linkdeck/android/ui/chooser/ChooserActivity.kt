@@ -91,35 +91,37 @@ class ChooserActivity : BaseActivity() {
         sheet.show(supportFragmentManager, ChooserBottomSheet.TAG)
 
         currentResolutionJob = lifecycleScope.launch {
+            var processedLink = link
+            var wasDeAmped = false
+            var deAmpSource: String? = null
+
+            if (appSettingsStore.isDeAmpingEnabled) {
+                val deAmpResult = com.linkdeck.android.core.deamp.DeAmpEngine.deAmp(link)
+                if (deAmpResult.wasDeAmped) {
+                    processedLink = deAmpResult.deAmpedLink
+                    wasDeAmped = true
+                    deAmpSource = deAmpResult.source?.displayName
+                }
+            }
+
             val redirectResult = if (appSettingsStore.isRedirectCheckingEnabled) {
-                redirectResolver.resolve(link)
+                redirectResolver.resolve(processedLink)
             } else {
-                RedirectResult.NoRedirect(link.rawUrl)
+                RedirectResult.NoRedirect(processedLink.rawUrl)
             }
 
             if (!isActive || isFinishing) return@launch
 
             val effectiveLink = when (redirectResult) {
                 is RedirectResult.Success -> {
-                    val sanitizedFinal = IntentSanitizer.sanitizeUrl(redirectResult.finalUrl)
-                    if (sanitizedFinal is SanitizationResult.Success) {
-                        sanitizedFinal.link
-                    } else {
-                        link
-                    }
+                    (IntentSanitizer.sanitizeUrl(redirectResult.finalUrl) as? SanitizationResult.Success)?.link ?: processedLink
                 }
-                is RedirectResult.NoRedirect -> {
-                    link
-                }
+                is RedirectResult.NoRedirect -> processedLink
                 is RedirectResult.Error -> {
                     if (redirectResult.errorType == RedirectErrorType.BLOCKED_PRIVATE_ADDRESS) {
-                        Toast.makeText(
-                            this@ChooserActivity,
-                            R.string.blocked_private_network_notice,
-                            Toast.LENGTH_LONG
-                        ).show()
+                        Toast.makeText(this@ChooserActivity, R.string.blocked_private_network_notice, Toast.LENGTH_LONG).show()
                     }
-                    link
+                    processedLink
                 }
             }
 
@@ -147,15 +149,10 @@ class ChooserActivity : BaseActivity() {
             if (matchingRule != null) {
                 val validTarget = PreferenceTargetValidator.validate(
                     packageManager = packageManager,
-                    preference = RoutingPreference(
-                        domain = matchingRule.host,
-                        packageName = matchingRule.packageName,
-                        appLabel = matchingRule.appLabel
-                    ),
+                    preference = RoutingPreference(matchingRule.host, matchingRule.packageName, matchingRule.appLabel),
                     sanitizedLink = candidateLink,
                     selfPackageName = packageName
                 )
-
                 if (validTarget != null && isAutoRouting) {
                     sheet.dismissAllowingStateLoss()
                     executeLaunch(validTarget, candidateLink, isAlways = false)
@@ -172,7 +169,6 @@ class ChooserActivity : BaseActivity() {
                     sanitizedLink = candidateLink,
                     selfPackageName = packageName
                 )
-
                 if (validTarget != null && isAutoRouting) {
                     sheet.dismissAllowingStateLoss()
                     executeLaunch(validTarget, candidateLink, isAlways = false)
@@ -183,15 +179,11 @@ class ChooserActivity : BaseActivity() {
             // Step 6: Fall through to interactive Chooser
             val openResolver = AppResolver(packageManager, packageName)
             val openTargets = openResolver.resolve(candidateLink)
-
-            // Exclude all browser and open target package names from the Share With section
-            val browserPackages = openTargets.filter {
-                it.category == TargetCategory.BROWSER || it.isBrowser
-            }.map { it.packageName }.toSet()
+            val browserPackages = openTargets.filter { it.category == TargetCategory.BROWSER || it.isBrowser }
+                .map { it.packageName }.toSet()
 
             val shareResolver = ShareTargetResolver(packageManager, packageName)
             val shareTargets = shareResolver.resolve(candidateLink, excludedPackageNames = browserPackages)
-
             val original = if (candidateLink.rawUrl != link.rawUrl) link else null
 
             val explanation = when {
@@ -206,6 +198,8 @@ class ChooserActivity : BaseActivity() {
                 redirectResult = redirectResult,
                 wasCleaned = wasCleaned,
                 removedTrackingParams = removedParams,
+                wasDeAmped = wasDeAmped,
+                deAmpSource = deAmpSource,
                 routingExplanation = explanation,
                 targetApp = null
             )
@@ -216,6 +210,7 @@ class ChooserActivity : BaseActivity() {
                 shareTargets = shareTargets,
                 originalLink = original,
                 wasCleaned = wasCleaned,
+                wasDeAmped = wasDeAmped,
                 inspectionData = inspectionData,
                 allowRememberChoices = appSettingsStore.isRememberChoicesEnabled
             )
@@ -245,58 +240,34 @@ class ChooserActivity : BaseActivity() {
         if (isLaunchingTarget) return
         isLaunchingTarget = true
         val result = ShareIntentLauncher.launch(this, target, link)
-
         if (result.isSuccess) {
             finish()
         } else {
             isLaunchingTarget = false
-            Toast.makeText(
-                this,
-                getString(R.string.share_failed_toast, target.appLabel),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(this, getString(R.string.share_failed_toast, target.appLabel), Toast.LENGTH_LONG).show()
         }
     }
 
     private fun executeLaunch(target: AppTarget, link: SanitizedLink, isAlways: Boolean) {
         isLaunchingTarget = true
         val result = IntentLauncher.launch(this, target, link)
-
         if (result.isSuccess) {
             if (isAlways && appSettingsStore.isRememberChoicesEnabled) {
-                val pref = RoutingPreference(
-                    domain = link.host,
-                    packageName = target.packageName,
-                    appLabel = target.appLabel
-                )
-                when (preferenceStore.savePreference(pref)) {
-                    is SavePreferenceResult.Success -> {
-                        Toast.makeText(
-                            this,
-                            getString(R.string.preference_saved_toast, link.host, target.appLabel),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                    is SavePreferenceResult.LimitReached -> {
-                        Toast.makeText(
-                            this,
-                            R.string.preference_limit_reached,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                    is SavePreferenceResult.InvalidDomain, is SavePreferenceResult.Error -> {
-                        // Proceed without crash
-                    }
-                }
+                savePreference(link.host, target)
             }
             finish()
         } else {
             isLaunchingTarget = false
-            Toast.makeText(
-                this,
-                getString(R.string.launch_failed_toast, target.appLabel),
-                Toast.LENGTH_LONG
-            ).show()
+            Toast.makeText(this, getString(R.string.launch_failed_toast, target.appLabel), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun savePreference(domain: String, target: AppTarget) {
+        val pref = RoutingPreference(domain, target.packageName, target.appLabel)
+        when (preferenceStore.savePreference(pref)) {
+            is SavePreferenceResult.Success -> Toast.makeText(this, getString(R.string.preference_saved_toast, domain, target.appLabel), Toast.LENGTH_SHORT).show()
+            is SavePreferenceResult.LimitReached -> Toast.makeText(this, R.string.preference_limit_reached, Toast.LENGTH_LONG).show()
+            else -> Unit
         }
     }
 

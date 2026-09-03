@@ -32,10 +32,11 @@
 
 **LinkDeck** acts as your smart, lightweight default browser proxy on Android. Whenever you tap a web link in any chat, social media, or email application, LinkDeck intercepts the request and gives you total control:
 
-1. **Unfurls Shortened Links On-Device**: Probes redirects (`bit.ly`, `t.co`, `tinyurl.com`, `amzn.to`) locally before opening.
-2. **Strips Tracking Parameters**: Removes marketing analytics tokens (`utm_*`, `fbclid`, `gclid`, `msclkid`, `twclid`, `igshid`, `_hsenc`).
-3. **Applies Custom Routing Rules**: Opens specific websites or wildcard paths (e.g. `youtube.com/shorts/*`) in your favorite native apps.
-4. **Presents a Clean Chooser**: Lets you launch with 1 tap, pin favorite share targets, inspect HTTP hops, or toggle "Always" routing per domain.
+1. **Unrolls AMP Links On-Device**: Bypasses Google AMP viewers, AMP Project CDN caches, Cloudflare/Bing AMP caches, and publisher subdomains into direct canonical URLs.
+2. **Unfurls Shortened Links On-Device**: Probes redirects (`bit.ly`, `t.co`, `tinyurl.com`, `amzn.to`) locally before opening.
+3. **Strips Tracking Parameters**: Removes marketing analytics tokens (`utm_*`, `fbclid`, `gclid`, `msclkid`, `twclid`, `igshid`, `_hsenc`).
+4. **Applies Custom Routing Rules**: Opens specific websites or wildcard paths (e.g. `youtube.com/shorts/*`) in your favorite native apps.
+5. **Presents a Clean Chooser**: Lets you launch with 1 tap, pin favorite share targets, inspect HTTP hops, or toggle "Always" routing per domain.
 
 ---
 
@@ -43,6 +44,7 @@
 
 | Feature | Description |
 | :--- | :--- |
+| **On-Device De-AMPing Engine** | Automatically unrolls Google AMP viewers (`google.com/amp/s/...`), AMP Project CDN caches (`*.cdn.ampproject.org`), Cloudflare/Bing AMP caches, and publisher subdomains (`amp.reddit.com`) into canonical publisher URLs with zero network calls, immediately unlocking native Android app discovery. |
 | **On-Device Redirect Resolver** | Unfurls redirect chains on-device with bounded hop limits, timeouts, and cycle detection. |
 | **SSRF & Private Network Shield** | Automatically blocks private IPv4/IPv6 ranges (`127.0.0.0/8`, `10.0.0.0/8`, `192.168.0.0/16`, `169.254.0.0/16`, `fc00::/7`, `fe80::/10`, CGNAT, IPv4-mapped IPv6) and dangerous ports. |
 | **Smart Tracking Cleaner** | Strips tracking tags while preserving functional application parameters, percent-encoding, parameter order, and URL fragments. |

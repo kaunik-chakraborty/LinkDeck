@@ -372,12 +372,16 @@ class LinkInspectorBottomSheet : BottomSheetDialogFragment() {
 
     private fun bindTrackingStatus(root: View, data: LinkInspectionData) {
         val textTracking: TextView = root.findViewById(R.id.textInspectorTrackingStatus)
-        if (data.wasCleaned && data.removedTrackingParams.isNotEmpty()) {
-            val count = data.removedTrackingParams.size
-            val paramsStr = data.removedTrackingParams.joinToString(", ")
-            textTracking.text = getString(R.string.inspector_tracking_cleaned, count) + " ($paramsStr)"
-        } else {
-            textTracking.text = getString(R.string.inspector_tracking_none)
+        val deAmpText = if (data.wasDeAmped) getString(R.string.inspector_de_amped_desc, data.deAmpSource ?: "AMP") else null
+        val trackingText = if (data.wasCleaned && data.removedTrackingParams.isNotEmpty()) {
+            getString(R.string.inspector_tracking_cleaned, data.removedTrackingParams.size) + " (${data.removedTrackingParams.joinToString(", ")})"
+        } else null
+
+        textTracking.text = when {
+            deAmpText != null && trackingText != null -> "$deAmpText\n$trackingText"
+            deAmpText != null -> deAmpText
+            trackingText != null -> trackingText
+            else -> getString(R.string.inspector_tracking_none)
         }
     }
 

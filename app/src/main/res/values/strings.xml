@@ -107,6 +107,12 @@
     <string name="setting_share_cleaning_desc">Strip tracking parameters when sharing links to LinkDeck from other apps.</string>
     <string name="setting_cname_detection_title">CNAME cloaking detection</string>
     <string name="setting_cname_detection_desc">Inspect DNS CNAME chains to detect third-party trackers disguised as first-party subdomains.</string>
+    <string name="setting_de_amping_title">Automatic De-AMPing</string>
+    <string name="setting_de_amping_desc">Unwrap Google AMP and cached links into direct canonical publisher URLs.</string>
+    <string name="badge_de_amped">De-AMPed</string>
+    <string name="toast_link_de_amped">Unwrapped canonical publisher URL</string>
+    <string name="inspector_de_amped_title">De-AMPed URL</string>
+    <string name="inspector_de_amped_desc">Unwrapped from %1$s</string>
 
     <!-- Share Clean Activity Strings -->
     <string name="share_clean_title">Clean &amp; Share Link</string>

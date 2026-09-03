@@ -118,10 +118,18 @@ class TestLinkActivity : BaseActivity() {
 
         currentJob?.cancel()
         currentJob = lifecycleScope.launch {
+            var processedLink = initialLink
+            if (appSettingsStore.isDeAmpingEnabled) {
+                val deAmpResult = com.linkdeck.android.core.deamp.DeAmpEngine.deAmp(initialLink)
+                if (deAmpResult.wasDeAmped) {
+                    processedLink = deAmpResult.deAmpedLink
+                }
+            }
+
             val redirectResult = if (appSettingsStore.isRedirectCheckingEnabled) {
-                redirectResolver.resolve(initialLink)
+                redirectResolver.resolve(processedLink)
             } else {
-                RedirectResult.NoRedirect(initialLink.rawUrl)
+                RedirectResult.NoRedirect(processedLink.rawUrl)
             }
 
             if (!isActive || isFinishing) return@launch
@@ -129,10 +137,10 @@ class TestLinkActivity : BaseActivity() {
             val effectiveLink = when (redirectResult) {
                 is RedirectResult.Success -> {
                     val sanitizedFinal = IntentSanitizer.sanitizeUrl(redirectResult.finalUrl)
-                    if (sanitizedFinal is SanitizationResult.Success) sanitizedFinal.link else initialLink
+                    if (sanitizedFinal is SanitizationResult.Success) sanitizedFinal.link else processedLink
                 }
-                is RedirectResult.NoRedirect -> initialLink
-                is RedirectResult.Error -> initialLink
+                is RedirectResult.NoRedirect -> processedLink
+                is RedirectResult.Error -> processedLink
             }
 
             var candidateLink = effectiveLink

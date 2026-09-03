@@ -27,6 +27,8 @@ data class LinkInspectionData(
     val redirectResult: RedirectResult,
     val wasCleaned: Boolean = false,
     val removedTrackingParams: List<String> = emptyList(),
+    val wasDeAmped: Boolean = false,
+    val deAmpSource: String? = null,
     val routingExplanation: RoutingExplanation = RoutingExplanation.ManualChoice,
     val targetApp: AppTarget? = null
 ) {

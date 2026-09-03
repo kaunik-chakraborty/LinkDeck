@@ -120,6 +120,16 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         }
 
     /**
+     * When true, incoming links wrapped in Google AMP, AMP CDN caches, or publisher
+     * AMP subdomains are automatically unwrapped to direct canonical URLs.
+     */
+    var isDeAmpingEnabled: Boolean
+        get() = prefs.getBoolean(KEY_DE_AMPING, DEFAULT_DE_AMPING)
+        set(value) {
+            prefs.edit().putBoolean(KEY_DE_AMPING, value).apply()
+        }
+
+    /**
      * When true, the first-time user onboarding walkthrough has been viewed or completed.
      */
     var isOnboardingCompleted: Boolean
@@ -153,6 +163,7 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         private const val KEY_TLS_INSPECTION = "tls_inspection_enabled"
         private const val KEY_SHARE_CLEANING = "share_cleaning_enabled"
         private const val KEY_CNAME_DETECTION = "cname_detection_enabled"
+        private const val KEY_DE_AMPING = "de_amping_enabled"
         private const val KEY_ONBOARDING_COMPLETED = "onboarding_completed"
 
         const val DEFAULT_AUTOMATIC_ROUTING = true
@@ -163,5 +174,6 @@ class AppSettingsStore(private val prefs: SharedPreferences) {
         const val DEFAULT_TLS_INSPECTION = true
         const val DEFAULT_SHARE_CLEANING = true
         const val DEFAULT_CNAME_DETECTION = true
+        const val DEFAULT_DE_AMPING = true
     }
 }

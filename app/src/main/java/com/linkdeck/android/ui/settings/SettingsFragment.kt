@@ -39,6 +39,7 @@ class SettingsFragment : Fragment() {
     private lateinit var switchTlsInspection: MaterialSwitch
     private lateinit var switchShareCleaning: MaterialSwitch
     private lateinit var switchCnameDetection: MaterialSwitch
+    private lateinit var switchDeAmping: MaterialSwitch
     private lateinit var switchDynamicColor: MaterialSwitch
 
     override fun onCreateView(
@@ -163,42 +164,25 @@ class SettingsFragment : Fragment() {
         switchTlsInspection = root.findViewById(R.id.switchTlsInspection)
         switchShareCleaning = root.findViewById(R.id.switchShareCleaning)
         switchCnameDetection = root.findViewById(R.id.switchCnameDetection)
+        switchDeAmping = root.findViewById(R.id.switchDeAmping)
 
         refreshSwitchStates()
 
-        switchAutoRouting.setOnCheckedChangeListener { _, isChecked ->
-            settingsStore.isAutomaticRoutingEnabled = isChecked
-        }
-
-        switchRememberChoices.setOnCheckedChangeListener { _, isChecked ->
-            settingsStore.isRememberChoicesEnabled = isChecked
-        }
-
+        switchAutoRouting.setOnCheckedChangeListener { _, isChecked -> settingsStore.isAutomaticRoutingEnabled = isChecked }
+        switchRememberChoices.setOnCheckedChangeListener { _, isChecked -> settingsStore.isRememberChoicesEnabled = isChecked }
         switchTrackingCleaner.setOnCheckedChangeListener { _, isChecked ->
             settingsStore.isTrackingCleanerEnabled = isChecked
             com.linkdeck.android.widget.WidgetUpdateHelper.updateAllWidgets(requireContext())
         }
-
         switchRedirectChecking.setOnCheckedChangeListener { _, isChecked ->
             settingsStore.isRedirectCheckingEnabled = isChecked
             com.linkdeck.android.widget.WidgetUpdateHelper.updateAllWidgets(requireContext())
         }
-
-        switchThreatWarnings.setOnCheckedChangeListener { _, isChecked ->
-            settingsStore.isThreatWarningsEnabled = isChecked
-        }
-
-        switchTlsInspection.setOnCheckedChangeListener { _, isChecked ->
-            settingsStore.isTlsInspectionEnabled = isChecked
-        }
-
-        switchShareCleaning.setOnCheckedChangeListener { _, isChecked ->
-            settingsStore.isShareCleaningEnabled = isChecked
-        }
-
-        switchCnameDetection.setOnCheckedChangeListener { _, isChecked ->
-            settingsStore.isCnameDetectionEnabled = isChecked
-        }
+        switchThreatWarnings.setOnCheckedChangeListener { _, isChecked -> settingsStore.isThreatWarningsEnabled = isChecked }
+        switchTlsInspection.setOnCheckedChangeListener { _, isChecked -> settingsStore.isTlsInspectionEnabled = isChecked }
+        switchShareCleaning.setOnCheckedChangeListener { _, isChecked -> settingsStore.isShareCleaningEnabled = isChecked }
+        switchCnameDetection.setOnCheckedChangeListener { _, isChecked -> settingsStore.isCnameDetectionEnabled = isChecked }
+        switchDeAmping.setOnCheckedChangeListener { _, isChecked -> settingsStore.isDeAmpingEnabled = isChecked }
     }
 
     fun refreshSwitchStates() {
@@ -211,6 +195,7 @@ class SettingsFragment : Fragment() {
         switchTlsInspection.isChecked = settingsStore.isTlsInspectionEnabled
         switchShareCleaning.isChecked = settingsStore.isShareCleaningEnabled
         switchCnameDetection.isChecked = settingsStore.isCnameDetectionEnabled
+        switchDeAmping.isChecked = settingsStore.isDeAmpingEnabled
         if (::switchDynamicColor.isInitialized && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             switchDynamicColor.isChecked = settingsStore.isDynamicColorEnabled
         }
@@ -218,15 +203,23 @@ class SettingsFragment : Fragment() {
 
     private fun bindDataActions(root: View) {
         root.findViewById<View>(R.id.btnRowClearPreferences).setOnClickListener {
-            showClearPreferencesDialog()
+            showConfirmDialog(R.string.setting_clear_preferences_title, R.string.dialog_clear_preferences_msg, R.string.btn_clear) {
+                preferenceStore.clearAll()
+                Toast.makeText(requireContext(), R.string.toast_preferences_cleared, Toast.LENGTH_SHORT).show()
+            }
         }
-
         root.findViewById<View>(R.id.btnRowClearRules).setOnClickListener {
-            showClearRulesDialog()
+            showConfirmDialog(R.string.setting_clear_rules_title, R.string.dialog_clear_rules_msg, R.string.btn_clear) {
+                ruleStore.clearAll()
+                Toast.makeText(requireContext(), R.string.toast_rules_cleared, Toast.LENGTH_SHORT).show()
+            }
         }
-
         root.findViewById<View>(R.id.btnRowResetSettings).setOnClickListener {
-            showResetSettingsDialog()
+            showConfirmDialog(R.string.setting_reset_settings_title, R.string.dialog_reset_settings_msg, R.string.btn_reset) {
+                settingsStore.resetSettings()
+                refreshSwitchStates()
+                Toast.makeText(requireContext(), R.string.toast_settings_reset, Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -240,12 +233,10 @@ class SettingsFragment : Fragment() {
         root.findViewById<View>(R.id.btnRowFeaturesGuide)?.setOnClickListener {
             startActivity(Intent(requireContext(), com.linkdeck.android.ui.guide.FeaturesGuideActivity::class.java))
         }
-
         root.findViewById<View>(R.id.btnRowWalkthrough)?.setOnClickListener {
             val intent = com.linkdeck.android.ui.onboarding.OnboardingActivity.createIntent(requireContext(), isReplay = true)
             startActivity(intent)
         }
-
         root.findViewById<View>(R.id.btnRowGithub)?.setOnClickListener {
             val url = getString(R.string.github_repo_url)
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -257,38 +248,13 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun showClearPreferencesDialog() {
+    private fun showConfirmDialog(titleRes: Int, messageRes: Int, positiveBtnRes: Int, onConfirm: () -> Unit) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.setting_clear_preferences_title)
-            .setMessage(R.string.dialog_clear_preferences_msg)
+            .setTitle(titleRes)
+            .setMessage(messageRes)
             .setNegativeButton(R.string.btn_cancel, null)
-            .setPositiveButton(R.string.btn_clear) { _, _ ->
-                preferenceStore.clearAll()
-                Toast.makeText(requireContext(), R.string.toast_preferences_cleared, Toast.LENGTH_SHORT).show()
-            }.show()
-    }
-
-    private fun showClearRulesDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.setting_clear_rules_title)
-            .setMessage(R.string.dialog_clear_rules_msg)
-            .setNegativeButton(R.string.btn_cancel, null)
-            .setPositiveButton(R.string.btn_clear) { _, _ ->
-                ruleStore.clearAll()
-                Toast.makeText(requireContext(), R.string.toast_rules_cleared, Toast.LENGTH_SHORT).show()
-            }.show()
-    }
-
-    private fun showResetSettingsDialog() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.setting_reset_settings_title)
-            .setMessage(R.string.dialog_reset_settings_msg)
-            .setNegativeButton(R.string.btn_cancel, null)
-            .setPositiveButton(R.string.btn_reset) { _, _ ->
-                settingsStore.resetSettings()
-                refreshSwitchStates()
-                Toast.makeText(requireContext(), R.string.toast_settings_reset, Toast.LENGTH_SHORT).show()
-            }.show()
+            .setPositiveButton(positiveBtnRes) { _, _ -> onConfirm() }
+            .show()
     }
 
     companion object {

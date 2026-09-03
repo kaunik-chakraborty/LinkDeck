@@ -4,6 +4,7 @@
 
 | Version | Supported |
 | ------- | --------- |
+| 1.2.x   | Yes       |
 | 1.1.x   | Yes       |
 | 1.0.x   | Yes       |
 
@@ -33,6 +34,9 @@ LinkDeck operates as a local-first link proxy on Android. Its security design en
 6. **On-Demand TLS Inspection & On-Device Threat Detection**:
    - `LinkThreatAnalyzer` evaluates link syntax locally for IDN Punycode homoglyph spoofing (`xn--...`), deceptive userinfo credentials, raw IP destinations, and cleartext HTTP without transmitting browsing data to third-party reputation APIs.
    - `TlsCertificateInspector` executes on-demand via direct cryptographic socket handshakes without sending HTTP request payloads, parsing X.509 chains, cipher suites, validity windows, and SHA-256 fingerprints.
+7. **Offline On-Device De-AMPing**:
+   - `DeAmpEngine` executes completely offline without network sockets, unrolling AMP wrappers into canonical publisher URLs using standard RFC 3986 URI parsing.
+   - Output URLs are re-sanitized through `IntentSanitizer` before dispatching to system package resolvers, preventing intent or loopback SSRF redirection.
 
 ---
 

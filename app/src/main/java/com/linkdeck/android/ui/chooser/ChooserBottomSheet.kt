@@ -23,18 +23,16 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.checkbox.MaterialCheckBox
 import com.linkdeck.android.R
 import com.linkdeck.android.core.inspector.LinkInspectionData
-import com.linkdeck.android.core.inspector.UrlRedactor
 import com.linkdeck.android.core.model.AppTarget
 import com.linkdeck.android.core.model.SanitizedLink
 import com.linkdeck.android.core.model.ShareTarget
+import com.linkdeck.android.core.inspector.UrlRedactor
 import com.linkdeck.android.core.preference.SharedPreferencesPinnedShareTargetStore
 import com.linkdeck.android.ui.inspector.LinkInspectorBottomSheet
 
 /**
- * Bottom sheet presentation for choosing an application to open or share a sanitized link,
- * supporting 1-tap direct launch, temporary ("Just once") and remembered ("Always") routing choices,
- * distinct "Share with" targets with pinning, tracking removal indicators,
- * "Open original link" checkbox toggle, and on-device Link Inspection diagnostics.
+ * BottomSheet presenting the target app chooser, domain preview, safety badges,
+ * and optional per-domain preference actions ("Just once" / "Always").
  */
 class ChooserBottomSheet : BottomSheetDialogFragment() {
 
@@ -43,13 +41,13 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
     private var errorMessage: String? = null
     private var openTargets: List<AppTarget> = emptyList()
     private var shareTargets: List<ShareTarget> = emptyList()
-    private var isLoading: Boolean = false
-    private var wasCleaned: Boolean = false
-    private var allowRememberChoices: Boolean = true
+    private var isLoading = false
+    private var wasCleaned = false
+    private var wasDeAmped = false
+    private var allowRememberChoices = true
     private var inspectionData: LinkInspectionData? = null
     private var selectedOpenTarget: AppTarget? = null
-    private var targetAdapter: TargetAdapter? = null
-    private var isUsingOriginal: Boolean = false
+    private var isUsingOriginal = false
     private val settingsStore by lazy { com.linkdeck.android.core.settings.AppSettingsStore(requireContext()) }
 
     var onTargetLaunchRequested: ((AppTarget, SanitizedLink, Boolean) -> Unit)? = null
@@ -60,51 +58,32 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
     fun setLoadingData(link: SanitizedLink) {
         this.sanitizedLink = link
         this.originalLink = null
-        this.openTargets = emptyList()
-        this.shareTargets = emptyList()
-        this.isLoading = true
-        this.wasCleaned = false
-        this.allowRememberChoices = true
-        this.inspectionData = null
-        this.errorMessage = null
-        this.selectedOpenTarget = null
-        this.isUsingOriginal = false
+        this.openTargets = emptyList(); this.shareTargets = emptyList()
+        this.isLoading = true; this.wasCleaned = false; this.wasDeAmped = false
+        this.inspectionData = null; this.errorMessage = null
+        this.selectedOpenTarget = null; this.isUsingOriginal = false
         updateView()
     }
 
     fun setLinkData(
-        link: SanitizedLink,
-        openTargets: List<AppTarget>,
-        shareTargets: List<ShareTarget> = emptyList(),
-        originalLink: SanitizedLink? = null,
-        wasCleaned: Boolean = false,
-        inspectionData: LinkInspectionData? = null,
-        allowRememberChoices: Boolean = true
+        link: SanitizedLink, openTargets: List<AppTarget>, shareTargets: List<ShareTarget> = emptyList(),
+        originalLink: SanitizedLink? = null, wasCleaned: Boolean = false, wasDeAmped: Boolean = false,
+        inspectionData: LinkInspectionData? = null, allowRememberChoices: Boolean = true
     ) {
-        this.sanitizedLink = link
-        this.originalLink = originalLink
-        this.openTargets = openTargets
-        this.shareTargets = shareTargets
-        this.isLoading = false
-        this.wasCleaned = wasCleaned
-        this.allowRememberChoices = allowRememberChoices
-        this.inspectionData = inspectionData
-        this.errorMessage = null
-        this.selectedOpenTarget = null
-        this.isUsingOriginal = false
+        this.sanitizedLink = link; this.originalLink = originalLink
+        this.openTargets = openTargets; this.shareTargets = shareTargets
+        this.isLoading = false; this.wasCleaned = wasCleaned; this.wasDeAmped = wasDeAmped
+        this.allowRememberChoices = allowRememberChoices; this.inspectionData = inspectionData
+        this.errorMessage = null; this.selectedOpenTarget = null; this.isUsingOriginal = false
         updateView()
     }
 
     fun setErrorData(message: String) {
         this.errorMessage = message
-        this.sanitizedLink = null
-        this.originalLink = null
-        this.openTargets = emptyList()
-        this.shareTargets = emptyList()
-        this.isLoading = false
-        this.wasCleaned = false
-        this.inspectionData = null
-        this.selectedOpenTarget = null
+        this.sanitizedLink = null; this.originalLink = null
+        this.openTargets = emptyList(); this.shareTargets = emptyList()
+        this.isLoading = false; this.wasCleaned = false; this.wasDeAmped = false
+        this.inspectionData = null; this.selectedOpenTarget = null
         this.isUsingOriginal = false
         updateView()
     }
@@ -120,20 +99,14 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
             val bottomSheet = dialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheet?.let { sheet ->
                 sheet.setBackgroundResource(R.drawable.bg_bottom_sheet)
-                val behavior = BottomSheetBehavior.from(sheet)
-                behavior.skipCollapsed = true
+                BottomSheetBehavior.from(sheet).skipCollapsed = true
             }
         }
         return dialog
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_chooser_bottom_sheet, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
+        inflater.inflate(R.layout.fragment_chooser_bottom_sheet, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -153,196 +126,164 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
 
     private fun updateView() {
         val root = view ?: return
-
-        val textHost: TextView = root.findViewById(R.id.textHost)
-        val textPath: TextView = root.findViewById(R.id.textPath)
-        val textRedirectSource: TextView = root.findViewById(R.id.textRedirectSource)
-        val textCleanedBadge: TextView = root.findViewById(R.id.textCleanedBadge)
-        val textSecurityBadge: TextView = root.findViewById(R.id.textSecurityBadge)
-        val cbOpenOriginalLink: MaterialCheckBox = root.findViewById(R.id.cbOpenOriginalLink)
-        val btnInspect: View = root.findViewById(R.id.btnInspectLink)
-        val btnCopy: View = root.findViewById(R.id.btnCopyLink)
-        val recyclerView: RecyclerView = root.findViewById(R.id.targetsRecyclerView)
-        val emptyLayout: View = root.findViewById(R.id.emptyStateLayout)
-        val errorLayout: View = root.findViewById(R.id.errorStateLayout)
-        val loadingLayout: View = root.findViewById(R.id.loadingLayout)
-        val actionButtonsLayout: View = root.findViewById(R.id.actionButtonsLayout)
-        val btnJustOnce: MaterialButton = root.findViewById(R.id.btnJustOnce)
-        val btnAlways: MaterialButton = root.findViewById(R.id.btnAlways)
-        val textError: TextView = root.findViewById(R.id.textErrorMessage)
-        val btnDismiss: MaterialButton = root.findViewById(R.id.btnDismissError)
-        val previewBadge: View = root.findViewById(R.id.urlPreviewBadge)
-
         val currentError = errorMessage
         val currentLink = sanitizedLink
 
         if (currentError != null) {
-            previewBadge.visibility = View.GONE
-            loadingLayout.visibility = View.GONE
-            recyclerView.visibility = View.GONE
-            actionButtonsLayout.visibility = View.GONE
-            emptyLayout.visibility = View.GONE
-            errorLayout.visibility = View.VISIBLE
-            textError.text = currentError
-
-            btnDismiss.setOnClickListener {
-                dismiss()
-            }
+            root.findViewById<View>(R.id.urlPreviewBadge).visibility = View.GONE
+            root.findViewById<View>(R.id.loadingLayout).visibility = View.GONE
+            root.findViewById<View>(R.id.targetsRecyclerView).visibility = View.GONE
+            root.findViewById<View>(R.id.actionButtonsLayout).visibility = View.GONE
+            root.findViewById<View>(R.id.emptyStateLayout).visibility = View.GONE
+            root.findViewById<View>(R.id.errorStateLayout).visibility = View.VISIBLE
+            root.findViewById<TextView>(R.id.textErrorMessage).text = currentError
+            root.findViewById<View>(R.id.btnDismissError).setOnClickListener { dismiss() }
             return
         }
 
         if (currentLink != null) {
-            previewBadge.visibility = View.VISIBLE
-            errorLayout.visibility = View.GONE
+            root.findViewById<View>(R.id.urlPreviewBadge).visibility = View.VISIBLE
+            root.findViewById<View>(R.id.errorStateLayout).visibility = View.GONE
+            bindHeader(root, currentLink)
+            bindActions(root, currentLink)
+            bindTargets(root, currentLink)
+        }
+    }
 
-            val orig = originalLink
-            val isTransformed = orig != null && (orig.rawUrl != currentLink.rawUrl || wasCleaned)
+    private fun bindHeader(root: View, currentLink: SanitizedLink) {
+        val orig = originalLink
+        val isTransformed = orig != null && (orig.rawUrl != currentLink.rawUrl || wasCleaned || wasDeAmped)
+        val displayLink = if (isUsingOriginal && orig != null) orig else currentLink
 
-            val displayLink = if (isUsingOriginal && orig != null) orig else currentLink
-            textHost.text = displayLink.host
-            textPath.text = UrlRedactor.truncateForDisplay(displayLink.path.ifEmpty { "/" })
+        root.findViewById<TextView>(R.id.textHost).text = displayLink.host
+        root.findViewById<TextView>(R.id.textPath).text = UrlRedactor.truncateForDisplay(displayLink.path.ifEmpty { "/" })
 
-            if (!isUsingOriginal && orig != null && orig.host != currentLink.host) {
-                textRedirectSource.visibility = View.VISIBLE
-                textRedirectSource.text = getString(R.string.redirected_from, orig.host)
-            } else {
-                textRedirectSource.visibility = View.GONE
-            }
+        val textRedirectSource = root.findViewById<TextView>(R.id.textRedirectSource)
+        textRedirectSource.visibility = if (!isUsingOriginal && orig != null && orig.host != currentLink.host) View.VISIBLE else View.GONE
+        if (orig != null) textRedirectSource.text = getString(R.string.redirected_from, orig.host)
 
-            textCleanedBadge.visibility = if (wasCleaned && !isUsingOriginal) View.VISIBLE else View.GONE
+        root.findViewById<TextView>(R.id.textCleanedBadge).visibility = if (wasCleaned && !isUsingOriginal) View.VISIBLE else View.GONE
+        root.findViewById<TextView?>(R.id.textDeAmpedBadge)?.visibility = if (wasDeAmped && !isUsingOriginal) View.VISIBLE else View.GONE
 
-            val threats = if (settingsStore.isThreatWarningsEnabled) {
-                com.linkdeck.android.core.security.LinkThreatAnalyzer.analyze(displayLink)
-            } else emptyList()
+        bindThreats(root, displayLink)
 
-            val criticalThreat = threats.firstOrNull { it.severity == com.linkdeck.android.core.security.LinkThreatWarning.Severity.CRITICAL }
-                ?: threats.firstOrNull { it.severity == com.linkdeck.android.core.security.LinkThreatWarning.Severity.HIGH }
-                ?: threats.firstOrNull { it is com.linkdeck.android.core.security.LinkThreatWarning.CleartextHttp }
-
-            if (criticalThreat != null) {
-                textSecurityBadge.visibility = View.VISIBLE
-                textSecurityBadge.text = when (criticalThreat) {
-                    is com.linkdeck.android.core.security.LinkThreatWarning.PunycodePhishing -> "Punycode Phishing"
-                    is com.linkdeck.android.core.security.LinkThreatWarning.UserInfoDeception -> "Deceptive Link"
-                    is com.linkdeck.android.core.security.LinkThreatWarning.CleartextHttp -> "HTTP Insecure"
-                    else -> "Security Alert"
-                }
-            } else {
-                textSecurityBadge.visibility = View.GONE
-            }
-
-            if (isTransformed) {
-                cbOpenOriginalLink.visibility = View.VISIBLE
-                cbOpenOriginalLink.setOnCheckedChangeListener(null)
-                cbOpenOriginalLink.isChecked = isUsingOriginal
-                cbOpenOriginalLink.setOnCheckedChangeListener { _, isChecked ->
-                    isUsingOriginal = isChecked
-                    val active = getActiveLink() ?: currentLink
-                    textHost.text = active.host
-                    textPath.text = UrlRedactor.truncateForDisplay(active.path.ifEmpty { "/" })
-                    if (!isChecked && orig != null && orig.host != currentLink.host) {
-                        textRedirectSource.visibility = View.VISIBLE
-                    } else {
-                        textRedirectSource.visibility = View.GONE
-                    }
-                    textCleanedBadge.visibility = if (wasCleaned && !isChecked) View.VISIBLE else View.GONE
-                    val toastMsg = if (isChecked) R.string.toast_using_original_link else R.string.toast_using_cleaned_link
-                    Toast.makeText(requireContext(), toastMsg, Toast.LENGTH_SHORT).show()
-                }
-            } else {
-                cbOpenOriginalLink.visibility = View.GONE
-            }
-
-            btnInspect.setOnClickListener {
-                val data = inspectionData
-                if (data != null) {
-                    val inspector = LinkInspectorBottomSheet.newInstance(data)
-                    inspector.onOpenOriginalRequested = { origLink ->
-                        isUsingOriginal = true
-                        updateView()
-                        val selected = selectedOpenTarget
-                        if (selected != null) {
-                            onTargetLaunchRequested?.invoke(selected, origLink, false)
-                        } else {
-                            Toast.makeText(requireContext(), R.string.toast_using_original_link, Toast.LENGTH_SHORT).show()
-                            onOpenOriginalRequested?.invoke(origLink)
-                        }
-                    }
-                    inspector.show(parentFragmentManager, LinkInspectorBottomSheet.TAG)
-                }
-            }
-
-            btnCopy.setOnClickListener {
+        val cbOriginal = root.findViewById<MaterialCheckBox>(R.id.cbOpenOriginalLink)
+        if (isTransformed) {
+            cbOriginal.visibility = View.VISIBLE
+            cbOriginal.setOnCheckedChangeListener(null)
+            cbOriginal.isChecked = isUsingOriginal
+            cbOriginal.setOnCheckedChangeListener { _, isChecked ->
+                isUsingOriginal = isChecked
                 val active = getActiveLink() ?: currentLink
-                copyUrlToClipboard(active.rawUrl)
+                root.findViewById<TextView>(R.id.textHost).text = active.host
+                root.findViewById<TextView>(R.id.textPath).text = UrlRedactor.truncateForDisplay(active.path.ifEmpty { "/" })
+                textRedirectSource.visibility = if (!isChecked && orig != null && orig.host != currentLink.host) View.VISIBLE else View.GONE
+                root.findViewById<TextView>(R.id.textCleanedBadge).visibility = if (wasCleaned && !isChecked) View.VISIBLE else View.GONE
+                root.findViewById<TextView?>(R.id.textDeAmpedBadge)?.visibility = if (wasDeAmped && !isChecked) View.VISIBLE else View.GONE
+                val toastMsg = if (isChecked) R.string.toast_using_original_link else R.string.toast_using_cleaned_link
+                Toast.makeText(requireContext(), toastMsg, Toast.LENGTH_SHORT).show()
             }
+        } else {
+            cbOriginal.visibility = View.GONE
+        }
+    }
 
-            if (allowRememberChoices) {
-                btnJustOnce.text = getString(R.string.action_just_once)
-                btnAlways.visibility = View.VISIBLE
-            } else {
-                btnJustOnce.text = getString(R.string.action_open)
-                btnAlways.visibility = View.GONE
+    private fun bindThreats(root: View, displayLink: SanitizedLink) {
+        val threats = if (settingsStore.isThreatWarningsEnabled) com.linkdeck.android.core.security.LinkThreatAnalyzer.analyze(displayLink) else emptyList()
+        val criticalThreat = threats.firstOrNull { it.severity == com.linkdeck.android.core.security.LinkThreatWarning.Severity.CRITICAL }
+            ?: threats.firstOrNull { it.severity == com.linkdeck.android.core.security.LinkThreatWarning.Severity.HIGH }
+            ?: threats.firstOrNull { it is com.linkdeck.android.core.security.LinkThreatWarning.CleartextHttp }
+
+        val badge = root.findViewById<TextView>(R.id.textSecurityBadge)
+        badge.visibility = if (criticalThreat != null) View.VISIBLE else View.GONE
+        if (criticalThreat != null) {
+            badge.text = when (criticalThreat) {
+                is com.linkdeck.android.core.security.LinkThreatWarning.PunycodePhishing -> "Punycode Phishing"
+                is com.linkdeck.android.core.security.LinkThreatWarning.UserInfoDeception -> "Deceptive Link"
+                is com.linkdeck.android.core.security.LinkThreatWarning.CleartextHttp -> "HTTP Insecure"
+                else -> "Security Alert"
             }
+        }
+    }
 
-            btnJustOnce.setOnClickListener {
-                selectedOpenTarget?.let { target ->
-                    val active = getActiveLink() ?: currentLink
-                    onTargetLaunchRequested?.invoke(target, active, false)
+    private fun bindActions(root: View, currentLink: SanitizedLink) {
+        root.findViewById<View>(R.id.btnInspectLink).setOnClickListener {
+            inspectionData?.let { data ->
+                val inspector = LinkInspectorBottomSheet.newInstance(data)
+                inspector.onOpenOriginalRequested = { origLink ->
+                    isUsingOriginal = true
+                    updateView()
+                    val selected = selectedOpenTarget
+                    if (selected != null) {
+                        onTargetLaunchRequested?.invoke(selected, origLink, false)
+                    } else {
+                        Toast.makeText(requireContext(), R.string.toast_using_original_link, Toast.LENGTH_SHORT).show()
+                        onOpenOriginalRequested?.invoke(origLink)
+                    }
                 }
+                inspector.show(parentFragmentManager, LinkInspectorBottomSheet.TAG)
             }
+        }
 
-            btnAlways.setOnClickListener {
-                selectedOpenTarget?.let { target ->
-                    val active = getActiveLink() ?: currentLink
-                    onTargetLaunchRequested?.invoke(target, active, true)
+        root.findViewById<View>(R.id.btnCopyLink).setOnClickListener {
+            val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setPrimaryClip(ClipData.newPlainText("Link", (getActiveLink() ?: currentLink).rawUrl))
+            Toast.makeText(requireContext(), R.string.link_copied_toast, Toast.LENGTH_SHORT).show()
+        }
+
+        val btnJustOnce = root.findViewById<MaterialButton>(R.id.btnJustOnce)
+        val btnAlways = root.findViewById<MaterialButton>(R.id.btnAlways)
+        btnJustOnce.text = getString(if (allowRememberChoices) R.string.action_just_once else R.string.action_open)
+        btnAlways.visibility = if (allowRememberChoices) View.VISIBLE else View.GONE
+
+        btnJustOnce.setOnClickListener {
+            selectedOpenTarget?.let { target -> onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, false) }
+        }
+        btnAlways.setOnClickListener {
+            selectedOpenTarget?.let { target -> onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, true) }
+        }
+    }
+
+    private fun bindTargets(root: View, currentLink: SanitizedLink) {
+        val loadingLayout = root.findViewById<View>(R.id.loadingLayout)
+        val btnInspect = root.findViewById<View>(R.id.btnInspectLink)
+        val recyclerView = root.findViewById<RecyclerView>(R.id.targetsRecyclerView)
+        val actionButtons = root.findViewById<View>(R.id.actionButtonsLayout)
+        val emptyLayout = root.findViewById<View>(R.id.emptyStateLayout)
+
+        if (isLoading) {
+            loadingLayout.visibility = View.VISIBLE
+            btnInspect.visibility = View.GONE; recyclerView.visibility = View.GONE
+            actionButtons.visibility = View.GONE; emptyLayout.visibility = View.GONE
+            return
+        }
+
+        loadingLayout.visibility = View.GONE
+        btnInspect.visibility = if (inspectionData != null) View.VISIBLE else View.GONE
+        val hasTargets = openTargets.isNotEmpty() || shareTargets.isNotEmpty()
+
+        if (!hasTargets) {
+            recyclerView.visibility = View.GONE; actionButtons.visibility = View.GONE; emptyLayout.visibility = View.VISIBLE
+        } else {
+            emptyLayout.visibility = View.GONE; recyclerView.visibility = View.VISIBLE
+            recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+            val pinnedStore = SharedPreferencesPinnedShareTargetStore(requireContext())
+            val adapter = TargetAdapter(
+                context = requireContext(),
+                packageManager = requireContext().packageManager,
+                pinnedStore = pinnedStore,
+                onOpenTargetSelected = { target ->
+                    selectedOpenTarget = target
+                    onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, false)
+                },
+                onShareTargetClicked = { shareTarget ->
+                    onShareRequested?.invoke(shareTarget, getActiveLink() ?: currentLink)
                 }
-            }
-
-            if (isLoading) {
-                loadingLayout.visibility = View.VISIBLE
-                btnInspect.visibility = View.GONE
-                recyclerView.visibility = View.GONE
-                actionButtonsLayout.visibility = View.GONE
-                emptyLayout.visibility = View.GONE
-            } else {
-                loadingLayout.visibility = View.GONE
-                btnInspect.visibility = if (inspectionData != null) View.VISIBLE else View.GONE
-
-                val hasAnyTargets = openTargets.isNotEmpty() || shareTargets.isNotEmpty()
-
-                if (!hasAnyTargets) {
-                    recyclerView.visibility = View.GONE
-                    actionButtonsLayout.visibility = View.GONE
-                    emptyLayout.visibility = View.VISIBLE
-                } else {
-                    emptyLayout.visibility = View.GONE
-                    recyclerView.visibility = View.VISIBLE
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
-                    val pinnedStore = SharedPreferencesPinnedShareTargetStore(requireContext())
-                    val adapter = TargetAdapter(
-                        context = requireContext(),
-                        packageManager = requireContext().packageManager,
-                        pinnedStore = pinnedStore,
-                        onOpenTargetSelected = { target ->
-                            selectedOpenTarget = target
-                            val active = getActiveLink() ?: currentLink
-                            // 1-Tap on any target opens immediately!
-                            onTargetLaunchRequested?.invoke(target, active, false)
-                        },
-                        onShareTargetClicked = { shareTarget ->
-                            val active = getActiveLink() ?: currentLink
-                            onShareRequested?.invoke(shareTarget, active)
-                        }
-                    )
-                    targetAdapter = adapter
-                    recyclerView.adapter = adapter
-                    adapter.submitData(openTargets, shareTargets)
-
-                    actionButtonsLayout.visibility = if (selectedOpenTarget != null) View.VISIBLE else View.GONE
-                }
-            }
+            )
+            recyclerView.adapter = adapter
+            adapter.submitData(openTargets, shareTargets)
+            actionButtons.visibility = if (selectedOpenTarget != null) View.VISIBLE else View.GONE
         }
     }
 
@@ -351,18 +292,8 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
         onDismissed?.invoke()
     }
 
-    private fun copyUrlToClipboard(url: String) {
-        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Link", url)
-        clipboard.setPrimaryClip(clip)
-        Toast.makeText(requireContext(), R.string.link_copied_toast, Toast.LENGTH_SHORT).show()
-    }
-
     companion object {
         const val TAG = "ChooserBottomSheet"
-
-        fun newInstance(): ChooserBottomSheet {
-            return ChooserBottomSheet()
-        }
+        fun newInstance(): ChooserBottomSheet = ChooserBottomSheet()
     }
 }

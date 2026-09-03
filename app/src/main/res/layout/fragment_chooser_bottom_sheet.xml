@@ -139,6 +139,22 @@
                 android:visibility="gone" />
 
             <TextView
+                android:id="@+id/textDeAmpedBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/badge_de_amped"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimaryContainer"
+                android:background="@drawable/bg_badge_chip"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:layout_marginEnd="6dp"
+                android:visibility="gone" />
+
+            <TextView
                 android:id="@+id/textRedirectSource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
