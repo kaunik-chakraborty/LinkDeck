@@ -192,7 +192,7 @@ class TargetAdapter(
             }
 
             itemView.setOnClickListener {
-                if (selectedOpenTarget == target) {
+                if (!allowRememberChoices || selectedOpenTarget == target) {
                     onOpenTargetLaunch(target, false)
                 } else {
                     val prevTarget = selectedOpenTarget
