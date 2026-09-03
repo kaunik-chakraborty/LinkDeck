@@ -58,6 +58,7 @@
 | **Material You & Typography** | Full Material Design 3 Monet dynamic wallpaper tinting and 6 curated modern typefaces (Satoshi, Outfit, General Sans, Cabinet Grotesk, Space Grotesk, Plus Jakarta Sans). |
 | **Dedicated 2-Tab Features Guide** | Built-in complete guide covering everyday user privacy walkthroughs and in-depth technical security architecture. |
 | **Interactive Walkthrough** | Built-in 4-slide onboarding guide for new users, replayable anytime from Settings. |
+| **Quick Settings "Clean Clipboard" Tile** | 1-tap dedicated Android Quick Settings tile to sanitize, de-AMP, and strip tracking from your clipboard in-place with instant visual feedback and lock screen safety. |
 | **Home Screen Widgets** | Multi-link quick paste widget and status widget for 1-tap clipboard routing from your home screen. |
 
 ---
@@ -87,8 +88,9 @@ LinkDeck includes an interactive 4-slide onboarding guide introducing users to:
 
 ---
 
-## Home Screen Widgets
+## Home Screen Widgets & Quick Settings
 
+- **Quick Settings "Clean Clipboard" Tile**: Add LinkDeck's tile to your Android Quick Settings panel to sanitize, de-AMP, and strip tracking parameters from whatever link is in your clipboard with 1 tap, without leaving your active app.
 - **Multi-Link & Quick Paste Widget** (`LinkDeckMultiLinkWidget`): Paste and open links instantly from your clipboard, manage quick links, and jump to settings.
 - **Status Widget** (`LinkDeckStatusWidget`): Shows current protection status and offers 1-tap diagnostic test shortcuts.
 

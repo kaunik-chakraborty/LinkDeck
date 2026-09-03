@@ -26,6 +26,7 @@ All core link handling and privacy functions execute **100% locally on your devi
 
 * **Tracking Parameter Stripping:** When you tap or share a URL, LinkDeck's `TrackingParameterCleaner` strips marketing and attribution tokens (such as `utm_*`, `fbclid`, `gclid`, `gbraid`, `wbraid`, `msclkid`, `igsi`, `igsh`, `igshid`, `ig_rid`, `ig_mid`, `twclid`, `tw_source`, `mc_*`, etc.) purely using local in-memory URI parsing. Your links are never sent to any remote server for cleaning.
 * **On-Device De-AMPing:** When you tap or share an Accelerated Mobile Pages (AMP) link, LinkDeck's `DeAmpEngine` parses and unwraps Google AMP viewers, AMP Project CDN caches, Cloudflare/Bing AMP caches, and publisher AMP subdomains locally into direct canonical publisher URLs with zero network calls and zero telemetry.
+* **Quick Settings Clipboard Sanitization:** When you tap the Clean Clipboard Quick Settings tile, LinkDeck accesses your primary clipboard clip locally to inspect and sanitize the link. Clipboard data is never stored to disk, never logged, and never transmitted over the network.
 * **Application Resolution via Binder IPC:** To show you which browsers and native applications can open a link, LinkDeck queries Android's system `PackageManager` through local Binder Inter-Process Communication (IPC).
 * **Scoped Package Visibility:** LinkDeck does **not** request the high-privilege `QUERY_ALL_PACKAGES` permission. It uses scoped Android `<queries>` declarations strictly restricted to web handlers (`http`/`https` intent filters) and text share targets (`ACTION_SEND`).
 

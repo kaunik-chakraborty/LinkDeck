@@ -80,8 +80,8 @@ object GuideRepository {
         GuideItem(
             id = "widgets",
             index = 10,
-            title = "Interactive Home Screen Widgets",
-            description = "Includes 2 dedicated home screen widgets:\n• Multi-Link & Paste Widget: 1-tap clipboard paste & open, paste & save, and 4 customizable quick links.\n• Status Widget: Live protection status, 1-tap test link shortcut, and dashboard access."
+            title = "Home Screen Widgets & Quick Settings Tile",
+            description = "Includes 2 dedicated home screen widgets and a Quick Settings tile:\n• Clean Clipboard QS Tile: Pull down your notification shade and tap to sanitize, de-AMP, and strip tracking from your clipboard in 1 tap.\n• Multi-Link & Paste Widget: 1-tap clipboard paste & open, paste & save, and 4 customizable quick links.\n• Status Widget: Live protection status, 1-tap test link shortcut, and dashboard access."
         ),
         GuideItem(
             id = "appearance",
@@ -137,8 +137,8 @@ object GuideRepository {
         GuideItem(
             id = "widget_remoteviews",
             index = 8,
-            title = "AppWidget RemoteViews & Clipboard IPC",
-            description = "• Multi-Link and Status widgets dispatch immutable PendingIntent actions to WidgetActionActivity.\n• Ingests clipboard data, sanitizes URIs, and routes through ChooserActivity without foreground UI flicker."
+            title = "AppWidget RemoteViews & QS TileService",
+            description = "• Multi-Link and Status widgets dispatch immutable PendingIntent actions to WidgetActionActivity.\n• CleanClipboardTileService provides system Quick Settings integration with isLocked authentication gating via unlockAndRun, updating clipboard links in-place with zero UI flicker."
         ),
         GuideItem(
             id = "rule_evaluator",

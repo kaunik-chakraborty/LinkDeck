@@ -114,6 +114,20 @@
     <string name="inspector_de_amped_title">De-AMPed URL</string>
     <string name="inspector_de_amped_desc">Unwrapped from %1$s</string>
 
+    <!-- Quick Settings Clean Clipboard Tile Strings -->
+    <string name="tile_clean_clipboard_label">Clean Clipboard</string>
+    <string name="tile_clean_clipboard_subtitle">Strip tracking &amp; AMP</string>
+    <string name="tile_clean_clipboard_cleaned">Cleaned!</string>
+    <string name="tile_clean_clipboard_already_clean">Already clean</string>
+    <string name="toast_clipboard_empty">Clipboard is empty</string>
+    <string name="toast_clipboard_no_link">No link found on clipboard</string>
+    <string name="toast_clipboard_invalid_link">Invalid link on clipboard</string>
+    <string name="toast_clipboard_already_clean">Link is already clean</string>
+    <string name="toast_clipboard_cleaned_link">Clean link copied to clipboard</string>
+    <string name="toast_clipboard_params_removed">Removed %1$d tracking parameter(s)</string>
+    <string name="toast_clipboard_deamped">De-AMPed and copied to clipboard</string>
+    <string name="toast_clipboard_deamped_and_cleaned">De-AMPed and removed %1$d tracking parameter(s)</string>
+
     <!-- Share Clean Activity Strings -->
     <string name="share_clean_title">Clean &amp; Share Link</string>
     <string name="share_clean_url_label">Cleaned destination</string>
