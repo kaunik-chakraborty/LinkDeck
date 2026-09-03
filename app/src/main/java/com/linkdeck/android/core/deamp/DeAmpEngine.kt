@@ -24,6 +24,15 @@ object DeAmpEngine {
     )
 
     /**
+     * Inspects a raw URL string and returns the de-AMPed URL, or null if not an AMP URL.
+     */
+    fun deAmpUrl(rawUrl: String): String? {
+        val sanitized = IntentSanitizer.sanitizeUrl(rawUrl) as? SanitizationResult.Success ?: return null
+        val result = deAmp(sanitized.link)
+        return if (result.wasDeAmped) result.deAmpedLink.rawUrl else null
+    }
+
+    /**
      * Inspects a sanitized link and resolves the canonical non-AMP destination.
      * Returns the original link if the link is not an AMP container or if parsing fails.
      */

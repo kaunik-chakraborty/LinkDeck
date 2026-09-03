@@ -245,6 +245,26 @@ class RedirectResolverTest {
         assertEquals(RedirectErrorType.DNS_FAILURE, (result as RedirectResult.Error).errorType)
     }
 
+    @Test
+    fun resolve_hopInterceptor_terminatesEarlyWhenIntercepted() = runTest {
+        val fake = FakeHttpTransport().apply {
+            registerRoute("https://tinyurl.com/amp-test", 301, "https://www.google.com/amp/s/en.wikipedia.org/wiki/Kotlin?utm_source=google")
+        }
+        val resolver = RedirectResolver(
+            transport = fake,
+            hopInterceptor = { url ->
+                if (url.contains("/amp/s/")) "https://en.wikipedia.org/wiki/Kotlin?utm_source=google" else null
+            }
+        )
+        val link = createSanitizedLink("https://tinyurl.com/amp-test", "tinyurl.com")
+        val result = resolver.resolve(link)
+
+        assertTrue(result is RedirectResult.Success)
+        val success = result as RedirectResult.Success
+        assertEquals("https://en.wikipedia.org/wiki/Kotlin?utm_source=google", success.finalUrl)
+        assertEquals(1, success.hops.size)
+    }
+
     private fun createSanitizedLink(url: String, host: String): SanitizedLink {
         return SanitizedLink(
             rawUrl = url,

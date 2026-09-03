@@ -57,29 +57,44 @@
                 android:maxLines="1"
                 tools:text="youtube.com" />
 
-            <ImageButton
-                android:id="@+id/btnInspectLink"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="9dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/info"
-                android:background="@drawable/bg_icon_button"
-                android:contentDescription="@string/inspector_btn_inspect"
-                app:tint="?attr/colorOnSurface"
-                android:layout_marginStart="6dp" />
+            <!-- macOS-style Unified Pill Container for Action Buttons -->
+            <LinearLayout
+                android:id="@+id/layoutActionPill"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="@drawable/bg_action_pill"
+                android:layout_marginStart="8dp">
 
-            <ImageButton
-                android:id="@+id/btnCopyLink"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="9dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/copy"
-                android:background="@drawable/bg_icon_button"
-                android:contentDescription="@string/copy_link_btn"
-                app:tint="?attr/colorOnSurface"
-                android:layout_marginStart="6dp" />
+                <ImageButton
+                    android:id="@+id/btnInspectLink"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:padding="9dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/info"
+                    android:background="@drawable/bg_pill_button_left"
+                    android:contentDescription="@string/inspector_btn_inspect"
+                    app:tint="?attr/colorOnSurface" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="18dp"
+                    android:background="?attr/colorOutlineVariant" />
+
+                <ImageButton
+                    android:id="@+id/btnCopyLink"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:padding="9dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/copy"
+                    android:background="@drawable/bg_pill_button_right"
+                    android:contentDescription="@string/copy_link_btn"
+                    app:tint="?attr/colorOnSurface" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -96,13 +111,14 @@
             android:layout_marginStart="28dp"
             tools:text="/watch?v=dQw4w9WgXcQ" />
 
-        <!-- Status Badges: Redirect & Tracking Cleaning -->
-        <LinearLayout
+        <!-- Status Badges: Redirect & Tracking Cleaning (Wrapped Flow Layout) -->
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/layoutBadges"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            app:chipSpacingHorizontal="6dp"
+            app:chipSpacingVertical="6dp"
+            app:singleLine="false"
             android:layout_marginTop="8dp"
             android:layout_marginStart="28dp">
 
@@ -112,13 +128,15 @@
                 android:layout_height="wrap_content"
                 android:textSize="11sp"
                 android:textStyle="bold"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/error"
                 android:background="@drawable/bg_badge_chip"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:layout_marginEnd="6dp"
                 android:visibility="gone"
                 tools:text="Phishing Risk" />
 
@@ -129,13 +147,15 @@
                 android:text="@string/tracking_cleaned_badge"
                 android:textSize="11sp"
                 android:textStyle="bold"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:background="@drawable/bg_badge_chip"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:layout_marginEnd="6dp"
                 android:visibility="gone" />
 
             <TextView
@@ -145,13 +165,15 @@
                 android:text="@string/badge_de_amped"
                 android:textSize="11sp"
                 android:textStyle="bold"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="?attr/colorOnPrimaryContainer"
                 android:background="@drawable/bg_badge_chip"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
-                android:layout_marginEnd="6dp"
                 android:visibility="gone" />
 
             <TextView
@@ -159,8 +181,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="11sp"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="?attr/colorOnSurfaceVariant"
-                android:background="@drawable/bg_badge_chip"
+                android:background="@drawable/bg_badge_redirect"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="3dp"
@@ -168,7 +193,7 @@
                 android:visibility="gone"
                 tools:text="↳ bit.ly" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <!-- Original Link Checkbox Container -->
         <com.google.android.material.checkbox.MaterialCheckBox
@@ -225,38 +250,6 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:overScrollMode="never" />
-
-    <!-- Action Buttons for Just Once / Always -->
-    <LinearLayout
-        android:id="@+id/actionButtonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingTop="12dp"
-        android:paddingBottom="4dp"
-        android:visibility="gone">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnJustOnce"
-            style="@style/Widget.LinkDeck.SecondaryButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="@string/action_just_once"
-            android:layout_marginEnd="8dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAlways"
-            style="@style/Widget.LinkDeck.PrimaryButton"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:text="@string/action_always"
-            android:layout_marginStart="8dp" />
-
-    </LinearLayout>
 
     <!-- Empty State -->
     <LinearLayout

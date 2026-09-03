@@ -44,7 +44,15 @@ class TestLinkActivity : BaseActivity() {
 
     private val ruleStore by lazy { SharedPreferencesRoutingRuleStore(this) }
     private val preferenceStore by lazy { SharedPreferencesRoutingPreferenceStore(this) }
-    private val redirectResolver = RedirectResolver()
+    private val redirectResolver by lazy {
+        RedirectResolver(
+            hopInterceptor = { url ->
+                if (appSettingsStore.isDeAmpingEnabled) {
+                    com.linkdeck.android.core.deamp.DeAmpEngine.deAmpUrl(url)
+                } else null
+            }
+        )
+    }
 
     private var currentJob: Job? = null
     private var lastTestedLink: SanitizedLink? = null
@@ -143,13 +151,21 @@ class TestLinkActivity : BaseActivity() {
                 is RedirectResult.Error -> processedLink
             }
 
-            var candidateLink = effectiveLink
+            var postDeAmpLink = effectiveLink
+            if (appSettingsStore.isDeAmpingEnabled) {
+                val postDeAmpResult = com.linkdeck.android.core.deamp.DeAmpEngine.deAmp(effectiveLink)
+                if (postDeAmpResult.wasDeAmped) {
+                    postDeAmpLink = postDeAmpResult.deAmpedLink
+                }
+            }
+
+            var candidateLink = postDeAmpLink
             var wasCleaned = false
             var removedParams = emptyList<String>()
 
             if (appSettingsStore.isTrackingCleanerEnabled) {
                 val customRules = com.linkdeck.android.core.cleaner.rules.CustomParameterRulesStore(this@TestLinkActivity).getEnabledRules()
-                val cleanResult = TrackingParameterCleaner.clean(effectiveLink, customRules)
+                val cleanResult = TrackingParameterCleaner.clean(postDeAmpLink, customRules)
                 if (cleanResult.hasRemovedParams) {
                     val reSanitized = IntentSanitizer.sanitizeUrl(cleanResult.cleanedLink.rawUrl)
                     if (reSanitized is SanitizationResult.Success) {

@@ -5,21 +5,21 @@
         <selector>
             <item android:state_activated="true">
                 <shape android:shape="rectangle">
-                    <corners android:radius="12dp" />
-                    <solid android:color="?attr/colorSecondaryContainer" />
-                    <stroke android:width="1.5dp" android:color="?attr/colorPrimary" />
+                    <corners android:radius="20dp" />
+                    <solid android:color="?attr/colorSurfaceVariant" />
+                    <stroke android:width="1dp" android:color="?attr/colorOutlineVariant" />
                 </shape>
             </item>
             <item android:state_selected="true">
                 <shape android:shape="rectangle">
-                    <corners android:radius="12dp" />
-                    <solid android:color="?attr/colorSecondaryContainer" />
-                    <stroke android:width="1.5dp" android:color="?attr/colorPrimary" />
+                    <corners android:radius="20dp" />
+                    <solid android:color="?attr/colorSurfaceVariant" />
+                    <stroke android:width="1dp" android:color="?attr/colorOutlineVariant" />
                 </shape>
             </item>
             <item>
                 <shape android:shape="rectangle">
-                    <corners android:radius="12dp" />
+                    <corners android:radius="20dp" />
                     <solid android:color="@android:color/transparent" />
                 </shape>
             </item>
@@ -27,7 +27,7 @@
     </item>
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <corners android:radius="12dp" />
+            <corners android:radius="20dp" />
             <solid android:color="@android:color/white" />
         </shape>
     </item>

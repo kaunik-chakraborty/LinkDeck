@@ -133,7 +133,6 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
             root.findViewById<View>(R.id.urlPreviewBadge).visibility = View.GONE
             root.findViewById<View>(R.id.loadingLayout).visibility = View.GONE
             root.findViewById<View>(R.id.targetsRecyclerView).visibility = View.GONE
-            root.findViewById<View>(R.id.actionButtonsLayout).visibility = View.GONE
             root.findViewById<View>(R.id.emptyStateLayout).visibility = View.GONE
             root.findViewById<View>(R.id.errorStateLayout).visibility = View.VISIBLE
             root.findViewById<TextView>(R.id.textErrorMessage).text = currentError
@@ -230,31 +229,18 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
             clipboard.setPrimaryClip(ClipData.newPlainText("Link", (getActiveLink() ?: currentLink).rawUrl))
             Toast.makeText(requireContext(), R.string.link_copied_toast, Toast.LENGTH_SHORT).show()
         }
-
-        val btnJustOnce = root.findViewById<MaterialButton>(R.id.btnJustOnce)
-        val btnAlways = root.findViewById<MaterialButton>(R.id.btnAlways)
-        btnJustOnce.text = getString(if (allowRememberChoices) R.string.action_just_once else R.string.action_open)
-        btnAlways.visibility = if (allowRememberChoices) View.VISIBLE else View.GONE
-
-        btnJustOnce.setOnClickListener {
-            selectedOpenTarget?.let { target -> onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, false) }
-        }
-        btnAlways.setOnClickListener {
-            selectedOpenTarget?.let { target -> onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, true) }
-        }
     }
 
     private fun bindTargets(root: View, currentLink: SanitizedLink) {
         val loadingLayout = root.findViewById<View>(R.id.loadingLayout)
         val btnInspect = root.findViewById<View>(R.id.btnInspectLink)
         val recyclerView = root.findViewById<RecyclerView>(R.id.targetsRecyclerView)
-        val actionButtons = root.findViewById<View>(R.id.actionButtonsLayout)
         val emptyLayout = root.findViewById<View>(R.id.emptyStateLayout)
 
         if (isLoading) {
             loadingLayout.visibility = View.VISIBLE
             btnInspect.visibility = View.GONE; recyclerView.visibility = View.GONE
-            actionButtons.visibility = View.GONE; emptyLayout.visibility = View.GONE
+            emptyLayout.visibility = View.GONE
             return
         }
 
@@ -263,7 +249,7 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
         val hasTargets = openTargets.isNotEmpty() || shareTargets.isNotEmpty()
 
         if (!hasTargets) {
-            recyclerView.visibility = View.GONE; actionButtons.visibility = View.GONE; emptyLayout.visibility = View.VISIBLE
+            recyclerView.visibility = View.GONE; emptyLayout.visibility = View.VISIBLE
         } else {
             emptyLayout.visibility = View.GONE; recyclerView.visibility = View.VISIBLE
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -273,9 +259,10 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
                 context = requireContext(),
                 packageManager = requireContext().packageManager,
                 pinnedStore = pinnedStore,
-                onOpenTargetSelected = { target ->
+                allowRememberChoices = allowRememberChoices,
+                onOpenTargetLaunch = { target, isAlways ->
                     selectedOpenTarget = target
-                    onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, false)
+                    onTargetLaunchRequested?.invoke(target, getActiveLink() ?: currentLink, isAlways)
                 },
                 onShareTargetClicked = { shareTarget ->
                     onShareRequested?.invoke(shareTarget, getActiveLink() ?: currentLink)
@@ -283,7 +270,6 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
             )
             recyclerView.adapter = adapter
             adapter.submitData(openTargets, shareTargets)
-            actionButtons.visibility = if (selectedOpenTarget != null) View.VISIBLE else View.GONE
         }
     }
 

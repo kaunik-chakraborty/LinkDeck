@@ -28,7 +28,8 @@ class TargetAdapter(
     private val context: Context,
     private val packageManager: PackageManager,
     private val pinnedStore: PinnedShareTargetStore? = null,
-    private val onOpenTargetSelected: (AppTarget) -> Unit,
+    var allowRememberChoices: Boolean = true,
+    private val onOpenTargetLaunch: (AppTarget, Boolean) -> Unit,
     private val onShareTargetClicked: (ShareTarget) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -154,6 +155,9 @@ class TargetAdapter(
         private val labelView: TextView = itemView.findViewById(R.id.appLabel)
         private val subtitleView: TextView = itemView.findViewById(R.id.appSubtitle)
         private val btnPinView: ImageButton = itemView.findViewById(R.id.btnPinTarget)
+        private val layoutInlineActions: View = itemView.findViewById(R.id.layoutInlineActions)
+        private val btnInlineJustOnce: com.google.android.material.button.MaterialButton = itemView.findViewById(R.id.btnInlineJustOnce)
+        private val btnInlineAlways: com.google.android.material.button.MaterialButton = itemView.findViewById(R.id.btnInlineAlways)
 
         fun bindOpen(target: AppTarget) {
             labelView.text = target.appLabel
@@ -177,9 +181,27 @@ class TargetAdapter(
             }
             btnPinView.visibility = View.GONE
 
+            layoutInlineActions.visibility = if (isSelected) View.VISIBLE else View.GONE
+            if (isSelected) {
+                btnInlineAlways.visibility = if (allowRememberChoices) View.VISIBLE else View.GONE
+                btnInlineJustOnce.text = context.getString(
+                    if (allowRememberChoices) R.string.action_just_once else R.string.action_open
+                )
+                btnInlineJustOnce.setOnClickListener { onOpenTargetLaunch(target, false) }
+                btnInlineAlways.setOnClickListener { onOpenTargetLaunch(target, true) }
+            }
+
             itemView.setOnClickListener {
-                setSelectedOpenTarget(target)
-                onOpenTargetSelected(target)
+                if (selectedOpenTarget == target) {
+                    onOpenTargetLaunch(target, false)
+                } else {
+                    val prevTarget = selectedOpenTarget
+                    selectedOpenTarget = target
+                    val prevPos = items.indexOfFirst { it is Item.Open && it.appTarget == prevTarget }
+                    val newPos = items.indexOfFirst { it is Item.Open && it.appTarget == target }
+                    if (prevPos != -1) notifyItemChanged(prevPos)
+                    if (newPos != -1) notifyItemChanged(newPos)
+                }
             }
         }
 
@@ -188,6 +210,7 @@ class TargetAdapter(
             itemView.contentDescription = "${target.appLabel}, share target"
             subtitleView.text = if (isPinned) "Pinned" else "Share link"
             subtitleView.visibility = View.VISIBLE
+            layoutInlineActions.visibility = View.GONE
 
             loadIcon(target.packageName, target.activityName, iconView)
 

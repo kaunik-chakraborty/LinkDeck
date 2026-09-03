@@ -3,7 +3,6 @@ package com.linkdeck.android.ui.chooser
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.linkdeck.android.R
 import com.linkdeck.android.core.cleaner.TrackingParameterCleaner
@@ -44,7 +43,15 @@ class ChooserActivity : BaseActivity() {
     private var chooserSheet: ChooserBottomSheet? = null
     private var isLaunchingTarget = false
     private var currentResolutionJob: Job? = null
-    private val redirectResolver = RedirectResolver()
+    private val redirectResolver by lazy {
+        RedirectResolver(
+            hopInterceptor = { url ->
+                if (appSettingsStore.isDeAmpingEnabled) {
+                    com.linkdeck.android.core.deamp.DeAmpEngine.deAmpUrl(url)
+                } else null
+            }
+        )
+    }
     private val ruleStore by lazy { SharedPreferencesRoutingRuleStore(this) }
     private val preferenceStore by lazy { SharedPreferencesRoutingPreferenceStore(this) }
 
@@ -125,14 +132,24 @@ class ChooserActivity : BaseActivity() {
                 }
             }
 
+            var postDeAmpLink = effectiveLink
+            if (appSettingsStore.isDeAmpingEnabled) {
+                val postDeAmpResult = com.linkdeck.android.core.deamp.DeAmpEngine.deAmp(effectiveLink)
+                if (postDeAmpResult.wasDeAmped) {
+                    postDeAmpLink = postDeAmpResult.deAmpedLink
+                    wasDeAmped = true
+                    deAmpSource = postDeAmpResult.source?.displayName
+                }
+            }
+
             // Step 3: Optional tracking parameter cleaner
-            var candidateLink = effectiveLink
+            var candidateLink = postDeAmpLink
             var wasCleaned = false
             var removedParams = emptyList<String>()
 
             if (appSettingsStore.isTrackingCleanerEnabled) {
                 val customRules = com.linkdeck.android.core.cleaner.rules.CustomParameterRulesStore(this@ChooserActivity).getEnabledRules()
-                val cleanResult = TrackingParameterCleaner.clean(effectiveLink, customRules)
+                val cleanResult = TrackingParameterCleaner.clean(postDeAmpLink, customRules)
                 if (cleanResult.hasRemovedParams) {
                     val reSanitized = IntentSanitizer.sanitizeUrl(cleanResult.cleanedLink.rawUrl)
                     if (reSanitized is SanitizationResult.Success) {
@@ -219,22 +236,15 @@ class ChooserActivity : BaseActivity() {
     }
 
     private fun bindSheetCallbacks(sheet: ChooserBottomSheet) {
-        sheet.onTargetLaunchRequested = { selectedTarget, link, isAlways ->
-            handleTargetSelection(selectedTarget, link, isAlways)
+        sheet.onTargetLaunchRequested = { target, link, isAlways ->
+            if (!isLaunchingTarget) executeLaunch(target, link, isAlways)
         }
-        sheet.onShareRequested = { selectedShareTarget, link ->
-            handleShareSelection(selectedShareTarget, link)
+        sheet.onShareRequested = { target, link ->
+            handleShareSelection(target, link)
         }
         sheet.onDismissed = {
-            if (!isFinishing && !isLaunchingTarget) {
-                finish()
-            }
+            if (!isFinishing && !isLaunchingTarget) finish()
         }
-    }
-
-    private fun handleTargetSelection(target: AppTarget, link: SanitizedLink, isAlways: Boolean) {
-        if (isLaunchingTarget) return
-        executeLaunch(target, link, isAlways)
     }
 
     private fun handleShareSelection(target: ShareTarget, link: SanitizedLink) {
@@ -275,16 +285,11 @@ class ChooserActivity : BaseActivity() {
     private fun showError(message: String) {
         currentResolutionJob?.cancel()
         chooserSheet?.dismissAllowingStateLoss()
-        val sheet = ChooserBottomSheet.newInstance().apply {
+        chooserSheet = ChooserBottomSheet.newInstance().apply {
             setErrorData(message)
-            onDismissed = {
-                if (!isFinishing) {
-                    finish()
-                }
-            }
+            onDismissed = { if (!isFinishing) finish() }
+            show(supportFragmentManager, ChooserBottomSheet.TAG)
         }
-        chooserSheet = sheet
-        sheet.show(supportFragmentManager, ChooserBottomSheet.TAG)
     }
 
     override fun onDestroy() {

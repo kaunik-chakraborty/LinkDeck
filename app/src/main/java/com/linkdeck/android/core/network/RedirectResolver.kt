@@ -27,7 +27,8 @@ class RedirectResolver(
     private val maxHops: Int = MAX_HOPS,
     private val connectTimeoutMs: Int = DEFAULT_CONNECT_TIMEOUT_MS,
     private val readTimeoutMs: Int = DEFAULT_READ_TIMEOUT_MS,
-    private val totalTimeoutMs: Long = DEFAULT_TOTAL_TIMEOUT_MS
+    private val totalTimeoutMs: Long = DEFAULT_TOTAL_TIMEOUT_MS,
+    private val hopInterceptor: ((String) -> String?)? = null
 ) {
 
     suspend fun resolve(sanitizedLink: SanitizedLink): RedirectResult = withContext(Dispatchers.IO) {
@@ -231,6 +232,20 @@ class RedirectResolver(
                 }
 
                 val nextUrl = resolvedUri.toASCIIString()
+                val interceptedUrl = hopInterceptor?.invoke(nextUrl)
+                if (interceptedUrl != null) {
+                    hops.add(
+                        RedirectHop(
+                            sourceUrl = currentUrl,
+                            statusCode = response.statusCode,
+                            location = rawLocation,
+                            targetUrl = interceptedUrl,
+                            resolvedIp = resolvedAddresses.firstOrNull()?.hostAddress
+                        )
+                    )
+                    return@withContext RedirectResult.Success(originalUrl, interceptedUrl, hops)
+                }
+
                 hops.add(
                     RedirectHop(
                         sourceUrl = currentUrl,

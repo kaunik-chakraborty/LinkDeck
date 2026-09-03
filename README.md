@@ -23,6 +23,7 @@
 - [Home Screen Widgets](#home-screen-widgets)
 - [System Requirements](#system-requirements)
 - [Building & Testing](#building--testing)
+- [Screenshots](#screenshots)
 - [Community & Policies](#community--policies)
 - [License](#license)
 
@@ -120,6 +121,21 @@ LinkDeck includes an interactive 4-slide onboarding guide introducing users to:
 # Assemble optimized release APK
 ./gradlew assembleRelease
 ```
+
+---
+
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/LinkDeck_Home.png" width="31%" alt="Home Dashboard" />
+  <img src="docs/screenshots/LinkDeck_Chooser_Sheet.png" width="31%" alt="Link Chooser" />
+  <img src="docs/screenshots/LinkDeck_Link_Details.png" width="31%" alt="Link Details" />
+</p>
+<p align="center">
+  <img src="docs/screenshots/LinkDeck_Custom_Rules.jpeg" width="31%" alt="Custom Parameter Rules" />
+  <img src="docs/screenshots/LinkDeck_Routing_Rule.png" width="31%" alt="Routing Rules" />
+  <img src="docs/screenshots/LinkDeck_Settings.png" width="31%" alt="Settings" />
+</p>
 
 ---
 
