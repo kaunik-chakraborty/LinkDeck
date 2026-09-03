@@ -213,7 +213,7 @@
     <string name="setting_github_desc">Star the project or view source code on GitHub</string>
     <string name="github_repo_url">https://github.com/kaunik-chakraborty/LinkDeck</string>
     <string name="setting_version_title">Version</string>
-    <string name="setting_version_desc">1.2 (Release)</string>
+    <string name="setting_version_desc">1.3 (Release)</string>
     <string name="setting_license_title">License</string>
     <string name="setting_license_desc">Open source (Apache License 2.0)</string>
     <string name="setting_privacy_title">Privacy &amp; Security</string>

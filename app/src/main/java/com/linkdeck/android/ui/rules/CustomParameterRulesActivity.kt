@@ -2,11 +2,12 @@ package com.linkdeck.android.ui.rules
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,12 +18,14 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.linkdeck.android.R
 import com.linkdeck.android.core.cleaner.rules.CustomParameterRule
 import com.linkdeck.android.core.cleaner.rules.CustomParameterRulesStore
+import com.linkdeck.android.ui.base.BaseActivity
 
 /**
  * Management activity allowing power users to view, add, toggle, and delete
  * custom tracking parameter stripping and allowlist rules.
+ * Inherits BaseActivity for Material You dynamic colors and font overlay support.
  */
-class CustomParameterRulesActivity : AppCompatActivity() {
+class CustomParameterRulesActivity : BaseActivity() {
 
     private val rulesStore by lazy { CustomParameterRulesStore(this) }
     private lateinit var adapter: CustomRuleAdapter
@@ -35,28 +38,29 @@ class CustomParameterRulesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_rules)
 
-        val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
+        val appBar = findViewById<View>(R.id.rulesAppBar)
+        val toolbar = findViewById<MaterialToolbar>(R.id.rulesToolbar)
         recyclerCustomRules = findViewById(R.id.recyclerCustomRules)
         viewEmptyState = findViewById(R.id.viewEmptyState)
         fabAddRule = findViewById(R.id.fabAddRule)
         val btnLoadPresets = findViewById<MaterialButton>(R.id.btnLoadPresets)
         val btnEmptyAddRule = findViewById<MaterialButton>(R.id.btnEmptyAddRule)
 
-        // Setup Toolbar
         toolbar.setNavigationOnClickListener {
             finish()
         }
 
-        // Setup Insets for edge-to-edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)) { _, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rulesCoordinator)) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            toolbar.updatePadding(top = systemBars.top)
-            recyclerCustomRules.updatePadding(bottom = systemBars.bottom + 88)
-            fabAddRule.updatePadding(bottom = systemBars.bottom)
+            appBar.updatePadding(top = systemBars.top)
+            recyclerCustomRules.updatePadding(bottom = systemBars.bottom + 96)
+            fabAddRule.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = systemBars.bottom + (20 * resources.displayMetrics.density).toInt()
+                rightMargin = systemBars.right + (20 * resources.displayMetrics.density).toInt()
+            }
             insets
         }
 
-        // Setup Adapter
         adapter = CustomRuleAdapter(
             onToggle = { rule, isChecked ->
                 rulesStore.toggleRule(rule.id, isChecked)
@@ -69,7 +73,6 @@ class CustomParameterRulesActivity : AppCompatActivity() {
         recyclerCustomRules.layoutManager = LinearLayoutManager(this)
         recyclerCustomRules.adapter = adapter
 
-        // Setup Actions
         fabAddRule.setOnClickListener {
             showAddRuleSheet()
         }

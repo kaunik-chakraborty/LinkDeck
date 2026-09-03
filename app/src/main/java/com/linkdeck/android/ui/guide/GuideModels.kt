@@ -88,6 +88,13 @@ object GuideRepository {
             index = 11,
             title = "Custom Typography & OLED Dark Theme",
             description = "Personalize your experience with 5 curated typography options (Satoshi, Outfit, Inter, JetBrains Mono, Space Grotesk), Material You dynamic colors, and OLED Pure Dark mode."
+        ),
+        GuideItem(
+            id = "custom_parameter_rules",
+            index = 12,
+            title = "Custom Parameter Rules (Power-User Engine)",
+            description = "Empowers you to define custom query parameters to block (strip) or allow (preserve). Supports wildcard prefix matching (e.g. mkt_*), domain scoping (e.g. twitter.com), and site unbreaking overrides.",
+            example = "Block: 'ref_src' on twitter.com\nBlock: 'igsi' on instagram.com\nAllow: 'si' on internal.company.com\n(Total granular privacy control over your links!)"
         )
     )
 
@@ -151,6 +158,12 @@ object GuideRepository {
             index = 10,
             title = "Zero Telemetry & Local Persistence",
             description = "• Zero tracking SDKs, zero crash reporting services, zero cloud accounts, and zero background data transmission.\n• All routing rules, quick link deck slots, and preferences are stored in app-private SharedPreferences with immediate 1-tap wipe support."
+        ),
+        GuideItem(
+            id = "custom_rules_engine",
+            index = 11,
+            title = "Custom Parameter Rule Evaluation Engine",
+            description = "• Pure, deterministic rule evaluator resolving ALLOW, BLOCK, and NEUTRAL states.\n• ALLOW rules strictly override default blocklists, allowing granular domain unbreaking.\n• In-memory caching with atomic SharedPreferences JSON persistence for zero-latency lookups.\n• Normalizes subdomains and handles wildcard prefixes without regular expression backtracking vulnerabilities."
         )
     )
 }

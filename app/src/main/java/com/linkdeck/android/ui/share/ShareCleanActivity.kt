@@ -11,13 +11,14 @@ import com.linkdeck.android.core.model.SanitizationResult
 import com.linkdeck.android.core.settings.AppSettingsStore
 import com.linkdeck.android.core.share.ShareUrlExtractor
 
+import com.linkdeck.android.ui.base.BaseActivity
+
 /**
  * Transparent entrypoint Activity that intercepts ACTION_SEND intents containing URLs or text,
  * cleans tracking parameters, and displays the ShareCleanBottomSheet.
+ * Inherits BaseActivity for font overlay and Material You dynamic colors support.
  */
-class ShareCleanActivity : AppCompatActivity() {
-
-    private val settingsStore by lazy { AppSettingsStore(this) }
+class ShareCleanActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,7 +28,7 @@ class ShareCleanActivity : AppCompatActivity() {
             return
         }
 
-        if (!settingsStore.isShareCleaningEnabled) {
+        if (!appSettingsStore.isShareCleaningEnabled) {
             // If share cleaning is disabled in settings, forward raw text to standard system chooser
             forwardRawIntent()
             finish()
@@ -57,8 +58,7 @@ class ShareCleanActivity : AppCompatActivity() {
             return
         }
 
-        val settingsStore = com.linkdeck.android.core.settings.AppSettingsStore(this)
-        val linkToClean = if (settingsStore.isDeAmpingEnabled) {
+        val linkToClean = if (appSettingsStore.isDeAmpingEnabled) {
             val deAmped = com.linkdeck.android.core.deamp.DeAmpEngine.deAmp(sanitization.link)
             if (deAmped.wasDeAmped) deAmped.deAmpedLink else sanitization.link
         } else {

@@ -94,15 +94,33 @@ class CustomParameterRulesStore(context: Context) {
 
         val presets = listOf(
             CustomParameterRule(
+                parameterPattern = "igsi",
+                isPrefix = false,
+                domainPattern = "instagram.com",
+                action = ParameterRuleAction.BLOCK
+            ),
+            CustomParameterRule(
+                parameterPattern = "igsh",
+                isPrefix = false,
+                domainPattern = "instagram.com",
+                action = ParameterRuleAction.BLOCK
+            ),
+            CustomParameterRule(
                 parameterPattern = "ref_src",
                 isPrefix = false,
                 domainPattern = "twitter.com",
                 action = ParameterRuleAction.BLOCK
             ),
             CustomParameterRule(
-                parameterPattern = "spm",
+                parameterPattern = "mibextid",
                 isPrefix = false,
-                domainPattern = "aliexpress.com",
+                domainPattern = "facebook.com",
+                action = ParameterRuleAction.BLOCK
+            ),
+            CustomParameterRule(
+                parameterPattern = "feature",
+                isPrefix = false,
+                domainPattern = "youtube.com",
                 action = ParameterRuleAction.BLOCK
             ),
             CustomParameterRule(
@@ -113,6 +131,12 @@ class CustomParameterRulesStore(context: Context) {
             ),
             CustomParameterRule(
                 parameterPattern = "cmpid",
+                isPrefix = false,
+                domainPattern = null,
+                action = ParameterRuleAction.BLOCK
+            ),
+            CustomParameterRule(
+                parameterPattern = "aff_id",
                 isPrefix = false,
                 domainPattern = null,
                 action = ParameterRuleAction.BLOCK
