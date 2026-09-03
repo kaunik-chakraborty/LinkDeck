@@ -63,10 +63,12 @@ class CleanClipboardActivity : Activity() {
             }
 
             val settingsStore = AppSettingsStore(this)
+            val customRules = com.linkdeck.android.core.cleaner.rules.CustomParameterRulesStore(this).getEnabledRules()
             val result = ClipboardLinkCleaner.clean(
                 rawClipboardText = rawText,
                 isDeAmpingEnabled = settingsStore.isDeAmpingEnabled,
-                isTrackingCleanerEnabled = settingsStore.isTrackingCleanerEnabled
+                isTrackingCleanerEnabled = settingsStore.isTrackingCleanerEnabled,
+                customRules = customRules
             )
 
             handleCleanResult(result, clipboard)

@@ -316,4 +316,31 @@
 
     <string name="setting_walkthrough_title">App Walkthrough</string>
     <string name="setting_walkthrough_desc">Replay the interactive introduction and features guide.</string>
+
+    <!-- Custom Parameter Rules (Feature 4) -->
+    <string name="setting_custom_rules_title">Custom Parameter Rules</string>
+    <string name="setting_custom_rules_desc">Define custom query parameters and domain overrides.</string>
+    <string name="custom_rules_screen_title">Custom Parameter Rules</string>
+    <string name="custom_rules_empty_title">No Custom Rules</string>
+    <string name="custom_rules_empty_desc">Add rules to strip proprietary tracking tokens or allowlist parameters on specific domains.</string>
+    <string name="custom_rules_btn_add">Add Rule</string>
+    <string name="custom_rules_btn_load_presets">Load Recommended Presets</string>
+    <string name="custom_rules_presets_loaded">Added %1$d recommended tracking rules</string>
+    <string name="custom_rules_presets_already_exist">Recommended rules are already loaded</string>
+    <string name="custom_rules_dialog_delete_title">Delete Rule</string>
+    <string name="custom_rules_dialog_delete_message">Are you sure you want to delete the rule for \"%1$s\"?</string>
+    <string name="sheet_add_rule_title">Add Parameter Rule</string>
+    <string name="sheet_add_rule_param_label">Parameter name or pattern</string>
+    <string name="sheet_add_rule_param_hint">e.g. ref_src or mkt_*</string>
+    <string name="sheet_add_rule_prefix_hint">Use an asterisk at the end for prefix matching (e.g. mkt_*)</string>
+    <string name="sheet_add_rule_domain_label">Domain scope (Optional)</string>
+    <string name="sheet_add_rule_domain_hint">e.g. amazon.com or leave blank for all</string>
+    <string name="sheet_add_rule_action_label">Rule action</string>
+    <string name="sheet_add_rule_action_block">Block (Strip parameter)</string>
+    <string name="sheet_add_rule_action_allow">Allow (Preserve parameter)</string>
+    <string name="sheet_add_rule_btn_save">Save Rule</string>
+    <string name="sheet_add_rule_err_empty_param">Parameter name cannot be empty</string>
+    <string name="custom_rule_scope_global">Global (All Domains)</string>
+    <string name="custom_rule_action_block">Block</string>
+    <string name="custom_rule_action_allow">Allow</string>
 </resources>

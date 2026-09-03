@@ -65,7 +65,8 @@ class ShareCleanActivity : AppCompatActivity() {
             sanitization.link
         }
 
-        val cleanResult = TrackingParameterCleaner.clean(linkToClean)
+        val customRules = com.linkdeck.android.core.cleaner.rules.CustomParameterRulesStore(this).getEnabledRules()
+        val cleanResult = TrackingParameterCleaner.clean(linkToClean, customRules)
         val finalUrl = cleanResult.cleanedLink.rawUrl
         val removedParams = cleanResult.removedParams
 

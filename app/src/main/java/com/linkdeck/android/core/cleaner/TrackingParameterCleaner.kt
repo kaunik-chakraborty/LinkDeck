@@ -147,10 +147,13 @@ object TrackingParameterCleaner {
     }
 
     /**
-     * Inspects and cleans known tracking parameters from [link].
+     * Inspects and cleans known tracking parameters and custom user rules from [link].
      * If no tracking parameters exist or if parsing fails, returns the unmodified link.
      */
-    fun clean(link: SanitizedLink): CleanResult {
+    fun clean(
+        link: SanitizedLink,
+        customRules: List<com.linkdeck.android.core.cleaner.rules.CustomParameterRule> = emptyList()
+    ): CleanResult {
         return try {
             val rawUrl = link.rawUrl
             val uri = URI(rawUrl)
@@ -170,7 +173,18 @@ object TrackingParameterCleaner {
                 val key = if (eqIdx != -1) pair.substring(0, eqIdx) else pair
                 val value = if (eqIdx != -1) pair.substring(eqIdx + 1) else null
 
-                if (isTrackingKey(key, value)) {
+                val decision = com.linkdeck.android.core.cleaner.rules.CustomRuleEvaluator.evaluate(
+                    key,
+                    link.host,
+                    customRules
+                )
+                val shouldRemove = when (decision) {
+                    com.linkdeck.android.core.cleaner.rules.RuleDecision.ALLOW -> false
+                    com.linkdeck.android.core.cleaner.rules.RuleDecision.BLOCK -> true
+                    com.linkdeck.android.core.cleaner.rules.RuleDecision.NEUTRAL -> isTrackingKey(key, value)
+                }
+
+                if (shouldRemove) {
                     removedParamNames.add(key)
                 } else {
                     preservedPairs.add(pair)

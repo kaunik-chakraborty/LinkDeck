@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_surface_card"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header: Parameter pattern + Switch -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iconRuleType"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/shieldcheck"
+            app:tint="?attr/colorPrimary" />
+
+        <TextView
+            android:id="@+id/textParameterPattern"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="?attr/colorOnSurface"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="mkt_*" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/switchRuleEnabled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp" />
+
+    </LinearLayout>
+
+    <!-- Badges Row: Action (Block/Allow) + Domain Scope + Delete Action -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- Action Chip (Block / Allow) -->
+        <TextView
+            android:id="@+id/chipRuleAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_badge_chip"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="3dp"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="BLOCK" />
+
+        <!-- Domain Scope Chip -->
+        <TextView
+            android:id="@+id/chipDomainScope"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/bg_url_badge"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="3dp"
+            android:textColor="?attr/colorOnSurfaceVariant"
+            android:textSize="11sp"
+            tools:text="twitter.com" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <!-- Delete Rule Button -->
+        <ImageButton
+            android:id="@+id/btnDeleteRule"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/btn_clear"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/delete"
+            app:tint="?attr/colorError" />
+
+    </LinearLayout>
+
+</LinearLayout>

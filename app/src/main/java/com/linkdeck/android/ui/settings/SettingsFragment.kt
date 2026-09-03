@@ -183,6 +183,10 @@ class SettingsFragment : Fragment() {
         switchShareCleaning.setOnCheckedChangeListener { _, isChecked -> settingsStore.isShareCleaningEnabled = isChecked }
         switchCnameDetection.setOnCheckedChangeListener { _, isChecked -> settingsStore.isCnameDetectionEnabled = isChecked }
         switchDeAmping.setOnCheckedChangeListener { _, isChecked -> settingsStore.isDeAmpingEnabled = isChecked }
+
+        root.findViewById<View>(R.id.rowCustomParameterRules).setOnClickListener {
+            startActivity(Intent(requireContext(), com.linkdeck.android.ui.rules.CustomParameterRulesActivity::class.java))
+        }
     }
 
     fun refreshSwitchStates() {

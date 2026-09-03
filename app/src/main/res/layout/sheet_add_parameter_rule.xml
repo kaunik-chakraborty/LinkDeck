@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:alpha="0.4"
+        android:background="?attr/colorOutline" />
+
+    <!-- Sheet Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/sheet_add_rule_title"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <!-- Parameter Key Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutInputParameter"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:hint="@string/sheet_add_rule_param_label"
+        app:helperText="@string/sheet_add_rule_prefix_hint"
+        app:helperTextEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editInputParameter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri|textNoSuggestions"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Domain Scope Input (Optional) -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layoutInputDomain"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:hint="@string/sheet_add_rule_domain_label"
+        app:helperText="@string/sheet_add_rule_domain_hint"
+        app:helperTextEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editInputDomain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textUri|textNoSuggestions"
+            android:singleLine="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Action Selection Label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/sheet_add_rule_action_label"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+    <!-- Action RadioGroup -->
+    <RadioGroup
+        android:id="@+id/radioGroupAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioActionBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/sheet_add_rule_action_block" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/radioActionAllow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sheet_add_rule_action_allow" />
+
+    </RadioGroup>
+
+    <!-- Save Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnSaveRule"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:text="@string/sheet_add_rule_btn_save" />
+
+</LinearLayout>

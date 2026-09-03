@@ -23,7 +23,8 @@ object ClipboardLinkCleaner {
     fun clean(
         rawClipboardText: String?,
         isDeAmpingEnabled: Boolean = true,
-        isTrackingCleanerEnabled: Boolean = true
+        isTrackingCleanerEnabled: Boolean = true,
+        customRules: List<com.linkdeck.android.core.cleaner.rules.CustomParameterRule> = emptyList()
     ): ClipboardCleanResult {
         if (rawClipboardText.isNullOrBlank()) {
             return ClipboardCleanResult.Empty
@@ -52,7 +53,7 @@ object ClipboardLinkCleaner {
 
         var removedParams = emptyList<String>()
         if (isTrackingCleanerEnabled) {
-            val cleanResult = TrackingParameterCleaner.clean(candidate)
+            val cleanResult = TrackingParameterCleaner.clean(candidate, customRules)
             if (cleanResult.hasRemovedParams) {
                 candidate = cleanResult.cleanedLink
                 removedParams = cleanResult.removedParams

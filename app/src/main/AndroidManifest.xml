@@ -128,6 +128,13 @@
             android:excludeFromRecents="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!-- Custom Parameter Rules Activity (Feature 4) -->
+        <activity
+            android:name=".ui.rules.CustomParameterRulesActivity"
+            android:exported="false"
+            android:label="@string/custom_rules_screen_title"
+            android:theme="@style/Theme.LinkDeck" />
+
         <!-- Multi-Link & Quick Paste Widget Provider -->
         <receiver
             android:name=".widget.LinkDeckMultiLinkWidget"

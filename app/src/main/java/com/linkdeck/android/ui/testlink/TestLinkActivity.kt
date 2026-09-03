@@ -148,7 +148,8 @@ class TestLinkActivity : BaseActivity() {
             var removedParams = emptyList<String>()
 
             if (appSettingsStore.isTrackingCleanerEnabled) {
-                val cleanResult = TrackingParameterCleaner.clean(effectiveLink)
+                val customRules = com.linkdeck.android.core.cleaner.rules.CustomParameterRulesStore(this@TestLinkActivity).getEnabledRules()
+                val cleanResult = TrackingParameterCleaner.clean(effectiveLink, customRules)
                 if (cleanResult.hasRemovedParams) {
                     val reSanitized = IntentSanitizer.sanitizeUrl(cleanResult.cleanedLink.rawUrl)
                     if (reSanitized is SanitizationResult.Success) {

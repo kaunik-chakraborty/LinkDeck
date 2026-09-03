@@ -188,4 +188,42 @@ class TrackingParameterCleanerTest {
         assertEquals("https://www.instagram.com/reel/C0000000000/", result.cleanedLink.rawUrl)
         assertTrue(result.removedParams.contains("igsi"))
     }
+
+    @Test
+    fun clean_withCustomBlockRule_stripsCustomParameter() {
+        val link = SanitizedLink(
+            rawUrl = "https://example.com/item?custom_tracker=123&product_id=45",
+            scheme = "https",
+            host = "example.com",
+            path = "/item"
+        )
+        val rule = com.linkdeck.android.core.cleaner.rules.CustomParameterRule(
+            parameterPattern = "custom_tracker",
+            action = com.linkdeck.android.core.cleaner.rules.ParameterRuleAction.BLOCK
+        )
+        val result = TrackingParameterCleaner.clean(link, listOf(rule))
+
+        assertTrue(result.hasRemovedParams)
+        assertEquals("https://example.com/item?product_id=45", result.cleanedLink.rawUrl)
+        assertTrue(result.removedParams.contains("custom_tracker"))
+    }
+
+    @Test
+    fun clean_withCustomAllowRule_preservesDefaultTrackingParameter() {
+        val link = SanitizedLink(
+            rawUrl = "https://youtube.com/watch?v=123&si=special_token",
+            scheme = "https",
+            host = "youtube.com",
+            path = "/watch"
+        )
+        val allowRule = com.linkdeck.android.core.cleaner.rules.CustomParameterRule(
+            parameterPattern = "si",
+            domainPattern = "youtube.com",
+            action = com.linkdeck.android.core.cleaner.rules.ParameterRuleAction.ALLOW
+        )
+        val result = TrackingParameterCleaner.clean(link, listOf(allowRule))
+
+        assertFalse("Expected si parameter to be preserved by allow rule", result.hasRemovedParams)
+        assertEquals("https://youtube.com/watch?v=123&si=special_token", result.cleanedLink.rawUrl)
+    }
 }
