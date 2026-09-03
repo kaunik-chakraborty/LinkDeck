@@ -149,4 +149,11 @@ class IntentSanitizerTest {
         )
         assertNull(IntentSanitizer.extractUrlFromText("Just regular text without any link"))
     }
+
+    @Test
+    fun sanitizeUrl_plainWordWithoutDomain_returnsMissingHostError() {
+        val result = IntentSanitizer.sanitizeUrl("hello")
+        assertTrue("Expected error for 'hello'", result is SanitizationResult.Error)
+        assertEquals(SanitizationError.MISSING_HOST, (result as SanitizationResult.Error).error)
+    }
 }

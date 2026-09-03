@@ -119,18 +119,19 @@
 
     <!-- Quick Links Section Header -->
     <LinearLayout
+        android:id="@+id/widgetQuickLinksHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="6dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/widget_quick_links"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@color/widget_text_secondary" />
 
@@ -139,10 +140,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Manage"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@color/widget_accent"
-            android:padding="2dp" />
+            android:paddingStart="12dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp" />
 
     </LinearLayout>
 
@@ -154,7 +158,9 @@
         android:orientation="horizontal"
         android:gravity="center"
         android:background="@drawable/bg_widget_card"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:layout_marginBottom="6dp"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
@@ -169,13 +175,13 @@
     <LinearLayout
         android:id="@+id/widgetSlot1"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="36dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
         android:paddingEnd="8dp"
         android:background="@drawable/bg_widget_card"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="6dp"
         android:visibility="gone">
 
         <TextView
@@ -197,7 +203,7 @@
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@color/widget_accent"
-            android:padding="4dp" />
+            android:padding="6dp" />
 
     </LinearLayout>
 
@@ -205,13 +211,13 @@
     <LinearLayout
         android:id="@+id/widgetSlot2"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="36dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="10dp"
         android:paddingEnd="8dp"
         android:background="@drawable/bg_widget_card"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="6dp"
         android:visibility="gone">
 
         <TextView
@@ -233,7 +239,7 @@
             android:textSize="12sp"
             android:textStyle="bold"
             android:textColor="@color/widget_accent"
-            android:padding="4dp" />
+            android:padding="6dp" />
 
     </LinearLayout>
 
@@ -241,7 +247,7 @@
     <LinearLayout
         android:id="@+id/widgetSlot3"
         android:layout_width="match_parent"
-        android:layout_height="34dp"
+        android:layout_height="36dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingStart="10dp"

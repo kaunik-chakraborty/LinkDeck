@@ -121,6 +121,13 @@
             android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!-- Clean Clipboard Trampoline Activity for Quick Settings Tile -->
+        <activity
+            android:name=".ui.clipboard.CleanClipboardActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <!-- Multi-Link & Quick Paste Widget Provider -->
         <receiver
             android:name=".widget.LinkDeckMultiLinkWidget"

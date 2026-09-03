@@ -1,48 +1,57 @@
 package com.linkdeck.android.widget
 
+import android.app.Activity
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import com.linkdeck.android.MainActivity
 import com.linkdeck.android.R
 import com.linkdeck.android.core.intent.IntentSanitizer
 import com.linkdeck.android.core.model.SanitizationResult
+import com.linkdeck.android.core.share.ShareUrlExtractor
 import com.linkdeck.android.ui.chooser.ChooserActivity
 import com.linkdeck.android.ui.testlink.TestLinkActivity
 
 /**
- * Ephemeral trampoline activity that handles widget actions such as
- * 1-tap clipboard paste & route, quick link save, and widget settings navigation.
+ * Headless trampoline that handles widget actions: clipboard paste & route,
+ * quick link save, and settings navigation. Extends platform Activity (not
+ * AppCompatActivity) because it renders zero UI and must use
+ * Theme.Translucent.NoTitleBar which is incompatible with AppCompat themes.
+ * Clipboard access is deferred to onWindowFocusChanged to comply with
+ * Android 10-16 privacy requirements across all OEMs.
  */
-class WidgetActionActivity : AppCompatActivity() {
+class WidgetActionActivity : Activity() {
 
     private val quickLinksStore by lazy { WidgetQuickLinksStore(this) }
+    private var pendingAction: String? = null
+    private var hasExecuted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val action = intent.action
         val directUrl = intent.getStringExtra(EXTRA_DIRECT_URL)
+        if (directUrl != null) {
+            launchLink(directUrl)
+            return
+        }
 
-        when {
-            directUrl != null -> {
-                launchLink(directUrl)
+        val action = intent.action
+        when (action) {
+            ACTION_PASTE_AND_OPEN, ACTION_PASTE_AND_SAVE -> {
+                pendingAction = action
+                // Safety fallback for OEM launchers that delay window focus delivery
+                window.decorView.postDelayed({
+                    executePendingActionIfNeeded()
+                }, 350)
             }
-            action == ACTION_PASTE_AND_OPEN -> {
-                handlePasteAndOpen()
-            }
-            action == ACTION_PASTE_AND_SAVE -> {
-                handlePasteAndSave()
-            }
-            action == ACTION_OPEN_SETTINGS -> {
+            ACTION_OPEN_SETTINGS -> {
                 startActivity(Intent(this, WidgetSettingsActivity::class.java))
                 finish()
             }
-            action == ACTION_OPEN_TEST_LINK -> {
+            ACTION_OPEN_TEST_LINK -> {
                 startActivity(Intent(this, TestLinkActivity::class.java))
                 finish()
             }
@@ -53,24 +62,44 @@ class WidgetActionActivity : AppCompatActivity() {
         }
     }
 
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        if (hasFocus) {
+            executePendingActionIfNeeded()
+        }
+    }
+
+    private fun executePendingActionIfNeeded() {
+        if (hasExecuted || isFinishing) return
+        hasExecuted = true
+
+        when (pendingAction) {
+            ACTION_PASTE_AND_OPEN -> handlePasteAndOpen()
+            ACTION_PASTE_AND_SAVE -> handlePasteAndSave()
+            else -> finish()
+        }
+    }
+
     private fun handlePasteAndOpen() {
         val pastedText = getClipboardText()
         if (pastedText.isNullOrBlank()) {
-            Toast.makeText(this, "Clipboard is empty. Copy a link first!", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, WidgetSettingsActivity::class.java))
+            Toast.makeText(applicationContext, R.string.toast_clipboard_empty, Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        val sanitized = IntentSanitizer.sanitizeUrl(pastedText)
+        val extractedUrl = ShareUrlExtractor.extractFirstUrl(pastedText)
+        if (extractedUrl == null) {
+            Toast.makeText(applicationContext, R.string.toast_clipboard_no_link, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        val sanitized = IntentSanitizer.sanitizeUrl(extractedUrl)
         if (sanitized is SanitizationResult.Success) {
             launchLink(sanitized.link.rawUrl)
         } else {
-            Toast.makeText(this, "No valid link found in clipboard", Toast.LENGTH_SHORT).show()
-            val testIntent = Intent(this, TestLinkActivity::class.java).apply {
-                putExtra(Intent.EXTRA_TEXT, pastedText)
-            }
-            startActivity(testIntent)
+            Toast.makeText(applicationContext, R.string.toast_clipboard_invalid_link, Toast.LENGTH_SHORT).show()
             finish()
         }
     }
@@ -78,23 +107,30 @@ class WidgetActionActivity : AppCompatActivity() {
     private fun handlePasteAndSave() {
         val pastedText = getClipboardText()
         if (pastedText.isNullOrBlank()) {
-            Toast.makeText(this, "Clipboard is empty. Copy a link first!", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, WidgetSettingsActivity::class.java))
+            Toast.makeText(applicationContext, R.string.toast_clipboard_empty, Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        val sanitized = IntentSanitizer.sanitizeUrl(pastedText)
+        val extractedUrl = ShareUrlExtractor.extractFirstUrl(pastedText)
+        if (extractedUrl == null) {
+            Toast.makeText(applicationContext, R.string.toast_clipboard_no_link, Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        val sanitized = IntentSanitizer.sanitizeUrl(extractedUrl)
         if (sanitized is SanitizationResult.Success) {
             val added = quickLinksStore.addQuickLink(sanitized.link.rawUrl)
             if (added) {
                 WidgetUpdateHelper.updateAllWidgets(this)
-                Toast.makeText(this, "Saved ${sanitized.link.host} to Widget Quick Links", Toast.LENGTH_SHORT).show()
+                val msg = getString(R.string.widget_quick_link_saved, sanitized.link.host)
+                Toast.makeText(applicationContext, msg, Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Widget quick links limit reached", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, R.string.widget_quick_links_limit, Toast.LENGTH_SHORT).show()
             }
         } else {
-            Toast.makeText(this, "Invalid link in clipboard", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, R.string.toast_clipboard_invalid_link, Toast.LENGTH_SHORT).show()
         }
         finish()
     }

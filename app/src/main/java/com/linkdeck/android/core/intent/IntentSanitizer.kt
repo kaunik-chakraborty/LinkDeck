@@ -106,7 +106,7 @@ object IntentSanitizer {
             )
 
         val host = parsedComponents.host?.trim()?.removeSuffix(".")?.lowercase(Locale.ROOT)
-        if (host.isNullOrBlank()) {
+        if (host.isNullOrBlank() || (!host.contains(".") && host != "localhost")) {
             return SanitizationResult.Error(
                 SanitizationError.MISSING_HOST,
                 "URL does not contain a valid host authority"

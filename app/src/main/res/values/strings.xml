@@ -275,6 +275,8 @@
     <string name="widget_btn_test_link">Test Link</string>
     <string name="widget_btn_rules">Rules</string>
     <string name="widget_btn_settings">Settings</string>
+    <string name="widget_quick_link_saved">Saved %1$s to Quick Links</string>
+    <string name="widget_quick_links_limit">Quick links limit reached</string>
 
     <!-- Onboarding Walkthrough -->
     <string name="onboarding_skip">Skip</string>

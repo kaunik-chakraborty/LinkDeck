@@ -43,4 +43,18 @@ class ShareUrlExtractorTest {
         assertNull(ShareUrlExtractor.extractFirstUrl(null))
         assertNull(ShareUrlExtractor.extractFirstUrl("   "))
     }
+
+    @Test
+    fun extractFirstUrl_plainWords_returnsNull() {
+        assertNull(ShareUrlExtractor.extractFirstUrl("hello"))
+        assertNull(ShareUrlExtractor.extractFirstUrl("Hello world! How are you doing?"))
+        assertNull(ShareUrlExtractor.extractFirstUrl("user@example.com"))
+    }
+
+    @Test
+    fun extractFirstUrl_schemelessDomains_returnsHttpsUrl() {
+        assertEquals("https://www.google.com", ShareUrlExtractor.extractFirstUrl("www.google.com"))
+        assertEquals("https://google.com", ShareUrlExtractor.extractFirstUrl("google.com"))
+        assertEquals("https://github.com/repo", ShareUrlExtractor.extractFirstUrl("github.com/repo"))
+    }
 }

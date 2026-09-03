@@ -38,6 +38,7 @@ class LinkDeckMultiLinkWidget : AppWidgetProvider() {
             )
             views.setOnClickPendingIntent(R.id.widgetBtnSettings, settingsPending)
             views.setOnClickPendingIntent(R.id.widgetBtnManage, settingsPending)
+            views.setOnClickPendingIntent(R.id.widgetQuickLinksHeader, settingsPending)
             views.setOnClickPendingIntent(R.id.widgetEmptyLinksLayout, settingsPending)
 
             // 2. Paste & Open link pending intent
