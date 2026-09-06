@@ -95,6 +95,13 @@ object GuideRepository {
             title = "Custom Parameter Rules (Power-User Engine)",
             description = "Empowers you to define custom query parameters to block (strip) or allow (preserve). Supports wildcard prefix matching (e.g. mkt_*), domain scoping (e.g. twitter.com), and site unbreaking overrides.",
             example = "Block: 'ref_src' on twitter.com\nBlock: 'igsi' on instagram.com\nAllow: 'si' on internal.company.com\n(Total granular privacy control over your links!)"
+        ),
+        GuideItem(
+            id = "qr_scanner_generator",
+            index = 13,
+            title = "Offline QR Code Scanner & Generator",
+            description = "Safely scan QR codes from your camera or photo gallery without tracking. LinkDeck automatically removes invasive ad tags, unrolls AMP links, and warns you about suspicious phishing links before opening. You can also generate clean QR codes to easily share links with others offline.",
+            example = "Point your camera at a restaurant or billboard QR code. LinkDeck strips tracking parameters and gives you an interactive preview with full control before visiting the website."
         )
     )
 
@@ -164,6 +171,12 @@ object GuideRepository {
             index = 11,
             title = "Custom Parameter Rule Evaluation Engine",
             description = "• Pure, deterministic rule evaluator resolving ALLOW, BLOCK, and NEUTRAL states.\n• ALLOW rules strictly override default blocklists, allowing granular domain unbreaking.\n• In-memory caching with atomic SharedPreferences JSON persistence for zero-latency lookups.\n• Normalizes subdomains and handles wildcard prefixes without regular expression backtracking vulnerabilities."
+        ),
+        GuideItem(
+            id = "qr_engine_tech",
+            index = 12,
+            title = "On-Device CameraX & ZXing QR Subsystem",
+            description = "• High-efficiency ImageAnalysis pipeline extracts 8-bit Y-plane luminance buffers directly from camera frames with PlanarYUVLuminanceSource, bypassing heavy Bitmap conversions.\n• Dual-pass adaptive binarization: HybridBinarizer for optimal edge contrast, with automatic fallback to GlobalHistogramBinarizer for uneven lighting.\n• Scanned web payloads pass through IntentSanitizer, DeAmpEngine, and LinkThreatAnalyzer (Punycode lookalike spoofing, embedded userinfo credentials, raw IP addresses, cleartext HTTP) with zero network lookups.\n• QR matrix generator utilizes ZXing BitMatrix rendering with configurable error correction (Level M/H) and cached FileProvider sharing."
         )
     )
 }

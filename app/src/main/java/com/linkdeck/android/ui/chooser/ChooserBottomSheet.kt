@@ -224,6 +224,12 @@ class ChooserBottomSheet : BottomSheetDialogFragment() {
             }
         }
 
+        root.findViewById<View>(R.id.btnShowQr).setOnClickListener {
+            val linkUrl = (getActiveLink() ?: currentLink).rawUrl
+            val qrSheet = com.linkdeck.android.ui.qr.QrGeneratorBottomSheet.newInstance(linkUrl)
+            qrSheet.show(parentFragmentManager, com.linkdeck.android.ui.qr.QrGeneratorBottomSheet.TAG)
+        }
+
         root.findViewById<View>(R.id.btnCopyLink).setOnClickListener {
             val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
             clipboard.setPrimaryClip(ClipData.newPlainText("Link", (getActiveLink() ?: currentLink).rawUrl))

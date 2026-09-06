@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_bottom_sheet"
+    android:paddingTop="12dp"
+    android:paddingBottom="16dp">
+
+    <!-- Drag Handle -->
+    <View
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:background="@drawable/bg_url_badge"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Top Header Bar with Title and Close Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginBottom="4dp">
+
+        <TextView
+            android:id="@+id/textQrGeneratorTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/qr_generator_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="?attr/colorOnSurface" />
+
+        <ImageButton
+            android:id="@+id/btnQrGenClose"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_close"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="@string/btn_done"
+            app:tint="?attr/colorOnSurface" />
+
+    </LinearLayout>
+
+    <!-- Subtitle / Hint -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/qr_generator_subtitle"
+        android:textSize="13sp"
+        android:textColor="?attr/colorOnSurfaceVariant"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Scrollable Container for Keyboard Optimization -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="12dp">
+
+            <!-- Full Width Text/URL Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutQr"
+                style="@style/Widget.LinkDeck.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/qr_gen_input_hint"
+                app:endIconMode="clear_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editQrInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textUri|textMultiLine"
+                    android:maxLines="3"
+                    android:textSize="13sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Action Pill Row: Paste from Clipboard -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnQrPaste"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="@string/qr_gen_paste_clipboard"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="14dp"
+                    app:icon="@drawable/paste"
+                    app:iconSize="14dp"
+                    app:iconTint="?attr/colorOnSurface"
+                    app:cornerRadius="18dp" />
+
+            </LinearLayout>
+
+            <!-- Sanitization Status Badges -->
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/layoutQrBadges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="6dp"
+                app:chipSpacingVertical="4dp"
+                android:layout_marginBottom="6dp">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipDeAmped"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:text="@string/badge_de_amped"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnErrorContainer"
+                    app:chipBackgroundColor="?attr/colorErrorContainer"
+                    app:chipStrokeColor="@android:color/transparent"
+                    android:visibility="gone" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipTrackersCleaned"
+                    style="@style/Widget.Material3.Chip.Assist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnPrimaryContainer"
+                    app:chipBackgroundColor="?attr/colorPrimaryContainer"
+                    app:chipStrokeColor="@android:color/transparent"
+                    android:visibility="gone"
+                    tools:text="3 Trackers Removed" />
+
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Checkbox for Sanitization Toggle -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkboxCleanLink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/qr_gen_clean_toggle"
+                android:textSize="12sp"
+                android:checked="true"
+                android:layout_marginBottom="12dp" />
+
+            <!-- QR Code Canvas Container -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@android:color/white"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant">
+
+                <ImageView
+                    android:id="@+id/imageQrCode"
+                    android:layout_width="190dp"
+                    android:layout_height="190dp"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    android:contentDescription="@string/qr_generator_title" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- URL Preview Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="?attr/colorSurfaceVariant"
+                app:strokeWidth="1dp"
+                app:strokeColor="?attr/colorOutlineVariant"
+                android:layout_marginTop="14dp">
+
+                <TextView
+                    android:id="@+id/textQrUrlPreview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="12dp"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="2dp"
+                    android:textIsSelectable="true"
+                    android:textColor="?attr/colorOnSurface"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    tools:text="https://example.com/sanitized-destination" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Actions -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:baselineAligned="false"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCopyQrLink"
+                    style="@style/Widget.LinkDeck.SecondaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="@string/qr_generator_copy_link"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/copy"
+                    app:iconSize="16dp"
+                    app:iconGravity="textStart"
+                    app:cornerRadius="24dp"
+                    android:layout_marginEnd="6dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShareQrImage"
+                    style="@style/Widget.LinkDeck.PrimaryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:text="@string/qr_generator_share_image"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    app:icon="@drawable/ic_share_forward"
+                    app:iconSize="16dp"
+                    app:iconGravity="textStart"
+                    app:cornerRadius="24dp"
+                    android:layout_marginStart="6dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

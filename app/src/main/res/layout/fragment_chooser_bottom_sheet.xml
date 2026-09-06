@@ -84,6 +84,22 @@
                     android:background="?attr/colorOutlineVariant" />
 
                 <ImageButton
+                    android:id="@+id/btnShowQr"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:padding="9dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_btn_show_qr"
+                    android:background="?attr/selectableItemBackground"
+                    android:contentDescription="@string/action_qr_code"
+                    app:tint="?attr/colorOnSurface" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="18dp"
+                    android:background="?attr/colorOutlineVariant" />
+
+                <ImageButton
                     android:id="@+id/btnCopyLink"
                     android:layout_width="38dp"
                     android:layout_height="38dp"

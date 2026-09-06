@@ -5,6 +5,10 @@
     <!-- Network access for on-device HTTP redirect resolution -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Camera access for on-device QR code scanning (optional hardware feature) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.any" android:required="false" />
+
     <!-- Package visibility: Query web-capable handlers, browsers, and share targets without requesting QUERY_ALL_PACKAGES -->
     <queries>
         <intent>
@@ -54,6 +58,9 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
         <!-- Onboarding Walkthrough Activity -->
@@ -172,6 +179,24 @@
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
             </intent-filter>
         </service>
+
+        <!-- Offline QR Code Scanner Activity -->
+        <activity
+            android:name=".ui.qr.QrScannerActivity"
+            android:exported="false"
+            android:label="@string/qr_scanner_title"
+            android:theme="@style/Theme.LinkDeck" />
+
+        <!-- FileProvider for Secure Offline QR Code Image Sharing -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
     </application>
 

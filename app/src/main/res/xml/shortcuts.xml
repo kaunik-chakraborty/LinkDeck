@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="scan_qr_code"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_scan_qr"
+        android:shortcutShortLabel="@string/shortcut_scan_qr_short"
+        android:shortcutLongLabel="@string/shortcut_scan_qr_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.linkdeck.android"
+            android:targetClass="com.linkdeck.android.ui.qr.QrScannerActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="clean_clipboard"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_clean_clipboard"
+        android:shortcutShortLabel="@string/tile_clean_clipboard_label"
+        android:shortcutLongLabel="@string/tile_clean_clipboard_subtitle">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.linkdeck.android"
+            android:targetClass="com.linkdeck.android.ui.clipboard.CleanClipboardActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="test_link"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_test_link"
+        android:shortcutShortLabel="@string/shortcut_test_link_short"
+        android:shortcutLongLabel="@string/shortcut_test_link_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.linkdeck.android"
+            android:targetClass="com.linkdeck.android.ui.testlink.TestLinkActivity" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="custom_rules"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_rules"
+        android:shortcutShortLabel="@string/shortcut_custom_rules_short"
+        android:shortcutLongLabel="@string/shortcut_custom_rules_long">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.linkdeck.android"
+            android:targetClass="com.linkdeck.android.ui.rules.CustomParameterRulesActivity" />
+    </shortcut>
+</shortcuts>

@@ -59,8 +59,10 @@
 | **Material You & Typography** | Full Material Design 3 Monet dynamic wallpaper tinting and 6 curated modern typefaces (Satoshi, Outfit, General Sans, Cabinet Grotesk, Space Grotesk, Plus Jakarta Sans). |
 | **Dedicated 2-Tab Features Guide** | Built-in complete guide covering everyday user privacy walkthroughs and in-depth technical security architecture. |
 | **Interactive Walkthrough** | Built-in 4-slide onboarding guide for new users, replayable anytime from Settings. |
+| **Offline QR Code Scanner &amp; Shield** | High-performance, 100% on-device CameraX &amp; ZXing scanner that intercepts physical QR codes, sanitizes trackers, unrolls AMP links, and evaluates phishing heuristics before opening (anti-quishing protection). Also supports scanning QR codes directly from gallery images and screenshots offline. |
+| **Offline QR Code Generator** | Generates high-resolution, high-contrast Material 3 QR codes on-device for any sanitized link with 1-tap clipboard copying and secure PNG sharing via FileProvider. |
 | **Quick Settings "Clean Clipboard" Tile** | 1-tap dedicated Android Quick Settings tile to sanitize, de-AMP, and strip tracking from your clipboard in-place with instant visual feedback and lock screen safety. |
-| **Home Screen Widgets** | Multi-link quick paste widget and status widget for 1-tap clipboard routing from your home screen. |
+| **Home Screen Widgets &amp; Shortcuts** | Multi-link quick paste widget, status widget, and launcher long-press App Shortcuts for 1-tap clipboard cleaning and QR scanning directly from your home screen. |
 
 ---
 

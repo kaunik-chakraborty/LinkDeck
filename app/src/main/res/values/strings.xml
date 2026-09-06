@@ -213,7 +213,7 @@
     <string name="setting_github_desc">Star the project or view source code on GitHub</string>
     <string name="github_repo_url">https://github.com/kaunik-chakraborty/LinkDeck</string>
     <string name="setting_version_title">Version</string>
-    <string name="setting_version_desc">1.3 (Release)</string>
+    <string name="setting_version_desc">1.4 (Release)</string>
     <string name="setting_license_title">License</string>
     <string name="setting_license_desc">Open source (Apache License 2.0)</string>
     <string name="setting_privacy_title">Privacy &amp; Security</string>
@@ -343,4 +343,41 @@
     <string name="custom_rule_scope_global">Global (All Domains)</string>
     <string name="custom_rule_action_block">Block</string>
     <string name="custom_rule_action_allow">Allow</string>
+
+    <!-- QR Code Scanner & Generator -->
+    <string name="qr_scanner_title">Scan QR Code</string>
+    <string name="qr_scanner_hint">Point camera at any QR code to sanitize and inspect link</string>
+    <string name="qr_scanner_pick_image">Scan Image from Gallery</string>
+    <string name="qr_permission_title">Camera Access Needed</string>
+    <string name="qr_permission_desc">Camera permission is required to scan physical QR codes locally on your device with zero telemetry.</string>
+    <string name="qr_permission_grant_btn">Allow Camera Access</string>
+    <string name="qr_scanner_gallery_err">No valid QR code found in selected image</string>
+    <string name="qr_scanner_gallery_read_err">Could not process the selected image file</string>
+    <string name="qr_generator_title">Share as QR Code</string>
+    <string name="qr_generator_subtitle">Scan with another device to transfer sanitized link offline</string>
+    <string name="qr_generator_copy_link">Copy Clean Link</string>
+    <string name="qr_generator_share_image">Share QR Code Image</string>
+    <string name="action_qr_code">QR Code</string>
+    <string name="action_show_qr">Show QR</string>
+    <string name="qr_result_title">Scanned QR Content</string>
+    <string name="qr_result_weblink_title">Web Destination</string>
+    <string name="qr_result_text_title">Scanned Text Content</string>
+    <string name="qr_result_btn_open">Open with LinkDeck</string>
+    <string name="qr_result_btn_inspect">Inspect Link</string>
+    <string name="qr_result_btn_copy">Copy Clean Link</string>
+    <string name="qr_result_btn_share">Share Clean Link</string>
+    <string name="qr_result_threat_badge">Security Warning</string>
+    <string name="qr_quick_action_scan">Scan QR</string>
+    <string name="qr_quick_action_generate">Create QR</string>
+    <string name="shortcut_scan_qr_short">Scan QR</string>
+    <string name="shortcut_scan_qr_long">Scan QR Code</string>
+    <string name="shortcut_test_link_short">Test Link</string>
+    <string name="shortcut_test_link_long">Test &amp; Inspect Link</string>
+    <string name="shortcut_custom_rules_short">Custom Rules</string>
+    <string name="shortcut_custom_rules_long">Parameter Rules</string>
+    <string name="qr_gen_input_hint">Enter URL or text</string>
+    <string name="qr_gen_clean_toggle">Sanitize link (De-AMP and strip trackers)</string>
+    <string name="qr_gen_empty_prompt">Enter any URL or text above to generate a QR code offline.</string>
+    <string name="btn_paste">Paste</string>
+    <string name="qr_gen_paste_clipboard">Paste from clipboard</string>
 </resources>

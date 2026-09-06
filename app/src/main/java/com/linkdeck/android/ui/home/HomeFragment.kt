@@ -184,10 +184,22 @@ class HomeFragment : Fragment() {
     private fun setupButtons(root: View) {
         val btnSetDefault: MaterialButton = root.findViewById(R.id.btnSetDefaultBrowser)
         val btnTestLink: MaterialButton = root.findViewById(R.id.btnTestLink)
+        val btnQuickScan: MaterialButton = root.findViewById(R.id.btnQuickScanQr)
+        val btnQuickGenerate: MaterialButton = root.findViewById(R.id.btnQuickGenerateQr)
         val editUrl: TextInputEditText = root.findViewById(R.id.editTestUrl)
 
         btnSetDefault.setOnClickListener {
             requestDefaultBrowserRole()
+        }
+
+        btnQuickScan.setOnClickListener {
+            startActivity(Intent(requireContext(), com.linkdeck.android.ui.qr.QrScannerActivity::class.java))
+        }
+
+        btnQuickGenerate.setOnClickListener {
+            val inputUrl = editUrl.text?.toString()?.trim().orEmpty()
+            val sheet = com.linkdeck.android.ui.qr.QrGeneratorBottomSheet.newInstance(inputUrl)
+            sheet.show(childFragmentManager, com.linkdeck.android.ui.qr.QrGeneratorBottomSheet.TAG)
         }
 
         val homeScroll: androidx.core.widget.NestedScrollView? = root.findViewById(R.id.homeScroll)
