@@ -5,6 +5,7 @@
 </p>
 
 <p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.linkdeck.android"><img src="https://img.shields.io/badge/Google_Play-Available_Now-414141?style=flat-square&logo=google-play&logoColor=white" alt="Google Play" /></a>
   <a href="https://github.com/kaunik-chakraborty/LinkDeck/stargazers"><img src="https://img.shields.io/github/stars/kaunik-chakraborty/LinkDeck?style=flat-square&color=blue" alt="GitHub Stars" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg?style=flat-square" alt="License: Apache 2.0" /></a>
   <img src="https://img.shields.io/badge/Platform-Android_10+-brightgreen.svg?style=flat-square" alt="Platform: Android 10+" />
@@ -12,10 +13,17 @@
   <img src="https://img.shields.io/badge/Telemetry-0%25_(100%25_On--Device)-success.svg?style=flat-square" alt="Zero Telemetry" />
 </p>
 
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.linkdeck.android">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70" alt="Get it on Google Play" />
+  </a>
+</p>
+
 ---
 
 ## Table of Contents
 
+- [Download](#download)
 - [Overview](#overview)
 - [Key Features](#key-features)
 - [Privacy & Security Architecture](#privacy--security-architecture)
@@ -26,6 +34,20 @@
 - [Screenshots](#screenshots)
 - [Community & Policies](#community--policies)
 - [License](#license)
+
+---
+
+## Download
+
+LinkDeck is available for free on Google Play:
+
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.linkdeck.android">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="70" alt="Get it on Google Play" />
+  </a>
+</p>
+
+Direct Link: [https://play.google.com/store/apps/details?id=com.linkdeck.android](https://play.google.com/store/apps/details?id=com.linkdeck.android)
 
 ---
 

@@ -80,10 +80,11 @@ LinkDeck requires the `android.permission.INTERNET` permission exclusively to pe
 
 ---
 
-## 7. Open Source Verification
+## 7. Open Source Verification & Distribution
 
 LinkDeck is distributed under the **Apache License 2.0**. Our entire source code, build scripts, and architecture are open and verifiable by the community:
 
+* **Google Play Store:** [https://play.google.com/store/apps/details?id=com.linkdeck.android](https://play.google.com/store/apps/details?id=com.linkdeck.android)
 * **Source Code Repository:** [https://github.com/kaunik-chakraborty/LinkDeck](https://github.com/kaunik-chakraborty/LinkDeck)
 
 ---
