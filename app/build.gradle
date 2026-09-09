@@ -11,8 +11,8 @@ android {
         applicationId "com.linkdeck.android"
         minSdk 29
         targetSdk 36
-        versionCode 5
-        versionName "1.4"
+        versionCode 7
+        versionName "1.4.2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -32,6 +32,11 @@ android {
     }
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+    packaging {
+        jniLibs {
+            useLegacyPackaging = false
+        }
     }
     lint {
         checkReleaseBuilds false
